@@ -1,47 +1,32 @@
-import { Stack, Typography } from "@mui/material";
-import { LinkButton } from "./components/LinkButton.tsx";
+import { LinkButton } from "./components/LinkButton/LinkButton.tsx";
+import styles from "./LandingPage.module.css";
 
 export default function LandingPage() {
   return (
-    <Stack
-      sx={{
-        bgcolor: "primary.main",
-        width: 1,
-        height: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}>
-      <Typography
-        variant="h1"
-        sx={{
-          textAlign: "center",
-          color: "primary.contrastText",
-          mb: 4,
-        }}>
-        Indiana Scouting Alliance 2025
-      </Typography>
-      <Stack gap={2}>
+    <div className={styles.overallFlex}>
+      <h1 className={styles.appHeading}>Indiana Scouting Alliance 2025</h1>
+      <div className={styles.buttonsFlex}>
         <LinkButton
           to="/scout"
-          color="secondary">
+          className={styles.menuButton}>
           Scout
         </LinkButton>
         <LinkButton
           to="/scout/savedmatches"
-          color="secondary">
+          className={styles.menuButton}>
           Saved Matches
         </LinkButton>
         <LinkButton
           to="/setup"
-          color="secondary">
+          className={styles.menuButton}>
           Device Setup
         </LinkButton>
         <LinkButton
           to="/data"
-          color="secondary">
+          className={styles.menuButton}>
           View Data
         </LinkButton>
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }

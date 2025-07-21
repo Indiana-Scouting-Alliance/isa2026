@@ -1,6 +1,6 @@
 import { User } from "@isa2025/api/src/utils/dbtypes.ts";
 import { Stack } from "@mui/material";
-import { LinkButton } from "../components/LinkButton.tsx";
+import { LinkButton } from "../components/LinkButton/LinkButton.tsx";
 
 type DataMenuProps = {
   permLevel: User["permLevel"];

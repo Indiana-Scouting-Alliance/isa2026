@@ -1,0 +1,23 @@
+.menuButton {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-contrastText);
+}
+
+.appHeading {
+  text-align: center;
+  color: var(--color-primary-contrastText);
+  margin-bottom: 32px;
+}
+
+.buttonsFlex {
+  display: flex;
+  gap: 16px;
+}
+
+.overallFlex {
+  background-color: var(--color-primary);
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}

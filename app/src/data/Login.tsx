@@ -1,9 +1,6 @@
 import { User } from "@isa2025/api/src/utils/dbtypes.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-  Avatar,
-  Box,
-  Button,
   IconButton,
   InputAdornment,
   TextField,
@@ -11,13 +8,11 @@ import {
 } from "@mui/material";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  GridBorder,
-  borderMarginPx,
-  borderWidthPx,
-} from "../components/GridBorder.tsx";
+import Button from "../components/Button/Button.tsx";
+import { GridBorder } from "../components/GridBorder/GridBorder.tsx";
 import { TextFieldDoubleLabel } from "../components/TextFieldLabel.tsx";
 import { trpc } from "../utils/trpc.ts";
+import styles from "./Login.module.css";
 
 type LoginProps = {
   setToken: (
@@ -54,26 +49,11 @@ export default function Login({ setToken }: LoginProps) {
 
   return (
     <GridBorder>
-      <Box
-        sx={{
-          width: 1,
-          height: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
-        <Avatar
+      <div className={styles.container}>
+        <img
           alt="ISA Logo"
           src="/logo.svg"
-          sx={{
-            width: "min(25vw, 25vh)",
-            height: "min(25vw, 25vh)",
-            m: 1,
-            borderColor: "primary.main",
-            borderStyle: "solid",
-            borderWidth: "5px",
-          }}
+          className={styles.logo}
         />
         <Typography
           variant="h3"
@@ -144,23 +124,15 @@ export default function Login({ setToken }: LoginProps) {
           onClick={() => {
             login.mutate({ username, password });
           }}
-          variant="outlined"
-          sx={{
-            mt: 1,
-          }}>
+          className={styles.submitButton}>
           Submit
         </Button>
-      </Box>
+      </div>
       <Button
         onClick={() => {
           navigate("/");
         }}
-        variant="contained"
-        sx={{
-          position: "absolute",
-          right: `${borderMarginPx + borderWidthPx + 20}px`,
-          bottom: `${borderMarginPx + borderWidthPx + 20}px`,
-        }}>
+        className={styles.homeButton}>
         Return to Home
       </Button>
     </GridBorder>

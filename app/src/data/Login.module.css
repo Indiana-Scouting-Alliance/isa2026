@@ -1,0 +1,34 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeButton {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+}
+
+.submitButton {
+  margin-top: 16px;
+
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+}
+
+.logo {
+  width: min(25vw, 25vh);
+  height: min(25vw, 25vh);
+  margin: 100%;
+  border-color: var(--color-primary);
+  border-style: solid;
+  border-width: 5px;
+  clip-path: 50%;
+}

@@ -10,4 +10,10 @@
   padding: 6px 16px;
   border: none;
   border-radius: 4px;
+
+  cursor: pointer;
+}
+
+.button:hover {
+  filter: brightness(0.8);
 }

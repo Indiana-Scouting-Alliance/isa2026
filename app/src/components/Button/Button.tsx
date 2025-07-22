@@ -5,18 +5,21 @@ type ButtonProps = {
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  ref?: React.Ref<HTMLButtonElement>;
 };
 export default function Button({
   onClick,
   children,
   className,
   style,
+  ref,
 }: ButtonProps) {
   return (
     <button
       onClick={onClick}
       className={styles.button + " " + className}
-      style={style}>
+      style={style}
+      ref={ref}>
       {children}
     </button>
   );

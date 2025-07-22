@@ -1,0 +1,14 @@
+.contentContainer {
+  --top-bar-height: 4rem;
+
+  width: 100%;
+  height: calc(
+    (100% - var(--top-bar-height)) + var(--grid-border-margin-width) +
+      var(--grid-border-border-width)
+  );
+  position: relative;
+  top: calc(
+    var(--top-bar-height) -
+      (var(--grid-border-margin-width) + var(--grid-border-border-width))
+  );
+}

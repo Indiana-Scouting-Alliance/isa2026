@@ -1,8 +1,8 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import BackdropComponent from "../components/BackdropComponent.tsx";
-import { GridBorder } from "../components/GridBorder.tsx";
-import HelpDialog from "../components/HelpDialog.tsx";
+import BackdropComponent from "../BackdropComponent.tsx";
+import { GridBorder } from "../GridBorder/GridBorder.tsx";
+import HelpDialog from "../HelpDialog.tsx";
 
 type ScoutPageContainerProps = {
   title: string | React.ReactNode;

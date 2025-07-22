@@ -8,11 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import {
-  borderMarginPx,
-  borderWidthPx,
-  GridBorder,
-} from "../components/GridBorder.tsx";
+import { GridBorder } from "../components/GridBorder/GridBorder.tsx";
+import styles from "./DataLayout.module.css";
 import DataMenu from "./DataMenu.tsx";
 import Export from "./export/Export.tsx";
 import Users from "./users/Users.tsx";
@@ -106,13 +103,7 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
           </Button>
         </Toolbar>
       </AppBar>
-      <Box
-        sx={{
-          width: 1,
-          height: `calc(calc(100% - ${topBarHeightRem}rem) + ${borderMarginPx + borderWidthPx}px)`,
-          position: "relative",
-          top: `calc(${topBarHeightRem}rem - ${borderMarginPx + borderWidthPx}px)`,
-        }}>
+      <div className={styles.contentContainer}>
         <GridBorder>
           <Routes>
             {["demo", "team", "datamanage", "admin"].includes(permLevel) && (
@@ -153,7 +144,7 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
             )}
           </Routes>
         </GridBorder>
-      </Box>
+      </div>
     </Box>
   );
 }

@@ -28,9 +28,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ScoutPageContainer } from "../components/ScoutPageContainer/ScoutPageContainer.tsx";
 import { StyledToggleButton } from "../components/StyledToggleButton.tsx";
 import { VisuallyHiddenInput } from "../components/VisuallyHiddenInput.tsx";
-import { ScoutPageContainer } from "../scout/ScoutPageContainer.tsx";
 import { putDBEvent, putDBMatches } from "../utils/idb.ts";
 import { trpc } from "../utils/trpc.ts";
 import DownloadEvent from "./DownloadEvent.tsx";

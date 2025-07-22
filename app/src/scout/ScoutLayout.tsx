@@ -11,6 +11,7 @@ import { Box, Button, Stack, Tab, Tabs } from "@mui/material";
 import EventEmitter from "events";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ScoutPageContainer } from "../components/ScoutPageContainer/ScoutPageContainer.tsx";
 import { DeviceSetupObj } from "../setup/DeviceSetup.tsx";
 import { getDBHumanPlayerEntries, putDBEntry } from "../utils/idb.ts";
 import { trpc } from "../utils/trpc.ts";
@@ -20,7 +21,6 @@ import Postmatch from "./robot/Postmatch.tsx";
 import Prematch from "./robot/Prematch.tsx";
 import { Teleop } from "./robot/Teleop.tsx";
 import { ExportMatchEntry } from "./SavedMatches.tsx";
-import { ScoutPageContainer } from "./ScoutPageContainer.tsx";
 
 export type MatchStage = "prematch" | "auto" | "teleop" | "postmatch" | "human";
 type ScoutLayoutProps = {

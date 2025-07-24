@@ -2,22 +2,24 @@ import {
   HumanPlayerEntryColumns,
   TeamMatchEntryColumns,
 } from "@isa2026/api/src/utils/dbtypes.ts";
-import { Box, Stack, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { Link, Route, Routes, useResolvedPath } from "react-router-dom";
+import { Route, Routes, useNavigate, useResolvedPath } from "react-router-dom";
+import TabBar from "../../components/Tabs/TabBar.tsx";
 import { trpc } from "../../utils/trpc.ts";
+import styles from "./Export.module.css";
 import ExportLayout from "./ExportLayout.tsx";
 
 export default function Export() {
+  const navigate = useNavigate();
+  const resolvedPath = useResolvedPath("");
+  const pathend = resolvedPath.pathname.split("/").pop();
+
   const [showPublicApiToken, setShowPublicApiToken] = useState(false);
   const [linkIncludesToken, setLinkIncludesToken] = useState(false);
   const [showAuthorization, setShowAuthorization] = useState(false);
 
   const [events, setEvents] = useState("");
   const [teams, setTeams] = useState("");
-
-  const resolvedPath = useResolvedPath("");
-  const pathend = resolvedPath.pathname.split("/").pop();
 
   const publicApiToken = trpc.users.publicApiToken.useQuery();
 
@@ -58,43 +60,27 @@ export default function Export() {
   );
 
   return (
-    <Stack
-      sx={{
-        width: 1,
-        height: 1,
-        padding: 2,
-      }}>
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: "divider",
-        }}>
-        <Tabs value={pathend === "" ? "/" : pathend}>
-          <Tab
-            label="Robot Data"
-            value="robots"
-            component={Link}
-            to={
-              resolvedPath.pathname.split("/").slice(0, -1).join("/") +
-              "/robots"
-            }
-          />
-          <Tab
-            label="Human Data"
-            value="humans"
-            component={Link}
-            to={
-              resolvedPath.pathname.split("/").slice(0, -1).join("/") +
-              "/humans"
-            }
-          />
-        </Tabs>
-      </Box>
-      <Box
-        sx={{
-          flex: 1,
-          overflowY: "scroll",
-        }}>
+    <div className={styles.container}>
+      <TabBar
+        value={
+          {
+            robots: "Robot Data",
+            humans: "Human Data",
+          }[pathend === "" ? "/" : pathend!]!
+        }
+        onChange={(value) => {
+          navigate(
+            resolvedPath.pathname.split("/").slice(0, -1).join("/") +
+              "/" +
+              {
+                "Robot Data": "robots",
+                "Human Data": "humans",
+              }[value]
+          );
+        }}
+        tabs={["Robot Data", "Human Data"]}
+      />
+      <div className={styles.contentContainer}>
         <Routes>
           <Route
             path="robots"
@@ -143,7 +129,40 @@ export default function Export() {
             }
           />
         </Routes>
+      </div>
+      {/* <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+        }}>
+        <Tabs value={pathend === "" ? "/" : pathend}>
+          <Tab
+            label="Robot Data"
+            value="robots"
+            component={Link}
+            to={
+              resolvedPath.pathname.split("/").slice(0, -1).join("/") +
+              "/robots"
+            }
+          />
+          <Tab
+            label="Human Data"
+            value="humans"
+            component={Link}
+            to={
+              resolvedPath.pathname.split("/").slice(0, -1).join("/") +
+              "/humans"
+            }
+          />
+        </Tabs>
       </Box>
-    </Stack>
+      <Box
+        sx={{
+          flex: 1,
+          overflowY: "scroll",
+        }}>
+        
+      </Box> */}
+    </div>
   );
 }

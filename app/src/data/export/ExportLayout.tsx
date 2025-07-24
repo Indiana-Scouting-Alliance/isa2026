@@ -17,7 +17,6 @@ import {
 import {
   Button,
   Checkbox,
-  Divider,
   FormControlLabel,
   IconButton,
   lighten,
@@ -30,6 +29,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import Divider from "../../components/Divider/Divider.tsx";
+import Input from "../../components/Input/Input.tsx";
+import styles from "./ExportLayout.module.css";
 
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -111,19 +113,8 @@ export default function ExportLayout({
   };
 
   return (
-    <Stack
-      sx={{
-        width: 1,
-        height: 1,
-        padding: 2,
-      }}
-      direction="row">
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 1,
-          height: 1,
-        }}>
+    <div className={styles.container}>
+      <div className={styles.half}>
         {robotColumnsState.length > 0 && (
           <>
             <Typography
@@ -276,35 +267,26 @@ export default function ExportLayout({
             </Stack>
           </>
         )}
-      </Stack>
+      </div>
       <Divider orientation="vertical" />
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 2,
-          overflowY: "scroll",
-        }}
-        gap={1}>
-        <TextField
+      <div className="half">
+        <Input
+          id="events-filter"
           value={events}
           onChange={(event) => {
             setEvents(event.currentTarget.value);
           }}
           label="Events (comma-separated)"
         />
-        <TextField
+        <Input
+          id="teams-filter"
           value={teams}
           onChange={(event) => {
             setTeams(event.currentTarget.value);
           }}
           label="Teams (comma-separated)"
         />
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
+        <Divider orientation="horizontal" />
         <ToggleButtonGroup
           value={fileType}
           exclusive
@@ -321,12 +303,7 @@ export default function ExportLayout({
           <StyledToggleButton value="csv">CSV</StyledToggleButton>
           {/* <StyledToggleButton value="xlsx">XLSX</StyledToggleButton> */}
         </ToggleButtonGroup>
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
+        <Divider orientation="horizontal" />
         <TextField
           value={publicApiToken ?? ""}
           slotProps={{
@@ -369,12 +346,7 @@ export default function ExportLayout({
             };
           }}
         />
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
+        <Divider orientation="horizontal" />
         <FormControlLabel
           control={
             <Checkbox
@@ -440,12 +412,7 @@ export default function ExportLayout({
             label='"Authorization" Header'
           />
         )}
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
+        <Divider orientation="horizontal" />
         <Button
           variant="outlined"
           onClick={async () => {
@@ -500,8 +467,8 @@ export default function ExportLayout({
           }}>
           Download as TXT
         </Button>
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }
 

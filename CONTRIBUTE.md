@@ -1,34 +1,34 @@
-## Development Instructions
+# Development Instructions
 
 Message @liujip0 on Discord if you have any questions.
 
-### 1. Clone the repo locally
+## 1. Clone the repo locally
 
 Use either GitHub CLI:
 
 ```zsh
-gh repo clone liujip0/scouting
+gh repo clone Indiana-Scouting-Alliance/isa2026
 ```
 
 or git:
 
 ```zsh
-git clone https://github.com/liujip0/scouting.git
+git clone https://github.com/Indiana-Scouting-Alliance/isa2026.git
 ```
 
-### 2. Navigate to scouting directory
+## 2. Navigate to scouting directory
 
 ```zsh
 cd scouting
 ```
 
-### 3. Install dependencies
+## 3. Install dependencies
 
 ```zsh
 pnpm install
 ```
 
-### 4. Add environment variables
+## 4. Add environment variables
 
 On Mac/Linux:
 
@@ -46,7 +46,7 @@ pnpm create-environment-windows
 - Get an FRC Events API key by registering [here](https://frc-events.firstinspires.org/services/api). Add this key to [`api/.dev.vars`](./api/.dev.vars) as `FIRST_API_TOKEN` in the form of `username:token`.
 - Run `openssl rand -base64 32` to generate a new JWT secret and add it to [`api/.dev.vars`](./api/.dev.vars) as `JWT_PRIVATE_KEY`.
 
-### 5. Initialize local database
+## 5. Initialize local database
 
 Change to `api/` folder
 
@@ -66,7 +66,7 @@ Return to original folder
 cd ..
 ```
 
-### 6. Run local development server
+## 6. Run local development server
 
 ```zsh
 pnpm dev

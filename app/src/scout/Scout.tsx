@@ -9,11 +9,12 @@ import {
   TeamMatchEntryInit,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import EventEmitter from "events";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { DeviceSetupObj } from "../setup/DeviceSetup.tsx";
-import SavedMatches from "./SavedMatches.tsx";
-import ScoutLayout from "./ScoutLayout.tsx";
+
+const ScoutLayout = React.lazy(() => import("./ScoutLayout.tsx"));
+const SavedMatches = React.lazy(() => import("./SavedMatches.tsx"));
 
 type ScoutProps = {
   deviceSetup: DeviceSetupObj;
@@ -142,32 +143,34 @@ export default function Scout({
   const [putEntriesPending, setPutEntriesPending] = useState(false);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <ScoutLayout
-            match={match}
-            setMatch={setMatch}
-            events={events}
-            deviceSetup={deviceSetup}
-            putEntriesPending={putEntriesPending}
-            setPutEntriesPending={setPutEntriesPending}
-            eventEmitter={eventEmitter}
-          />
-        }
-      />
-      <Route
-        path="savedmatches"
-        element={
-          <SavedMatches
-            match={match}
-            setMatch={setMatch}
-            events={events}
-            validDeviceSetup={validDeviceSetup}
-          />
-        }
-      />
-    </Routes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ScoutLayout
+              match={match}
+              setMatch={setMatch}
+              events={events}
+              deviceSetup={deviceSetup}
+              putEntriesPending={putEntriesPending}
+              setPutEntriesPending={setPutEntriesPending}
+              eventEmitter={eventEmitter}
+            />
+          }
+        />
+        <Route
+          path="savedmatches"
+          element={
+            <SavedMatches
+              match={match}
+              setMatch={setMatch}
+              events={events}
+              validDeviceSetup={validDeviceSetup}
+            />
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 }

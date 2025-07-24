@@ -1,13 +1,15 @@
 import { DBEvent, Match } from "@isa2026/api/src/utils/dbtypes.ts";
 import EventEmitter from "events";
-import { useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Data from "./data/Data.tsx";
-import LandingPage from "./LandingPage.tsx";
 import ReloadPrompt from "./reloadprompt/ReloadPrompt.tsx";
-import Scout from "./scout/Scout.tsx";
-import DeviceSetup, { DeviceSetupObj } from "./setup/DeviceSetup.tsx";
+import { DeviceSetupObj } from "./setup/DeviceSetup.tsx";
 import { getDBEvents, getDBMatches, initDB } from "./utils/idb.ts";
+
+const LandingPage = React.lazy(() => import("./LandingPage.tsx"));
+const Data = React.lazy(() => import("./data/Data.tsx"));
+const Scout = React.lazy(() => import("./scout/Scout.tsx"));
+const DeviceSetup = React.lazy(() => import("./setup/DeviceSetup.tsx"));
 
 export default function App() {
   const eventEmitter = useMemo(() => new EventEmitter(), []);
@@ -74,37 +76,39 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={<LandingPage />}
-          />
-          <Route
-            path="/data/*"
-            element={<Data />}
-          />
-          <Route
-            path="/scout/*"
-            element={
-              <Scout
-                deviceSetup={deviceSetup}
-                events={events}
-                eventEmitter={eventEmitter}
-              />
-            }
-          />
-          <Route
-            path="/setup"
-            element={
-              <DeviceSetup
-                deviceSetup={deviceSetup}
-                setDeviceSetup={setDeviceSetup}
-                events={events}
-                setEvents={setEvents}
-              />
-            }
-          />
-        </Routes>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route
+              path="/"
+              element={<LandingPage />}
+            />
+            <Route
+              path="/data/*"
+              element={<Data />}
+            />
+            <Route
+              path="/scout/*"
+              element={
+                <Scout
+                  deviceSetup={deviceSetup}
+                  events={events}
+                  eventEmitter={eventEmitter}
+                />
+              }
+            />
+            <Route
+              path="/setup"
+              element={
+                <DeviceSetup
+                  deviceSetup={deviceSetup}
+                  setDeviceSetup={setDeviceSetup}
+                  events={events}
+                  setEvents={setEvents}
+                />
+              }
+            />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
       <ReloadPrompt />
     </>

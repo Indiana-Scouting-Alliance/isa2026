@@ -1,5 +1,5 @@
-import { MAX_TEAM_NUMBER } from "@isa2025/api/src/utils/constants.ts";
-import { User, UserPermLevel } from "@isa2025/api/src/utils/dbtypes.ts";
+import { MAX_TEAM_NUMBER } from "@isa2026/api/src/utils/constants.ts";
+import { User, UserPermLevel } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,

@@ -1,3 +1,5 @@
+-- Migration number: 0001 	 2025-07-24T14:30:38.465Z
+
 DROP TABLE IF EXISTS TeamMatchEntry;
 DROP TABLE IF EXISTS HumanPlayerEntry;
 

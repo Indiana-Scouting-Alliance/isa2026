@@ -1,0 +1,14 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+
+  border: none;
+  background-color: var(--color-background);
+  cursor: pointer;
+  clip-path: circle(50%);
+}
+.button:hover {
+  filter: var(--hover-dim);
+}

@@ -1,16 +1,12 @@
 import { User } from "@isa2025/api/src/utils/dbtypes.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
 import { GridBorder } from "../components/GridBorder/GridBorder.tsx";
-import { TextFieldDoubleLabel } from "../components/TextFieldLabel.tsx";
+import IconButton from "../components/IconButton/IconButton.tsx";
+import Input from "../components/Input/Input.tsx";
+import { TextFieldDoubleLabel } from "../components/TextFieldLabel/TextFieldLabel.tsx";
 import { trpc } from "../utils/trpc.ts";
 import styles from "./Login.module.css";
 
@@ -55,16 +51,12 @@ export default function Login({ setToken }: LoginProps) {
           src="/logo.svg"
           className={styles.logo}
         />
-        <Typography
-          variant="h3"
-          fontSize="2rem"
-          sx={{
-            mb: 2,
-          }}>
-          Login
-        </Typography>
-        <TextFieldDoubleLabel label="Username:">
-          <TextField
+        <h3 className={styles.title}>Login</h3>
+        <TextFieldDoubleLabel
+          label="Username:"
+          inputId="login-username">
+          <Input
+            id="login-username"
             type="text"
             value={username}
             onChange={(event) => {
@@ -72,16 +64,13 @@ export default function Login({ setToken }: LoginProps) {
             }}
             placeholder="Enter Username"
             error={errorText !== ""}
-            color="primary"
-            size="small"
-            sx={{
-              width: 1,
-              borderColor: "primary.main",
-            }}
           />
         </TextFieldDoubleLabel>
-        <TextFieldDoubleLabel label="Password:">
-          <TextField
+        <TextFieldDoubleLabel
+          label="Password:"
+          inputId="login-password">
+          <Input
+            id="login-password"
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(event) => {
@@ -92,31 +81,19 @@ export default function Login({ setToken }: LoginProps) {
                 submitRef.current?.click();
               }
             }}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => {
-                        setShowPassword(!showPassword);
-                      }}>
-                      {showPassword ?
-                        <VisibilityOff color="primary" />
-                      : <Visibility color="primary" />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
-            }}
+            endIcon={
+              <IconButton
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}>
+                {showPassword ?
+                  <VisibilityOff color="primary" />
+                : <Visibility color="primary" />}
+              </IconButton>
+            }
             placeholder="Enter Password"
             error={errorText !== ""}
             helperText={errorText}
-            variant="outlined"
-            size="small"
-            sx={{
-              width: 1,
-              borderColor: "primary.main",
-            }}
           />
         </TextFieldDoubleLabel>
         <Button

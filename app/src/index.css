@@ -4,7 +4,9 @@
   --color-secondary: #ffb900;
   --color-secondary-contrastText: #000;
   --color-background: #89cff0;
+  --color-background-contrastText: #000;
   --color-paper-background: #dddddd;
+  --color-error: #d32f2f;
 
   --text-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   --text-h1-size: 5rem;
@@ -13,6 +15,8 @@
 
   --grid-border-margin-width: 20px;
   --grid-border-border-width: 5px;
+
+  --hover-dim: brightness(0.8);
 }
 
 * {

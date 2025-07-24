@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.textFieldContainer {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 35vw;
+  max-width: 25rem;
+}
+
+.hiddenLabelContainer {
+  visibility: hidden;
+}
+
+.label {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}

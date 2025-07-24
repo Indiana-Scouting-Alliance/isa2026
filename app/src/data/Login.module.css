@@ -19,16 +19,24 @@
 .submitButton {
   margin-top: 16px;
 
-  background-color: transparent;
+  background-color: var(--color-background);
   border: 1px solid var(--color-primary);
 }
 
 .logo {
   width: min(25vw, 25vh);
   height: min(25vw, 25vh);
-  margin: 100%;
+
   border-color: var(--color-primary);
   border-style: solid;
   border-width: 5px;
-  clip-path: 50%;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 3em;
+  font-family: var(--text-font-family);
+  font-weight: normal;
+
+  margin-bottom: 16px;
 }

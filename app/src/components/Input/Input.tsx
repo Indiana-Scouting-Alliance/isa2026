@@ -2,9 +2,9 @@ import styles from "./Input.module.css";
 
 type InputProps = {
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   type?: "text" | "password" | "email" | "number" | "search";
-  id?: string;
+  id: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -12,6 +12,7 @@ type InputProps = {
   label?: string;
   error?: boolean;
   helperText?: string;
+  disabled?: boolean;
 };
 export default function Input({
   value,
@@ -25,10 +26,17 @@ export default function Input({
   label,
   error,
   helperText,
+  disabled,
 }: InputProps) {
   return (
     <div>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label
+          htmlFor={id}
+          className={styles.label}>
+          {label}
+        </label>
+      )}
       <div
         className={styles.outline + " " + (error ? styles.errorOutline : "")}>
         {startIcon}
@@ -40,6 +48,7 @@ export default function Input({
           id={id}
           onKeyDown={onKeyDown}
           placeholder={placeholder}
+          disabled={disabled}
         />
         {endIcon}
       </div>

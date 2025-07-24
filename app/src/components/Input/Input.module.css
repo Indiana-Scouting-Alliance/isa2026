@@ -44,3 +44,7 @@
 .helperTextError {
   color: var(--color-error);
 }
+
+.label {
+  font-family: var(--text-font-family);
+}

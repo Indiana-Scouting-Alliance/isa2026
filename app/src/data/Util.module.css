@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  gap: 16px;
+}
+
+.fileUploadButton {
+  color: var(--color-primary);
+  background-color: var(--color-background);
+}

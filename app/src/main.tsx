@@ -65,7 +65,7 @@ const trpcClient = trpc.createClient({
     }),
   ],
 });
-
+7;
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={theme}>
     <trpc.Provider

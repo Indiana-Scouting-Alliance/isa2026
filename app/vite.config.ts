@@ -23,9 +23,9 @@ export default defineConfig({
         globPatterns: ["**/*"],
       },
       manifest: {
-        name: "Indiana Scouting Alliance 2025",
-        short_name: "ISA 2025",
-        description: "Scouting app for Indiana Scouting Alliance 2025",
+        name: "Indiana Scouting Alliance 2026",
+        short_name: "ISA 2026",
+        description: "Scouting app for Indiana Scouting Alliance 2026",
         theme_color: "#000f5d",
         background_color: "#000f5d",
         display: "fullscreen",

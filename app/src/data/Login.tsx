@@ -1,4 +1,4 @@
-import { User } from "@isa2025/api/src/utils/dbtypes.ts";
+import { User } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";

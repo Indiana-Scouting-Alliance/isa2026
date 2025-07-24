@@ -1,4 +1,4 @@
-import { User } from "@isa2025/api/src/utils/dbtypes.ts";
+import { User } from "@isa2026/api/src/utils/dbtypes.ts";
 import { LinkButton } from "../components/LinkButton/LinkButton.tsx";
 import styles from "./DataMenu.module.css";
 

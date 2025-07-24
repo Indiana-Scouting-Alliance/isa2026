@@ -1,12 +1,12 @@
-import { MAX_TEAM_NUMBER } from "@isa2025/api/src/utils/constants.ts";
+import { MAX_TEAM_NUMBER } from "@isa2026/api/src/utils/constants.ts";
 import {
   Alliance,
   DBEvent,
   Match,
   MatchLevel,
   TeamMatchEntry,
-} from "@isa2025/api/src/utils/dbtypes.ts";
-import { omit } from "@isa2025/api/src/utils/utils.ts";
+} from "@isa2026/api/src/utils/dbtypes.ts";
+import { omit } from "@isa2026/api/src/utils/utils.ts";
 import { Close, OpenInNew } from "@mui/icons-material";
 import {
   Box,

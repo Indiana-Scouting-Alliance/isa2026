@@ -1,54 +1,52 @@
-## Development Instructions
+# Development Instructions
 
 Message @liujip0 on Discord if you have any questions.
 
-### 1. Clone the repo locally
+## 1. Clone the repo locally
 
 Use either GitHub CLI:
 
 ```zsh
-gh repo clone liujip0/scouting
+gh repo clone Indiana-Scouting-Alliance/isa2026
 ```
 
 or git:
 
 ```zsh
-git clone https://github.com/liujip0/scouting.git
+git clone https://github.com/Indiana-Scouting-Alliance/isa2026.git
 ```
 
-### 2. Navigate to scouting directory
+## 2. Navigate to scouting directory
 
 ```zsh
 cd scouting
 ```
 
-### 3. Install dependencies
+## 3. Install dependencies
 
 ```zsh
 pnpm install
 ```
 
-### 4. Add environment variables
+## 4. Add environment variables
 
-Create a file called `.env.local` in `app/src/`
+On Mac/Linux:
 
-```env
-VITE_SERVER_URL="http://localhost:8787"
+```zsh
+pnpm create-environment
 ```
 
-Create a file called `.dev.vars` in `api/`
+On Windows:
 
-```env
-ADMIN_ACCOUNT_USERNAME="admin"
-ADMIN_ACCOUNT_PASSWORD="adminpassword"
-
-FIRST_API_TOKEN=<Direct message @liujip0 on Discord>
-TBA_API_TOKEN=<Direct message @liujip0 on Discord>
-
-JWT_PRIVATE_KEY="xc03o1xblf4rga87xss3ebztlc8f5r9l"
+```zsh
+pnpm create-environment-windows
 ```
 
-### 5. Initialize local database
+- Get a TheBlueAlliance API key from your [account page](https://www.thebluealliance.com/account) and add it to [`api/.dev.vars`](./api/.dev.vars) as `TBA_API_TOKEN`
+- Get an FRC Events API key by registering [here](https://frc-events.firstinspires.org/services/api). Add this key to [`api/.dev.vars`](./api/.dev.vars) as `FIRST_API_TOKEN` in the form of `username:token`.
+- Run `openssl rand -base64 32` to generate a new JWT secret and add it to [`api/.dev.vars`](./api/.dev.vars) as `JWT_PRIVATE_KEY`.
+
+## 5. Initialize local database
 
 Change to `api/` folder
 
@@ -56,10 +54,10 @@ Change to `api/` folder
 cd api
 ```
 
-Initialize local database
+Apply migrations
 
 ```zsh
-npx wrangler d1 execute isa2025-db --file=./migrations/0000_initialize.sql
+npx wrangler d1 migrations apply isa2026-db
 ```
 
 Return to original folder
@@ -68,7 +66,7 @@ Return to original folder
 cd ..
 ```
 
-### 6. Run local development server
+## 6. Run local development server
 
 ```zsh
 pnpm dev

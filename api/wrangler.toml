@@ -1,16 +1,16 @@
-name = "isa2025-api"
+name = "isa2026-api"
 compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2024-10-22"
+compatibility_date = "2025-07-24"
 main = "src/index.ts"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "isa2025-db"
-database_id = "beb7b5e5-4196-4a8f-807d-5a5cb56be206"
+database_name = "isa2026-db"
+database_id = "c78a80ef-5c92-4916-a204-ab22c967677b"
 
 [[kv_namespaces]]
 binding = "KV"
-id = "5bfff9b720da468ebce0b001dbbd0b61"
+id = "c187ffbf9da446e9bd939b960c4fc68b"
 
 [observability]
 enabled = true

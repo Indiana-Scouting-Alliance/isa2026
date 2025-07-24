@@ -97,7 +97,7 @@ export default function Login({ setToken }: LoginProps) {
           />
         </TextFieldDoubleLabel>
         <Button
-          ref={submitRef}
+          htmlRef={submitRef}
           onClick={() => {
             login.mutate({ username, password });
           }}

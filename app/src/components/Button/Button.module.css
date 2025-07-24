@@ -1,4 +1,6 @@
 .button {
+  --button-border-width: 1px;
+
   font-size: 1.25rem;
   font-family: var(--text-font-family);
   text-transform: uppercase;

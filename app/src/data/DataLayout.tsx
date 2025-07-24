@@ -1,20 +1,14 @@
 import { User } from "@isa2026/api/src/utils/dbtypes.ts";
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import Button from "../components/Button/Button.tsx";
 import { GridBorder } from "../components/GridBorder/GridBorder.tsx";
 import styles from "./DataLayout.module.css";
-import DataMenu from "./DataMenu.tsx";
-import Export from "./export/Export.tsx";
-import Users from "./users/Users.tsx";
-import Util from "./Util.tsx";
-import View from "./View.tsx";
+
+const DataMenu = React.lazy(() => import("./DataMenu.tsx"));
+const Export = React.lazy(() => import("./export/Export.tsx"));
+const Users = React.lazy(() => import("./users/Users.tsx"));
+const Util = React.lazy(() => import("./Util.tsx"));
 
 type DataLayoutProps = {
   setToken: (
@@ -25,84 +19,49 @@ type DataLayoutProps = {
   permLevel: User["permLevel"];
 };
 export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
-  const topBarHeightRem = 4;
-
   const navigate = useNavigate();
   const logoutFunction = () => {
     setToken("", 0, "none");
   };
 
   return (
-    <Box
-      sx={{
-        width: 1,
-        height: 1,
-      }}>
-      <AppBar
-        color="primary"
-        sx={{
-          height: `${topBarHeightRem}rem`,
-        }}>
-        <Toolbar
-          sx={{
-            alignItems: "center",
-            flex: 1,
+    <div className={styles.container}>
+      <div className={styles.topBar}>
+        <img
+          alt="ISA Logo"
+          src="/logo.svg"
+          className={styles.logo}
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <h2
+          className={styles.title}
+          onClick={() => {
+            navigate("/");
           }}>
-          <Avatar
-            alt="ISA Logo"
-            src="/logo.svg"
-            sx={{
-              borderColor: "primary.main",
-              borderStyle: "solid",
-              borderWidth: "2px",
-              mr: 2,
-            }}
-            onClick={() => {
+          Indiana Scouting Alliance
+        </h2>
+        <div className={styles.spacer}></div>
+        <Button
+          onClick={() => {
+            if (window.location.pathname === "/data") {
               navigate("/");
-            }}
-          />
-          <Typography
-            variant="h2"
-            sx={{
-              flex: 1,
-              fontSize: {
-                xs: "1rem",
-                sm: "1.2rem",
-                md: "1.4rem",
-                lg: "1.6rem",
-                xl: "1.6rem",
-              },
-            }}
-            onClick={() => {
-              navigate("/");
-            }}>
-            Indiana Scouting Alliance
-          </Typography>
-          <Button
-            onClick={() => {
-              if (window.location.pathname === "/data") {
-                navigate("/");
-              } else {
-                navigate("/data");
-              }
-            }}
-            variant="outlined"
-            color="secondary"
-            sx={{
-              mr: 2,
-            }}>
-            Return
-          </Button>
-          <Button
-            onClick={() => {
-              logoutFunction();
-            }}
-            variant="outlined"
-            color="secondary">
-            Log Out
-          </Button>
-        </Toolbar>
-      </AppBar>
+            } else {
+              navigate("/data");
+            }
+          }}
+          className={styles.topBarButton}>
+          Return
+        </Button>
+        <Button
+          onClick={() => {
+            logoutFunction();
+          }}
+          className={styles.topBarButton}>
+          Log Out
+        </Button>
+      </div>
       <div className={styles.contentContainer}>
         <GridBorder>
           <Routes>
@@ -110,12 +69,6 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
               <Route
                 path="/"
                 element={<DataMenu permLevel={permLevel} />}
-              />
-            )}
-            {["demo", "team", "datamanage", "admin"].includes(permLevel) && (
-              <Route
-                path="view"
-                element={<View logoutFunction={logoutFunction} />}
               />
             )}
             {["team", "datamanage", "admin"].includes(permLevel) && (
@@ -145,6 +98,6 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
           </Routes>
         </GridBorder>
       </div>
-    </Box>
+    </div>
   );
 }

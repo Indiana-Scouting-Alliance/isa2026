@@ -26,9 +26,6 @@ export default function Input({
   error,
   helperText,
 }: InputProps) {
-  console.log(
-    styles.input + " " + (error ? styles.errorOutline : styles.normalOutline)
-  );
   return (
     <div>
       {label && <label htmlFor={id}>{label}</label>}

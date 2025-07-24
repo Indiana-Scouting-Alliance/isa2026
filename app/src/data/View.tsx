@@ -1,7 +1,7 @@
 import {
   TeamMatchEntryColumn,
   TeamMatchEntryColumns,
-} from "@isa2025/api/src/utils/dbtypes.ts";
+} from "@isa2026/api/src/utils/dbtypes.ts";
 import { FilterAltOff, Refresh } from "@mui/icons-material";
 import {
   IconButton,

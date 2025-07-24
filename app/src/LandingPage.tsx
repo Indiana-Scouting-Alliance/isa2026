@@ -18,7 +18,7 @@ export default function LandingPage() {
           color: "primary.contrastText",
           mb: 4,
         }}>
-        Indiana Scouting Alliance 2025
+        Indiana Scouting Alliance 2026
       </Typography>
       <Stack gap={2}>
         <LinkButton

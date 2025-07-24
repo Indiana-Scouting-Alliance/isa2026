@@ -3,7 +3,7 @@ import {
   HumanPlayerEntry,
   Match,
   MatchLevel,
-} from "@isa2025/api/src/utils/dbtypes.ts";
+} from "@isa2026/api/src/utils/dbtypes.ts";
 import { Add, Remove } from "@mui/icons-material";
 import {
   Divider,

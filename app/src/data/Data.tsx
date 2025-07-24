@@ -1,4 +1,4 @@
-import { User } from "@isa2025/api/src/utils/dbtypes.ts";
+import { User } from "@isa2026/api/src/utils/dbtypes.ts";
 import { useEffect, useState } from "react";
 import { initDB } from "../utils/idb.ts";
 import DataLayout from "./DataLayout.tsx";

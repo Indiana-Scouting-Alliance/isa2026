@@ -6,10 +6,16 @@
 .appHeading {
   text-align: center;
   color: var(--color-primary-contrastText);
-  margin-bottom: 32px;
+  margin-bottom: 0;
   font-family: var(--text-font-family);
   font-size: var(--text-h1-size);
   font-weight: 300;
+}
+
+.appSubheading {
+  font-family: var(--text-font-family);
+  color: var(--color-primary-contrastText);
+  margin-bottom: 1em;
 }
 
 .buttonsFlex {

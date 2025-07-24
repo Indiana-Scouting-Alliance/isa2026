@@ -4,7 +4,8 @@ import styles from "./LandingPage.module.css";
 export default function LandingPage() {
   return (
     <div className={styles.overallFlex}>
-      <h1 className={styles.appHeading}>Indiana Scouting Alliance 2026</h1>
+      <h1 className={styles.appHeading}>Indiana Scouting Alliance</h1>
+      <h2 className={styles.appSubheading}>2026 REBUILT</h2>
       <div className={styles.buttonsFlex}>
         <LinkButton
           to="/scout"

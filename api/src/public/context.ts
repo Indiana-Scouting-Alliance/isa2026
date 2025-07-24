@@ -30,6 +30,6 @@ export const createPublicContext = async (
     ctx: ctx,
   });
   response.headers.append("Access-Control-Allow-Origin", "*");
-  response.headers.append("Access-Control-Allow-Headers", "*");
+  response.headers.append("Access-Control-Allow-Headers", "*, Authorization");
   return response;
 };

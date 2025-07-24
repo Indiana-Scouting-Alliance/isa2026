@@ -30,9 +30,21 @@ pnpm install
 
 ### 4. Add environment variables
 
-Copy [`app/src/.env.local.example`](./app/src/.env.local.example) to [`app/src/.env.local`](./app/src/.env.local).
+On Mac/Linux:
 
-Copy [api/migrations/.dev.vars.example`](./api/migrations/.dev.vars.example) to [`api/migrations/.dev.vars`](./api/migrations/.dev.vars).
+```zsh
+pnpm create-environment
+```
+
+On Windows:
+
+```zsh
+pnpm create-environment-windows
+```
+
+- Get a TheBlueAlliance API key from your [account page](https://www.thebluealliance.com/account) and add it to [`api/.dev.vars`](./api/.dev.vars) as `TBA_API_TOKEN`
+- Get an FRC Events API key by registering [here](https://frc-events.firstinspires.org/services/api). Add this key to [`api/.dev.vars`](./api/.dev.vars) as `FIRST_API_TOKEN` in the form of `username:token`.
+- Run `openssl rand -base64 32` to generate a new JWT secret and add it to [`api/.dev.vars`](./api/.dev.vars) as `JWT_PRIVATE_KEY`.
 
 ### 5. Initialize local database
 

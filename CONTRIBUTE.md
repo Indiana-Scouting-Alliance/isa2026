@@ -30,23 +30,9 @@ pnpm install
 
 ### 4. Add environment variables
 
-Create a file called `.env.local` in `app/src/`
+Copy [`app/src/.env.local.example`](./app/src/.env.local.example) to [`app/src/.env.local`](./app/src/.env.local).
 
-```env
-VITE_SERVER_URL="http://localhost:8787"
-```
-
-Create a file called `.dev.vars` in `api/`
-
-```env
-ADMIN_ACCOUNT_USERNAME="admin"
-ADMIN_ACCOUNT_PASSWORD="adminpassword"
-
-FIRST_API_TOKEN=<Direct message @liujip0 on Discord>
-TBA_API_TOKEN=<Direct message @liujip0 on Discord>
-
-JWT_PRIVATE_KEY="xc03o1xblf4rga87xss3ebztlc8f5r9l"
-```
+Copy [api/migrations/.dev.vars.example`](./api/migrations/.dev.vars.example) to [`api/migrations/.dev.vars`](./api/migrations/.dev.vars).
 
 ### 5. Initialize local database
 
@@ -56,10 +42,10 @@ Change to `api/` folder
 cd api
 ```
 
-Initialize local database
+Apply migrations
 
 ```zsh
-npx wrangler d1 execute isa2025-db --file=./migrations/0000_initialize.sql
+npx wrangler d1 migrations apply isa2026-db
 ```
 
 Return to original folder

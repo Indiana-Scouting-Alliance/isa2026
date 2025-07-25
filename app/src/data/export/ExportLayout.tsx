@@ -15,21 +15,18 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
   lighten,
-  Stack,
   styled,
-  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import Button from "../../components/Button/Button.tsx";
+import { default as Checkbox2 } from "../../components/Checkbox/Checkbox.tsx";
 import Divider from "../../components/Divider/Divider.tsx";
+import IconButton from "../../components/IconButton/IconButton.tsx";
 import Input from "../../components/Input/Input.tsx";
 import styles from "./ExportLayout.module.css";
 
@@ -117,52 +114,26 @@ export default function ExportLayout({
       <div className={styles.half}>
         {robotColumnsState.length > 0 && (
           <>
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              sx={{
-                textWrap: "wrap",
-              }}>
+            <p className={styles.columnsHeader}>
               Select columns to include in robot data
-            </Typography>
-            <Stack
-              sx={{
-                flex: 1,
-                height: 1,
-                overflowY: "scroll",
-                mb: 2,
-              }}>
+            </p>
+            <div className={styles.columnsContainer}>
               {TeamMatchEntryColumns.map((column, columnIndex) => {
                 return (
-                  <FormControlLabel
+                  <Checkbox2
+                    value={robotColumnsState[columnIndex]}
                     key={column}
-                    checked={robotColumnsState[columnIndex]}
-                    onChange={(_event, checked) => {
+                    id={column + "-checkbox"}
+                    onChange={(checked) => {
                       setRobotColumnsState(
                         robotColumnsState.map((value, valueIndex) =>
                           valueIndex === columnIndex ? checked : value
                         )
                       );
                     }}
-                    control={<Checkbox />}
                     label={
-                      <Stack
-                        direction="row"
-                        sx={{
-                          alignItems: "center",
-                        }}
-                        gap={1}>
-                        <Typography>
-                          {column.startsWith("auto") ?
-                            column.replace("auto", "auto\u200b")
-                          : column.startsWith("teleop") ?
-                            column.replace("teleop", "teleop\u200b")
-                          : column.startsWith("endgame") ?
-                            column.replace("endgame", "endgame\u200b")
-                          : column.startsWith("postmatch") ?
-                            column.replace("postmatch", "postmatch\u200b")
-                          : column}
-                        </Typography>
+                      <div className={styles.columnLabelContainer}>
+                        <Typography>{column}</Typography>
                         {
                           {
                             boolean: <DataTypeIcon dataType="boolean" />,
@@ -193,50 +164,35 @@ export default function ExportLayout({
                             undefined: <DataTypeIcon dataType="error" />,
                           }[typeof TeamMatchEntryInit[column]]
                         }
-                      </Stack>
+                      </div>
                     }
                   />
                 );
               })}
-            </Stack>
+            </div>
           </>
         )}
         {humanColumnsState.length > 0 && (
           <>
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              sx={{
-                textWrap: "wrap",
-              }}>
+            <p className={styles.columnsHeader}>
               Select columns to include in human data
-            </Typography>
-            <Stack
-              sx={{
-                flex: 1,
-                height: 1,
-                overflowY: "scroll",
-              }}>
+            </p>
+            <div className={styles.columnsContainer}>
               {HumanPlayerEntryColumns.map((column, columnIndex) => (
-                <FormControlLabel
+                <Checkbox2
                   key={column}
-                  checked={humanColumnsState[columnIndex]}
-                  onChange={(_event, checked) => {
+                  id={column + "-checkbox"}
+                  value={humanColumnsState[columnIndex]}
+                  onChange={(checked) => {
                     setHumanColumnsState(
                       humanColumnsState.map((value, valueIndex) =>
                         valueIndex === columnIndex ? checked : value
                       )
                     );
                   }}
-                  control={<Checkbox />}
                   label={
-                    <Stack
-                      direction="row"
-                      sx={{
-                        alignItems: "center",
-                      }}
-                      gap={1}>
-                      <Typography>{column}</Typography>
+                    <div className={styles.columnLabelContainer}>
+                      <p className={styles.columnLabel}>{column}</p>
                       {
                         {
                           boolean: <DataTypeIcon dataType="boolean" />,
@@ -260,16 +216,16 @@ export default function ExportLayout({
                           undefined: <DataTypeIcon dataType="error" />,
                         }[typeof HumanPlayerEntryInit[column]]
                       }
-                    </Stack>
+                    </div>
                   }
                 />
               ))}
-            </Stack>
+            </div>
           </>
         )}
       </div>
       <Divider orientation="vertical" />
-      <div className="half">
+      <div className={styles.half}>
         <Input
           id="events-filter"
           value={events}
@@ -304,117 +260,88 @@ export default function ExportLayout({
           {/* <StyledToggleButton value="xlsx">XLSX</StyledToggleButton> */}
         </ToggleButtonGroup>
         <Divider orientation="horizontal" />
-        <TextField
+        <Input
+          id="public-api-token"
           value={publicApiToken ?? ""}
-          slotProps={{
-            input: {
-              endAdornment: (
-                <>
-                  <IconButton
-                    onClick={() => {
-                      setShowPublicApiToken(!showPublicApiToken);
-                    }}>
-                    {showPublicApiToken ?
-                      <VisibilityOff />
-                    : <Visibility />}
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      if (publicApiToken) {
-                        navigator.clipboard.writeText(publicApiToken);
-                      }
-                    }}>
-                    <ContentCopy />
-                  </IconButton>
-                </>
-              ),
-            },
-            inputLabel: {
-              shrink: true,
-            },
-          }}
+          endIcon={
+            <>
+              <IconButton
+                onClick={() => {
+                  setShowPublicApiToken(!showPublicApiToken);
+                }}>
+                {showPublicApiToken ?
+                  <VisibilityOff />
+                : <Visibility />}
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  if (publicApiToken) {
+                    navigator.clipboard.writeText(publicApiToken);
+                  }
+                }}>
+                <ContentCopy />
+              </IconButton>
+            </>
+          }
           type={showPublicApiToken ? "text" : "password"}
           disabled
           label="publicApiToken"
-          variant="outlined"
-          sx={(theme) => {
-            return {
-              "& .MuiInputBase-input.Mui-disabled": {
-                WebkitTextFillColor: theme.palette.text.primary,
-                color: theme.palette.text.primary,
-              },
-            };
-          }}
         />
         <Divider orientation="horizontal" />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={linkIncludesToken}
-              onChange={(event) => {
-                setLinkIncludesToken(event.currentTarget.checked);
-              }}
-            />
-          }
+        <Checkbox2
+          id="include-token-in-link"
           label="Include token in link"
+          value={linkIncludesToken}
+          onChange={(value) => {
+            setLinkIncludesToken(value);
+          }}
         />
-        <TextField
+        <Input
           value={getApiLink()}
-          slotProps={{
-            input: {
-              endAdornment: (
+          endIcon={
+            <IconButton
+              onClick={() => {
+                if (publicApiToken) {
+                  navigator.clipboard.writeText(getApiLink());
+                }
+              }}>
+              <ContentCopy />
+            </IconButton>
+          }
+          label="API Link"
+          id="api-link"
+        />
+        {!linkIncludesToken && (
+          <Input
+            value={"Bearer " + publicApiToken}
+            endIcon={
+              <>
+                <IconButton
+                  onClick={() => {
+                    setShowAuthorization(!showAuthorization);
+                  }}>
+                  {showAuthorization ?
+                    <VisibilityOff />
+                  : <Visibility />}
+                </IconButton>
                 <IconButton
                   onClick={() => {
                     if (publicApiToken) {
-                      navigator.clipboard.writeText(getApiLink());
+                      navigator.clipboard.writeText("Bearer " + publicApiToken);
                     }
                   }}>
                   <ContentCopy />
                 </IconButton>
-              ),
-            },
-          }}
-          label="API Link"
-          sx={{
-            mb: 1,
-          }}
-        />
-        {!linkIncludesToken && (
-          <TextField
-            value={"Bearer " + publicApiToken}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <>
-                    <IconButton
-                      onClick={() => {
-                        setShowAuthorization(!showAuthorization);
-                      }}>
-                      {showAuthorization ?
-                        <VisibilityOff />
-                      : <Visibility />}
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        if (publicApiToken) {
-                          navigator.clipboard.writeText(
-                            "Bearer " + publicApiToken
-                          );
-                        }
-                      }}>
-                      <ContentCopy />
-                    </IconButton>
-                  </>
-                ),
-              },
-            }}
+              </>
+            }
             type={showAuthorization ? "text" : "password"}
             label='"Authorization" Header'
+            id="authorization-header"
           />
         )}
         <Divider orientation="horizontal" />
         <Button
-          variant="outlined"
+          className={styles.downloadButton}
           onClick={async () => {
             const res = await (
               await fetch(getApiLink(), {
@@ -441,7 +368,7 @@ export default function ExportLayout({
           Download File
         </Button>
         <Button
-          variant="outlined"
+          className={styles.downloadButton}
           onClick={async () => {
             const res = await (
               await fetch(getApiLink(), {
@@ -472,6 +399,7 @@ export default function ExportLayout({
   );
 }
 
+// TODO: move to /components
 type DataTypeIconProps = {
   dataType: string;
 };

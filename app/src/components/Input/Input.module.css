@@ -29,9 +29,11 @@
   font-family: var(--text-font-family);
   font-size: var(--text-body-size);
 }
-
 .input:focus {
   outline: none;
+}
+.inputDisabled {
+  color: color-mix(in srgb, var(--color-background-contrastText) 50%, #888 50%);
 }
 
 .helperText {

@@ -5,6 +5,7 @@
   padding: 6px;
 
   border: none;
+  color: var(--color-primary);
   background-color: var(--color-background);
   cursor: pointer;
   clip-path: circle(50%);

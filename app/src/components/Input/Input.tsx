@@ -41,7 +41,9 @@ export default function Input({
         className={styles.outline + " " + (error ? styles.errorOutline : "")}>
         {startIcon}
         <input
-          className={styles.input}
+          className={
+            styles.input + " " + (disabled ? styles.inputDisabled : "")
+          }
           value={value}
           onChange={onChange}
           type={type}

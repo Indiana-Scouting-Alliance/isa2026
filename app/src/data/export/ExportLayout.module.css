@@ -11,6 +11,39 @@
   flex: 1;
   height: 100%;
   padding: 8px;
+  gap: 16px;
 
   overflow-y: scroll;
+}
+
+.columnsHeader {
+  font-family: var(--text-font-family);
+  font-weight: bold;
+  text-wrap: wrap;
+  font-size: var(--text-body-size);
+}
+
+.columnsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.columnLabelContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.columnLabel {
+  font-family: var(--text-font-family);
+  font-size: 1em;
+}
+
+.downloadButton {
+  color: var(--color-primary);
+  border: var(--button-border-width) solid var(--color-primary);
+  background-color: var(--color-background);
 }

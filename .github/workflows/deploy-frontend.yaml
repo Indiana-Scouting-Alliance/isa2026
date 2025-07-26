@@ -40,6 +40,7 @@ jobs:
         run: |
           sed -i -e 's|base: "/",|base: "/isa2026/",|' app/vite.config.ts
           sed -i -e 's|basename="/"|basename: "/isa2026"|' app/src/App.tsx
+          cat app/src/App.tsx
       - name: Build
         run: cd app && pnpm run build
       - name: Setup Pages

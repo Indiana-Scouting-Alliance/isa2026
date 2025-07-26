@@ -293,13 +293,13 @@ export default function Prematch({
             }}>
             <img
               src={
-                match.alliance === "Red" ?
+                import.meta.env.BASE_URL +
+                (match.alliance === "Red" ?
                   deviceSetup.fieldOrientation === "barge" ?
-                    "/RedBarge.png"
-                  : "/RedProcessor.png"
-                : deviceSetup.fieldOrientation === "barge" ?
-                  "/BlueBarge.png"
-                : "/BlueProcessor.png"
+                    "RedBarge.png"
+                  : "RedProcessor.png"
+                : deviceSetup.fieldOrientation === "barge" ? "BlueBarge.png"
+                : "BlueProcessor.png")
               }
               style={{
                 width: "100%",

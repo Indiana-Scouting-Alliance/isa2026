@@ -65,7 +65,7 @@ export default function Login({ setToken }: LoginProps) {
         }}>
         <Avatar
           alt="ISA Logo"
-          src="/logo.svg"
+          src={import.meta.env.BASE_URL + "logo.svg"}
           sx={{
             width: "min(25vw, 25vh)",
             height: "min(25vw, 25vh)",

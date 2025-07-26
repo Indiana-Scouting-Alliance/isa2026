@@ -53,7 +53,7 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
           }}>
           <Avatar
             alt="ISA Logo"
-            src="/logo.svg"
+            src={import.meta.env.BASE_URL + "logo.svg"}
             sx={{
               borderColor: "primary.main",
               borderStyle: "solid",

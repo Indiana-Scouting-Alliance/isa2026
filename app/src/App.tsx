@@ -75,7 +75,7 @@ export default function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route

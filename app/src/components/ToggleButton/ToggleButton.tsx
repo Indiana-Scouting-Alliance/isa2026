@@ -1,5 +1,5 @@
 import Button from "../Button/Button.tsx";
-import style from "./ToggleButton.module.css";
+import styles from "./ToggleButton.module.css";
 
 type ToggleButtonProps = {
   value: boolean;
@@ -13,7 +13,7 @@ export default function ToggleButton({
 }: ToggleButtonProps) {
   return (
     <Button
-      className={value ? style.buttonTrue : style.buttonFalse}
+      className={value ? styles.buttonTrue : styles.buttonFalse}
       onClick={() => {
         onChange(!value);
       }}>

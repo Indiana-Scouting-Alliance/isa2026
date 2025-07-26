@@ -44,7 +44,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                 position: "relative",
               }}>
               <img
-                src={"/Branch.png"}
+                src={import.meta.env.BASE_URL + "Branch.png"}
                 style={{
                   height: "100%",
                   width: "100%",
@@ -216,7 +216,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
               }
             }}>
             <img
-              src={"/Net.png"}
+              src={import.meta.env.BASE_URL + "Net.png"}
               style={{
                 height: "100%",
                 width: "100%",
@@ -258,7 +258,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                 }
               }}>
               <img
-                src={"/Processor.png"}
+                src={import.meta.env.BASE_URL + "Processor.png"}
                 style={{
                   height: "100%",
                   width: "100%",

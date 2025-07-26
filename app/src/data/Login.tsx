@@ -48,7 +48,7 @@ export default function Login({ setToken }: LoginProps) {
       <div className={styles.container}>
         <img
           alt="ISA Logo"
-          src="/logo.svg"
+          src={import.meta.env.BASE_URL + "logo.svg"}
           className={styles.logo}
         />
         <h3 className={styles.title}>Login</h3>

@@ -79,7 +79,7 @@ export default function HelpDialog({ open, onClose }: HelpDialogProps) {
                 marginRight: "7rem",
               }}>
               <img
-                src={import.meta.env.BASE_URL + "cageshelp.png"}
+                src={import.meta.env.BASE_URL + "assets/cageshelp.png"}
                 alt="Cages Example"
                 style={{
                   width: "100%",
@@ -92,7 +92,7 @@ export default function HelpDialog({ open, onClose }: HelpDialogProps) {
                 width: "30%",
               }}>
               <img
-                src={import.meta.env.BASE_URL + "linecrosshelp.png"}
+                src={import.meta.env.BASE_URL + "assets/linecrosshelp.png"}
                 alt="Line Cross Example"
                 style={{
                   width: "100%",

@@ -122,7 +122,7 @@ export default function Auto({
             position: "relative",
           }}>
           <img
-            src={import.meta.env.BASE_URL + "Reef.png"}
+            src={import.meta.env.BASE_URL + "assets/Reef.png"}
             style={{
               height: "100%",
               width: "100%",
@@ -740,7 +740,7 @@ export default function Auto({
                 }
               }}>
               <img
-                src={import.meta.env.BASE_URL + "Processor.png"}
+                src={import.meta.env.BASE_URL + "assets/Processor.png"}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -786,7 +786,7 @@ export default function Auto({
                 }
               }}>
               <img
-                src={import.meta.env.BASE_URL + "Net.png"}
+                src={import.meta.env.BASE_URL + "assets/Net.png"}
                 style={{
                   width: "100%",
                   height: "100%",

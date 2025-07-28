@@ -294,6 +294,7 @@ export default function Prematch({
             <img
               src={
                 import.meta.env.BASE_URL +
+                "assets/" +
                 (match.alliance === "Red" ?
                   deviceSetup.fieldOrientation === "barge" ?
                     "RedBarge.png"

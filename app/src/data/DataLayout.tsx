@@ -29,7 +29,7 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
       <div className={styles.topBar}>
         <img
           alt="ISA Logo"
-          src={import.meta.env.BASE_URL + "logo.svg"}
+          src={import.meta.env.BASE_URL + "icons/logo.svg"}
           className={styles.logo}
           onClick={() => {
             navigate("/");

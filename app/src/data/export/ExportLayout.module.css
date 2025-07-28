@@ -47,3 +47,12 @@
   border: var(--button-border-width) solid var(--color-primary);
   background-color: var(--color-background);
 }
+
+.toggleButton {
+  flex-grow: 1;
+}
+
+.tooltipLabel {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}

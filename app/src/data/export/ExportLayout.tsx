@@ -14,33 +14,16 @@ import {
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
-import {
-  lighten,
-  styled,
-  ToggleButton,
-  ToggleButtonGroup,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import Button from "../../components/Button/Button.tsx";
-import { default as Checkbox2 } from "../../components/Checkbox/Checkbox.tsx";
+import Checkbox from "../../components/Checkbox/Checkbox.tsx";
 import Divider from "../../components/Divider/Divider.tsx";
 import IconButton from "../../components/IconButton/IconButton.tsx";
 import Input from "../../components/Input/Input.tsx";
+import ToggleButton from "../../components/ToggleButton/ToggleButton.tsx";
+import ToggleButtonGroup from "../../components/ToggleButton/ToggleButtonGroup.tsx";
 import styles from "./ExportLayout.module.css";
-
-const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  borderWidth: 3,
-  "&.Mui-selected": {
-    color: theme.palette.primary.main,
-    backgroundColor: lighten(theme.palette.primary.light, 0.5),
-    "&:hover": {
-      backgroundColor: lighten(theme.palette.primary.light, 0.5),
-    },
-  },
-}));
 
 type ExportLayoutProps = {
   showPublicApiToken: boolean;
@@ -120,7 +103,7 @@ export default function ExportLayout({
             <div className={styles.columnsContainer}>
               {TeamMatchEntryColumns.map((column, columnIndex) => {
                 return (
-                  <Checkbox2
+                  <Checkbox
                     value={robotColumnsState[columnIndex]}
                     key={column}
                     id={column + "-checkbox"}
@@ -133,7 +116,7 @@ export default function ExportLayout({
                     }}
                     label={
                       <div className={styles.columnLabelContainer}>
-                        <Typography>{column}</Typography>
+                        <p className={styles.columnLabel}>{column}</p>
                         {
                           {
                             boolean: <DataTypeIcon dataType="boolean" />,
@@ -179,7 +162,7 @@ export default function ExportLayout({
             </p>
             <div className={styles.columnsContainer}>
               {HumanPlayerEntryColumns.map((column, columnIndex) => (
-                <Checkbox2
+                <Checkbox
                   key={column}
                   id={column + "-checkbox"}
                   value={humanColumnsState[columnIndex]}
@@ -245,19 +228,22 @@ export default function ExportLayout({
         <Divider orientation="horizontal" />
         <ToggleButtonGroup
           value={fileType}
-          exclusive
-          onChange={(_event, value) => {
+          onChange={(value) => {
             if (value) {
-              setFileType(value);
+              setFileType(value as "json" | "csv" | "xlsx");
             }
-          }}
-          color="primary"
-          sx={{
-            width: 1,
           }}>
-          <StyledToggleButton value="json">JSON</StyledToggleButton>
-          <StyledToggleButton value="csv">CSV</StyledToggleButton>
-          {/* <StyledToggleButton value="xlsx">XLSX</StyledToggleButton> */}
+          <ToggleButton
+            value="json"
+            className={styles.toggleButton}>
+            JSON
+          </ToggleButton>
+          <ToggleButton
+            value="csv"
+            className={styles.toggleButton}>
+            CSV
+          </ToggleButton>
+          {/* <ToggleButton2 value="xlsx">XLSX</ToggleButton2> */}
         </ToggleButtonGroup>
         <Divider orientation="horizontal" />
         <Input
@@ -288,7 +274,7 @@ export default function ExportLayout({
           label="publicApiToken"
         />
         <Divider orientation="horizontal" />
-        <Checkbox2
+        <Checkbox
           id="include-token-in-link"
           label="Include token in link"
           value={linkIncludesToken}
@@ -408,7 +394,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "string": {
       return (
         <Tooltip
-          title={<Typography>string</Typography>}
+          title={<p className={styles.tooltipLabel}>string</p>}
           arrow>
           <FormatQuote />
         </Tooltip>
@@ -417,7 +403,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "integer": {
       return (
         <Tooltip
-          title={<Typography>integer</Typography>}
+          title={<p className={styles.tooltipLabel}>integer</p>}
           arrow>
           <Numbers />
         </Tooltip>
@@ -426,7 +412,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "boolean": {
       return (
         <Tooltip
-          title={<Typography>boolean (0 | 1)</Typography>}
+          title={<p className={styles.tooltipLabel}>boolean (0 | 1)</p>}
           arrow>
           <Contrast />
         </Tooltip>
@@ -435,7 +421,9 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "error": {
       return (
         <Tooltip
-          title={<Typography>invalid type (contact dev)</Typography>}
+          title={
+            <p className={styles.tooltipLabel}>invalid type (contact dev)</p>
+          }
           arrow>
           <Error />
         </Tooltip>
@@ -445,7 +433,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "4": {
       return (
         <Tooltip
-          title={<Typography>{dataType}</Typography>}
+          title={<p className={styles.tooltipLabel}>{dataType}</p>}
           arrow>
           <Numbers />
         </Tooltip>
@@ -454,7 +442,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     default: {
       return (
         <Tooltip
-          title={<Typography>{dataType}</Typography>}
+          title={<p className={styles.tooltipLabel}>{dataType}</p>}
           arrow>
           <FormatQuote />
         </Tooltip>

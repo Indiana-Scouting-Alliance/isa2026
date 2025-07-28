@@ -16,6 +16,8 @@
   --grid-border-margin-width: 20px;
   --grid-border-border-width: 5px;
 
+  --button-border-width: 1px;
+
   --hover-dim: brightness(0.8);
 }
 

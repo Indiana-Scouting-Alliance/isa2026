@@ -1,6 +1,4 @@
 .button {
-  --button-border-width: 1px;
-
   min-width: 64px;
   padding: 6px 16px;
   border: none;

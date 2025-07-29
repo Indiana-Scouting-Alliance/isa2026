@@ -1,7 +1,7 @@
 import styles from "./Input.module.css";
 
 type InputProps = {
-  value: string;
+  value: string | number;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   type?: "text" | "password" | "email" | "number" | "search";
   id: string;

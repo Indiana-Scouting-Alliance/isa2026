@@ -1,19 +1,18 @@
 import { MAX_TEAM_NUMBER } from "@isa2026/api/src/utils/constants.ts";
 import { User, UserPermLevel } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  Dialog,
+import { useState } from "react";
+import Button from "../../components/Button/Button.tsx";
+import IconButton from "../../components/Button/IconButton/IconButton.tsx";
+import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { useState } from "react";
+} from "../../components/Dialog/Dialog.tsx";
+import Input from "../../components/Input/Input.tsx";
+import Select from "../../components/Select/Select.tsx";
 import { trpc } from "../../utils/trpc.ts";
+import styles from "./CreateUser.module.css";
 
 type CreateUserProps = {
   createUser: boolean;
@@ -49,12 +48,9 @@ export default function CreateUser({
       }}>
       <DialogTitle>Create New User</DialogTitle>
       <DialogContent>
-        <Stack
-          sx={{
-            pt: 2,
-          }}
-          gap={2}>
-          <TextField
+        <div className={styles.dialogContent}>
+          <Input
+            id="create-user-username"
             value={createUserUsername}
             onChange={(event) => {
               setCreateUserUsername(event.currentTarget.value);
@@ -63,7 +59,8 @@ export default function CreateUser({
             helperText={createUserUsernameError}
             error={createUserUsernameError !== ""}
           />
-          <TextField
+          <Input
+            id="create-user-password"
             value={createUserPassword}
             onChange={(event) => {
               setCreateUserPassword(event.currentTarget.value);
@@ -72,37 +69,36 @@ export default function CreateUser({
             helperText={createUserPasswordError}
             error={createUserPasswordError !== ""}
             type={createUserShowPassword ? "text" : "password"}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <IconButton
-                    onClick={() => {
-                      setCreateUserShowPassword(!createUserShowPassword);
-                    }}>
-                    {createUserShowPassword ?
-                      <VisibilityOff />
-                    : <Visibility />}
-                  </IconButton>
-                ),
-              },
-            }}
+            endIcon={
+              <IconButton
+                className={styles.showPasswordButton}
+                onClick={() => {
+                  setCreateUserShowPassword(!createUserShowPassword);
+                }}>
+                {createUserShowPassword ?
+                  <VisibilityOff />
+                : <Visibility />}
+              </IconButton>
+            }
           />
-          <TextField
+          <Select
+            id="create-user-permLevel"
             value={createUserPermLevel}
-            onChange={(event) => {
-              setCreateUserPermLevel(event.target.value as User["permLevel"]);
+            onChange={(value) => {
+              setCreateUserPermLevel(value as User["permLevel"]);
             }}
-            select
             label="Permission Level">
             {UserPermLevel.map((perm) => (
-              <MenuItem
+              <option
                 key={perm}
                 value={perm}>
                 {perm}
-              </MenuItem>
+              </option>
             ))}
-          </TextField>
-          <TextField
+          </Select>
+          <Input
+            id="create-user-teamNumber"
+            type="number"
             value={isNaN(createUserTeamNumber) ? "" : createUserTeamNumber}
             onChange={(event) => {
               setCreateUserTeamNumber(parseInt(event.currentTarget.value));
@@ -111,16 +107,18 @@ export default function CreateUser({
             helperText={createUserTeamNumberError}
             error={createUserTeamNumberError !== ""}
           />
-        </Stack>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button
+          className={styles.actionButton}
           onClick={() => {
             setCreateUser(false);
           }}>
           Cancel
         </Button>
         <Button
+          className={styles.actionButton}
           onClick={() => {
             let error = false;
 

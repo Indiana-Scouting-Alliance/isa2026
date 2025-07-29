@@ -5,20 +5,12 @@ import {
   UserPermLevel,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Delete, Edit, FilterAltOff, Refresh } from "@mui/icons-material";
-import {
-  Stack,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
 import { useState } from "react";
 import Button from "../../components/Button/Button.tsx";
 import IconButton from "../../components/IconButton/IconButton.tsx";
 import Input from "../../components/Input/Input.tsx";
 import Select from "../../components/Select/Select.tsx";
-import { BorderedTable, Td, Th } from "../../components/Table.tsx";
+import { Table, TableHead, Td, Th } from "../../components/Table/Table.tsx";
 import { trpc } from "../../utils/trpc.ts";
 import CreateUser from "./CreateUser.tsx";
 import EditUser from "./EditUser.tsx";
@@ -123,23 +115,27 @@ export default function Users({ logoutFunction }: UsersProps) {
           <FilterAltOff />
         </IconButton>
       </div>
-      <TableContainer
-        sx={{
-          width: 1,
-          height: 1,
-        }}>
-        <BorderedTable>
+      <div className={styles.tableContainer}>
+        <Table className={styles.table}>
           <TableHead>
-            <TableRow>
+            <tr>
               {UserColumns.map((column) =>
                 column !== "hashedPassword" ?
-                  <Th key={column}>{column}</Th>
+                  <Th key={column}>
+                    {
+                      {
+                        username: "Username",
+                        permLevel: "Permissions",
+                        teamNumber: "Team",
+                      }[column]
+                    }
+                  </Th>
                 : null
               )}
               <Th>Actions</Th>
-            </TableRow>
+            </tr>
           </TableHead>
-          <TableBody>
+          <tbody>
             {users.data?.map((user) => {
               if (searchUsername) {
                 if (!user.username.includes(searchUsername)) {
@@ -152,42 +148,36 @@ export default function Users({ logoutFunction }: UsersProps) {
                 }
               }
               return (
-                <TableRow key={user.username}>
+                <tr key={user.username}>
                   {UserColumns.map((column) =>
                     column !== "hashedPassword" ?
-                      <Td key={column}>
-                        <Typography>{user[column as UserColumn]}</Typography>
-                      </Td>
+                      <Td key={column}>{user[column as UserColumn]}</Td>
                     : null
                   )}
                   <Td>
-                    <Stack
-                      direction="row"
-                      sx={{
-                        width: 1,
-                        height: 1,
-                        justifyContent: "space-around",
-                      }}>
+                    <div className={styles.tableActions}>
                       <IconButton
                         onClick={() => {
                           openEditUser(user.username);
-                        }}>
-                        <Edit color="primary" />
+                        }}
+                        className={styles.editButton}>
+                        <Edit />
                       </IconButton>
                       <IconButton
                         onClick={() => {
                           //TODO
-                        }}>
-                        <Delete color="error" />
+                        }}
+                        className={styles.deleteButton}>
+                        <Delete />
                       </IconButton>
-                    </Stack>
+                    </div>
                   </Td>
-                </TableRow>
+                </tr>
               );
             })}
-          </TableBody>
-        </BorderedTable>
-      </TableContainer>
+          </tbody>
+        </Table>
+      </div>
       <EditUser
         editUserUsername={editUserUsername}
         setEditUserUsername={setEditUserUsername}

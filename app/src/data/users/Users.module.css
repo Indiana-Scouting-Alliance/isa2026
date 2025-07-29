@@ -35,3 +35,30 @@
 .paperInput {
   flex: 4;
 }
+
+.tableContainer {
+  flex: 1;
+  width: 100%;
+
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+}
+
+.tableActions {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.editButton {
+  color: var(--color-primary);
+}
+
+.deleteButton {
+  color: var(--color-error);
+}

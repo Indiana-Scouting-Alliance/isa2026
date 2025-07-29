@@ -1,5 +1,5 @@
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
-import IconButton from "../IconButton/IconButton.tsx";
+import IconButton from "../../Button/IconButton/IconButton.tsx";
 import styles from "./Checkbox.module.css";
 
 type CheckboxProps = {

@@ -1,4 +1,4 @@
-import { LinkButton } from "./components/LinkButton/LinkButton.tsx";
+import { LinkButton } from "./components/Button/LinkButton/LinkButton.tsx";
 import styles from "./LandingPage.module.css";
 
 export default function LandingPage() {

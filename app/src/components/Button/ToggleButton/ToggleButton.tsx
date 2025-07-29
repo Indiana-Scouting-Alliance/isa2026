@@ -1,5 +1,5 @@
-import Button from "../Button/Button.tsx";
-import styles from "../Button/ToggleButton/ToggleButton.module.css";
+import Button from "../Button.tsx";
+import styles from "./ToggleButton.module.css";
 
 type ToggleButtonProps = {
   value: boolean;

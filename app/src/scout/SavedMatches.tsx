@@ -47,7 +47,7 @@ import {
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ScoutPageContainer } from "../components/ScoutPageContainer/ScoutPageContainer.tsx";
+import { ScoutPageContainer } from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
 import {
   deleteEntry,
   getDBHumanPlayerEntries,

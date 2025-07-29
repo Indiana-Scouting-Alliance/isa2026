@@ -3,7 +3,7 @@ import { Close, Download, FileUpload, Send } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
 import { useRef, useState } from "react";
 import Button from "../components/Button/Button.tsx";
-import IconButton from "../components/IconButton/IconButton.tsx";
+import IconButton from "../components/Button/IconButton/IconButton.tsx";
 import Input from "../components/Input/Input.tsx";
 import { trpc } from "../utils/trpc.ts";
 import styles from "./Util.module.css";

@@ -5,7 +5,8 @@
 }
 
 .tooltipContainer {
-  /* position: relative; */
+  position: fixed;
+  transform: translateX(-50%);
 }
 
 .tooltip {

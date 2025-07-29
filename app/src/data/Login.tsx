@@ -3,10 +3,10 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
-import { GridBorder } from "../components/GridBorder/GridBorder.tsx";
-import IconButton from "../components/IconButton/IconButton.tsx";
+import IconButton from "../components/Button/IconButton/IconButton.tsx";
 import Input from "../components/Input/Input.tsx";
-import { TextFieldDoubleLabel } from "../components/TextFieldLabel/TextFieldLabel.tsx";
+import { TextFieldDoubleLabel } from "../components/Input/TextFieldLabel/TextFieldLabel.tsx";
+import { GridBorder } from "../components/PageContainer/GridBorder/GridBorder.tsx";
 import { trpc } from "../utils/trpc.ts";
 import styles from "./Login.module.css";
 

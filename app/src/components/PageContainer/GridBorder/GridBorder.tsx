@@ -1,4 +1,4 @@
-import BackdropComponent from "../BackdropComponent.tsx";
+import BackdropComponent from "../../BackdropComponent.tsx";
 import styles from "./GridBorder.module.css";
 
 type GridBorderProps = {

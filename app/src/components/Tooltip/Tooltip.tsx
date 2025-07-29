@@ -14,10 +14,8 @@ export default function Tooltip({ content, children }: TooltipProps) {
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     setTooltipStyle({
-      position: "fixed",
       top: rect.bottom,
       left: rect.left,
-      transform: "translateX(-50%)",
     });
     setVisible(true);
   };

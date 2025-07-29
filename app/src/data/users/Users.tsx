@@ -7,7 +7,7 @@ import {
 import { Delete, Edit, FilterAltOff, Refresh } from "@mui/icons-material";
 import { useState } from "react";
 import Button from "../../components/Button/Button.tsx";
-import IconButton from "../../components/IconButton/IconButton.tsx";
+import IconButton from "../../components/Button/IconButton/IconButton.tsx";
 import Input from "../../components/Input/Input.tsx";
 import Select from "../../components/Select/Select.tsx";
 import { Table, TableHead, Td, Th } from "../../components/Table/Table.tsx";
@@ -76,7 +76,7 @@ export default function Users({ logoutFunction }: UsersProps) {
           className={styles.paperInput}
         />
         <Select
-          id="search-permlevel"
+          id="search-permLevel"
           value={searchPermLevel}
           onChange={(value) => {
             setSearchPermLevel(value as User["permLevel"] | "");

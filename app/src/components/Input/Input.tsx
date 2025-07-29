@@ -13,6 +13,7 @@ type InputProps = {
   error?: boolean;
   helperText?: string;
   disabled?: boolean;
+  className?: string;
 };
 export default function Input({
   value,
@@ -27,9 +28,10 @@ export default function Input({
   error,
   helperText,
   disabled,
+  className,
 }: InputProps) {
   return (
-    <div>
+    <div className={styles.container + " " + (className || "")}>
       {label && (
         <label
           htmlFor={id}

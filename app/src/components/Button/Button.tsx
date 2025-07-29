@@ -17,7 +17,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={styles.button + " " + className}
+      className={styles.button + " " + (className || "")}
       style={style}
       ref={htmlRef}>
       {children}

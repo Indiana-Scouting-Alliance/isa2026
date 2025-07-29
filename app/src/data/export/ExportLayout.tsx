@@ -143,6 +143,8 @@ export default function ExportLayout({
                                 ].includes(column)
                               ) ?
                                 <DataTypeIcon dataType="boolean" />
+                              : column === "dataConfidence" ?
+                                <DataTypeIcon dataType='"low" | "neutral" | "high"' />
                               : <DataTypeIcon dataType="error" />,
                             undefined: <DataTypeIcon dataType="error" />,
                           }[typeof TeamMatchEntryInit[column]]

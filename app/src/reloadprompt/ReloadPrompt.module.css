@@ -1,0 +1,38 @@
+.container {
+  padding: 0;
+  margin: 0;
+  width: 0;
+  height: 0;
+}
+
+.toast {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 16px;
+  padding: 12px;
+
+  border: var(--button-border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+  z-index: 10;
+  text-align: left;
+  background-color: var(--color-paper-background);
+}
+
+.message {
+  margin-bottom: 8px;
+
+  font-family: var(--text-font-family);
+  font-size: var(--text-label-size);
+}
+
+button.toastButton {
+  margin-right: 5px;
+  padding: 3px 10px;
+
+  font-size: var(--text-label-size);
+  border-radius: var(--border-radius);
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-paper-background);
+}

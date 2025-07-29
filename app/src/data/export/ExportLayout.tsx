@@ -422,7 +422,9 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
       return (
         <Tooltip
           title={
-            <p className={styles.tooltipLabel}>invalid type (contact dev)</p>
+            <p className={styles.tooltipLabel}>
+              invalid type (contact dev): {dataType}
+            </p>
           }
           arrow>
           <Error />

@@ -27,8 +27,11 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  padding-right: 6px;
+  padding-bottom: 6px;
+
   overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .columnLabelContainer {
@@ -54,5 +57,9 @@
 
 .tooltipLabel {
   font-family: var(--text-font-family);
-  font-size: var(--text-body-size);
+  font-size: var(--text-label-size);
+  /* TODO: make variable */
+  color: white;
+  text-wrap: nowrap;
+  z-index: inherit;
 }

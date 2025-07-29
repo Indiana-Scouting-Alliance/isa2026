@@ -14,7 +14,6 @@ import {
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import Button from "../../components/Button/Button.tsx";
 import Checkbox from "../../components/Checkbox/Checkbox.tsx";
@@ -23,6 +22,7 @@ import IconButton from "../../components/IconButton/IconButton.tsx";
 import Input from "../../components/Input/Input.tsx";
 import ToggleButton from "../../components/ToggleButton/ToggleButton.tsx";
 import ToggleButtonGroup from "../../components/ToggleButton/ToggleButtonGroup.tsx";
+import Tooltip from "../../components/Tooltip/Tooltip.tsx";
 import styles from "./ExportLayout.module.css";
 
 type ExportLayoutProps = {
@@ -395,18 +395,14 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
   switch (dataType) {
     case "string": {
       return (
-        <Tooltip
-          title={<p className={styles.tooltipLabel}>string</p>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>string</p>}>
           <FormatQuote />
         </Tooltip>
       );
     }
     case "integer": {
       return (
-        <Tooltip
-          title={<p className={styles.tooltipLabel}>integer</p>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>integer</p>}>
           <Numbers />
         </Tooltip>
       );
@@ -414,8 +410,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "boolean": {
       return (
         <Tooltip
-          title={<p className={styles.tooltipLabel}>boolean (0 | 1)</p>}
-          arrow>
+          content={<p className={styles.tooltipLabel}>boolean (0 | 1)</p>}>
           <Contrast />
         </Tooltip>
       );
@@ -423,12 +418,11 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "error": {
       return (
         <Tooltip
-          title={
+          content={
             <p className={styles.tooltipLabel}>
               invalid type (contact dev): {dataType}
             </p>
-          }
-          arrow>
+          }>
           <Error />
         </Tooltip>
       );
@@ -436,18 +430,14 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "1 | 2 | 3":
     case "4": {
       return (
-        <Tooltip
-          title={<p className={styles.tooltipLabel}>{dataType}</p>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>{dataType}</p>}>
           <Numbers />
         </Tooltip>
       );
     }
     default: {
       return (
-        <Tooltip
-          title={<p className={styles.tooltipLabel}>{dataType}</p>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>{dataType}</p>}>
           <FormatQuote />
         </Tooltip>
       );

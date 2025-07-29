@@ -1,0 +1,27 @@
+.container {
+  /* position: relative; */
+  display: inline;
+  position: static;
+}
+
+.tooltipContainer {
+  /* position: relative; */
+}
+
+.tooltip {
+  position: absolute;
+  padding: 4px;
+  left: -50%;
+
+  /* TODO: make variable */
+  background-color: black;
+  opacity: 0.8;
+  z-index: 99;
+  border-radius: var(--border-radius);
+  font-size: var(--text-label-size);
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+}

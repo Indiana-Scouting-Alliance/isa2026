@@ -47,8 +47,8 @@ export default function Util() {
       />
       <Input
         value={importDataString}
-        onChange={(event) => {
-          setImportDataString(event.currentTarget.value);
+        onChange={(value) => {
+          setImportDataString(value);
         }}
         endIcon={
           <IconButton

@@ -59,8 +59,8 @@ export default function Login({ setToken }: LoginProps) {
             id="login-username"
             type="text"
             value={username}
-            onChange={(event) => {
-              setUsername(event.currentTarget.value);
+            onChange={(value) => {
+              setUsername(value);
             }}
             placeholder="Enter Username"
             error={errorText !== ""}
@@ -73,8 +73,8 @@ export default function Login({ setToken }: LoginProps) {
             id="login-password"
             type={showPassword ? "text" : "password"}
             value={password}
-            onChange={(event) => {
-              setPassword(event.currentTarget.value);
+            onChange={(value) => {
+              setPassword(value);
             }}
             onKeyDown={(event) => {
               if (event.key === "Enter") {

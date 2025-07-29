@@ -12,7 +12,7 @@ import Dialog, {
 import Input from "../../components/Input/Input.tsx";
 import Select from "../../components/Select/Select.tsx";
 import { trpc } from "../../utils/trpc.ts";
-import styles from "./CreateUser.module.css";
+import styles from "./UserDialog.module.css";
 
 type CreateUserProps = {
   createUser: boolean;
@@ -52,8 +52,8 @@ export default function CreateUser({
           <Input
             id="create-user-username"
             value={createUserUsername}
-            onChange={(event) => {
-              setCreateUserUsername(event.currentTarget.value);
+            onChange={(value) => {
+              setCreateUserUsername(value);
             }}
             label="Username"
             helperText={createUserUsernameError}
@@ -62,8 +62,8 @@ export default function CreateUser({
           <Input
             id="create-user-password"
             value={createUserPassword}
-            onChange={(event) => {
-              setCreateUserPassword(event.currentTarget.value);
+            onChange={(value) => {
+              setCreateUserPassword(value);
             }}
             label="Password"
             helperText={createUserPasswordError}
@@ -100,8 +100,8 @@ export default function CreateUser({
             id="create-user-teamNumber"
             type="number"
             value={isNaN(createUserTeamNumber) ? "" : createUserTeamNumber}
-            onChange={(event) => {
-              setCreateUserTeamNumber(parseInt(event.currentTarget.value));
+            onChange={(value) => {
+              setCreateUserTeamNumber(parseInt(value));
             }}
             label="Team Number"
             helperText={createUserTeamNumberError}

@@ -214,16 +214,16 @@ export default function ExportLayout({
         <Input
           id="events-filter"
           value={events}
-          onChange={(event) => {
-            setEvents(event.currentTarget.value);
+          onChange={(value) => {
+            setEvents(value);
           }}
           label="Events (comma-separated)"
         />
         <Input
           id="teams-filter"
           value={teams}
-          onChange={(event) => {
-            setTeams(event.currentTarget.value);
+          onChange={(value) => {
+            setTeams(value);
           }}
           label="Teams (comma-separated)"
         />

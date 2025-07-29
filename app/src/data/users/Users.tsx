@@ -69,8 +69,8 @@ export default function Users({ logoutFunction }: UsersProps) {
         <Input
           id="search-username"
           value={searchUsername}
-          onChange={(event) => {
-            setSearchUsername(event.currentTarget.value);
+          onChange={(value) => {
+            setSearchUsername(value);
           }}
           label="Username"
           className={styles.paperInput}

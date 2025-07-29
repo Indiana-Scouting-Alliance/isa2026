@@ -2,7 +2,7 @@ import styles from "./Input.module.css";
 
 type InputProps = {
   value: string | number;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: string) => void;
   type?: "text" | "password" | "email" | "number" | "search";
   id: string;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -47,7 +47,11 @@ export default function Input({
             styles.input + " " + (disabled ? styles.inputDisabled : "")
           }
           value={value}
-          onChange={onChange}
+          onChange={(event) => {
+            if (onChange) {
+              onChange(event.currentTarget.value);
+            }
+          }}
           type={type}
           id={id}
           onKeyDown={onKeyDown}

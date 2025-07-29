@@ -1,17 +1,18 @@
 import { MAX_TEAM_NUMBER } from "@isa2026/api/src/utils/constants.ts";
 import { User, UserPermLevel } from "@isa2026/api/src/utils/dbtypes.ts";
-import {
-  Button,
-  Dialog,
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
+import Button from "../../components/Button/Button.tsx";
+import IconButton from "../../components/Button/IconButton/IconButton.tsx";
+import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { useState } from "react";
+} from "../../components/Dialog/Dialog.tsx";
+import Input from "../../components/Input/Input.tsx";
+import Select from "../../components/Select/Select.tsx";
 import { trpc } from "../../utils/trpc.ts";
+import styles from "./UserDialog.module.css";
 
 type EditUserProps = {
   editUserUsername: string | null;
@@ -42,6 +43,7 @@ export default function EditUser({
   });
   const [editUserUsernameError, setEditUserUsernameError] = useState("");
   const [editUserPassword, setEditUserPassword] = useState("");
+  const [editUserShowPassword, setEditUserShowPassword] = useState(false);
   const [editUserTeamNumberError, setEditUserTeamNumberError] = useState("");
 
   return (
@@ -52,65 +54,78 @@ export default function EditUser({
       }}>
       <DialogTitle>Manage User</DialogTitle>
       <DialogContent>
-        <Stack
-          sx={{
-            pt: 2,
-          }}
-          gap={2}>
-          <TextField
-            value={editUserUsername}
-            onChange={(event) => {
-              setEditUserUsername(event.currentTarget.value);
+        <div className={styles.dialogContent}>
+          <Input
+            id="edit-user-username"
+            value={editUserUsername || ""}
+            onChange={(value) => {
+              setEditUserUsername(value);
             }}
             label="Username"
             helperText={editUserUsernameError}
             error={editUserUsernameError !== ""}
           />
-          <TextField
-            value={editUserPermLevel}
-            onChange={(event) => {
-              setEditUserPermLevel(event.target.value as User["permLevel"]);
+          <Select
+            id="edit-user-permLevel"
+            value={editUserPermLevel || ""}
+            onChange={(value) => {
+              setEditUserPermLevel(value as User["permLevel"]);
             }}
-            select
             label="Permission Level">
             {UserPermLevel.map((perm) => (
-              <MenuItem
+              <option
                 key={perm}
                 value={perm}>
                 {perm}
-              </MenuItem>
+              </option>
             ))}
-          </TextField>
-          <TextField
+          </Select>
+          <Input
+            id="edit-user-teamNumber"
             value={
               editUserTeamNumber === undefined || isNaN(editUserTeamNumber) ?
                 ""
               : editUserTeamNumber
             }
-            onChange={(event) => {
-              setEditUserTeamNumber(parseInt(event.currentTarget.value));
+            onChange={(value) => {
+              setEditUserTeamNumber(parseInt(value));
             }}
             label="Team Number"
             helperText={editUserTeamNumberError}
             error={editUserTeamNumberError !== ""}
           />
-          <TextField
+          <Input
+            id="edit-user-password"
             value={editUserPassword}
-            onChange={(event) => {
-              setEditUserPassword(event.currentTarget.value);
+            onChange={(value) => {
+              setEditUserPassword(value);
             }}
             label="Password"
+            type={editUserShowPassword ? "text" : "password"}
+            endIcon={
+              <IconButton
+                className={styles.showPasswordButton}
+                onClick={() => {
+                  setEditUserShowPassword(!editUserShowPassword);
+                }}>
+                {editUserShowPassword ?
+                  <VisibilityOff />
+                : <Visibility />}
+              </IconButton>
+            }
           />
-        </Stack>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button
+          className={styles.actionButton}
           onClick={() => {
             closeEditUser();
           }}>
           Cancel
         </Button>
         <Button
+          className={styles.actionButton}
           onClick={() => {
             let error = false;
 

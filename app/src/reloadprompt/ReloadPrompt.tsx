@@ -39,18 +39,20 @@ export default function ReloadPrompt() {
               "App ready to work offline"
             : "New content available, click on reload button to update."}
           </div>
-          {needRefresh && (
+          <div className={styles.buttonContainer}>
+            {needRefresh && (
+              <Button
+                className={styles.toastButton}
+                onClick={() => updateServiceWorker(true)}>
+                Reload
+              </Button>
+            )}
             <Button
               className={styles.toastButton}
-              onClick={() => updateServiceWorker(true)}>
-              Reload
+              onClick={() => close()}>
+              Close
             </Button>
-          )}
-          <Button
-            className={styles.toastButton}
-            onClick={() => close()}>
-            Close
-          </Button>
+          </div>
         </div>
       )}
     </div>

@@ -11,6 +11,8 @@
   bottom: 0;
   margin: 16px;
   padding: 12px;
+  display: flex;
+  flex-direction: column;
 
   border: var(--button-border-width) solid var(--color-primary);
   border-radius: var(--border-radius);
@@ -26,8 +28,12 @@
   font-size: var(--text-label-size);
 }
 
+.buttonContainer {
+  display: flex;
+  gap: 6px;
+}
+
 button.toastButton {
-  margin-right: 5px;
   padding: 3px 10px;
 
   font-size: var(--text-label-size);

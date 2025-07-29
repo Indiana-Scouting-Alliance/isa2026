@@ -17,9 +17,9 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { VisuallyHiddenInput } from "../components/VisuallyHiddenInput.tsx";
-import { putDBEntry } from "../utils/idb.ts";
-import { trpc } from "../utils/trpc.ts";
+import { VisuallyHiddenInput } from "../../components/VisuallyHiddenInput.tsx";
+import { putDBEntry } from "../../utils/idb.ts";
+import { trpc } from "../../utils/trpc.ts";
 import { ExportMatchEntry } from "./SavedMatches.tsx";
 
 export const QRCODE_UPLOAD_DELIMITER = "`";

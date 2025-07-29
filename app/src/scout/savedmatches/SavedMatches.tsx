@@ -25,36 +25,28 @@ import {
   Star,
   Upload,
 } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  FormControlLabel,
-  IconButton,
-  lighten,
-  List,
-  ListItem,
-  Paper,
-  Snackbar,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Snackbar } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ScoutPageContainer } from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
+import Button from "../../components/Button/Button.tsx";
+import IconButton from "../../components/Button/IconButton/IconButton.tsx";
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "../../components/Dialog/Dialog.tsx";
+import Divider from "../../components/Divider/Divider.tsx";
+import { default as Checkbox2 } from "../../components/Input/Checkbox/Checkbox.tsx";
+import { ScoutPageContainer } from "../../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
 import {
   deleteEntry,
   getDBHumanPlayerEntries,
   getDBTeamMatchEntries,
   putDBEntry,
-} from "../utils/idb.ts";
-import { trpc } from "../utils/trpc.ts";
+} from "../../utils/idb.ts";
+import { trpc } from "../../utils/trpc.ts";
+import styles from "./SavedMatches.module.css";
 import UploadFromSavedMatches, {
   QRCODE_UPLOAD_DELIMITER,
 } from "./UploadFromSavedMatches.tsx";
@@ -178,14 +170,14 @@ export default function SavedMatches({
       navButtons={
         <>
           <Button
-            variant="outlined"
+            className={styles.outlinedNavButton}
             onClick={() => {
               navigate("/scout");
             }}>
             Back
           </Button>
           <Button
-            variant="outlined"
+            className={styles.outlinedNavButton}
             onClick={() => {
               navigate("/");
             }}>
@@ -193,7 +185,7 @@ export default function SavedMatches({
           </Button>
           {validDeviceSetup && (
             <Button
-              variant="contained"
+              className={styles.filledNavButton}
               onClick={() => {
                 console.log(getDBTeamMatchEntries());
                 const newMatch: TeamMatchEntry | HumanPlayerEntry = {
@@ -251,26 +243,11 @@ export default function SavedMatches({
           )}
         </>
       }>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        sx={{
-          height: "auto",
-          width: "100%",
-          overflow: "auto",
-        }}>
-        <Stack
-          sx={{
-            flex: 1,
-            padding: 2,
-          }}>
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-evenly",
-              marginBottom: 2,
-            }}
-            gap={2}>
+      <div className={styles.contentContainer}>
+        <div className={styles.matchListContainer}>
+          <div className={styles.matchListActionContainer}>
             <Button
+              className={styles.matchListActionButton}
               onClick={() => {
                 console.log(getDBTeamMatchEntries());
                 if (matches.every((x) => x.selected)) {
@@ -288,17 +265,16 @@ export default function SavedMatches({
                     }))
                   );
                 }
-              }}
-              variant="outlined">
+              }}>
               {matches.every((x) => x.selected) ? "Deselect All" : "Select All"}
             </Button>
             <Button
+              className={styles.matchListActionButton}
               onClick={() => {
                 if (matches.some((x) => x.selected)) {
                   setConfirmDeleteMatch(true);
                 }
-              }}
-              variant="outlined">
+              }}>
               Delete
             </Button>
             <Dialog
@@ -308,20 +284,16 @@ export default function SavedMatches({
               }}>
               <DialogTitle>Confirm Deletion</DialogTitle>
               <DialogContent>
-                <Stack>
-                  <Typography>
+                <div className={styles.deleteDialogContent}>
+                  <p className={styles.deleteDialogText}>
                     Are you sure you want to delete the following matches? This
                     cannot be undone.
-                  </Typography>
-                  <List
-                    sx={{
-                      listStyleType: "disc",
-                      paddingLeft: 4,
-                    }}>
+                  </p>
+                  <ul className={styles.deleteDialogList}>
                     {matches
                       .filter((x) => x.selected)
                       .map((x) => (
-                        <ListItem
+                        <li
                           key={
                             x.eventKey +
                             "_" +
@@ -336,32 +308,30 @@ export default function SavedMatches({
                             "_" +
                             x.deviceId
                           }
-                          sx={{
-                            display: "list-item",
-                          }}>
-                          <Typography>
-                            {x.eventKey +
-                              "_" +
-                              matchLevelAbbrev(x.matchLevel) +
-                              x.matchNumber +
-                              " " +
-                              x.alliance +
-                              " " +
-                              x.robotNumber}
-                          </Typography>
-                        </ListItem>
+                          className={styles.deleteDialogListItem}>
+                          {x.eventKey +
+                            "_" +
+                            matchLevelAbbrev(x.matchLevel) +
+                            x.matchNumber +
+                            " " +
+                            x.alliance +
+                            " " +
+                            x.robotNumber}
+                        </li>
                       ))}
-                  </List>
-                </Stack>
+                  </ul>
+                </div>
               </DialogContent>
               <DialogActions>
                 <Button
+                  className={styles.deleteDialogActionButton}
                   onClick={() => {
                     setConfirmDeleteMatch(false);
                   }}>
                   Cancel
                 </Button>
                 <Button
+                  className={styles.deleteDialogActionButton}
                   onClick={async () => {
                     for (const i of matches.filter((x) => x.selected)) {
                       await deleteEntry(i);
@@ -373,27 +343,12 @@ export default function SavedMatches({
                 </Button>
               </DialogActions>
             </Dialog>
-          </Stack>
-          <Stack
-            sx={{
-              flex: 1,
-              overflowY: "scroll",
-            }}
-            gap={1}>
+          </div>
+          <div className={styles.matchList}>
             {matches.map((matchData, index) => (
-              <Paper
+              <div
                 key={index}
-                sx={(theme) => ({
-                  padding: 2,
-                  borderColor: "primary.main",
-                  borderWidth: 2,
-                  borderStyle: "solid",
-                  backgroundColor: lighten(
-                    theme.palette.background.default,
-                    0.5
-                  ),
-                  cursor: "pointer",
-                })}
+                className={styles.match}
                 onClick={() => {
                   setMatches(
                     matches.map((x) =>
@@ -412,21 +367,31 @@ export default function SavedMatches({
                     )
                   );
                 }}>
-                <FormControlLabel
-                  checked={matchData.selected}
-                  control={<Checkbox />}
-                  slotProps={{
-                    typography: {
-                      width: 1,
-                    },
+                <Checkbox2
+                  className={styles.matchCheckbox}
+                  id={"match-list-item-" + index}
+                  onChange={(value) => {
+                    setMatches(
+                      matches.map((x) =>
+                        (
+                          x.eventKey === matchData.eventKey &&
+                          x.matchLevel === matchData.matchLevel &&
+                          x.matchNumber === matchData.matchNumber &&
+                          x.alliance === matchData.alliance &&
+                          x.robotNumber === matchData.robotNumber
+                        ) ?
+                          {
+                            ...matchData,
+                            selected: value,
+                          }
+                        : x
+                      )
+                    );
                   }}
-                  sx={{
-                    width: 1,
-                  }}
+                  value={matchData.selected}
                   label={
-                    <Stack
-                      direction="row"
-                      gap={2}
+                    <div
+                      className={styles.matchLabelContainer}
                       onClick={(event) => {
                         event.preventDefault();
                         setMatches(
@@ -446,14 +411,33 @@ export default function SavedMatches({
                           )
                         );
                       }}>
-                      <Stack
-                        sx={{
-                          flex: 1,
-                        }}>
-                        <Typography
-                          sx={{
-                            fontWeight:
-                              (
+                      <div className={styles.matchLabel}>
+                        <p
+                          className={
+                            styles.matchLabelText +
+                            " " +
+                            ((
+                              !matchData.autoUpload &&
+                              !matchData.quickshare &&
+                              !matchData.clipboard &&
+                              !matchData.qr &&
+                              !matchData.download &&
+                              !matchData.upload
+                            ) ?
+                              styles.matchLabelTextNoUpload
+                            : "")
+                          }>
+                          {matchData.eventKey +
+                            "_" +
+                            matchLevelAbbrev(matchData.matchLevel) +
+                            matchData.matchNumber}
+                        </p>
+                        <div className={styles.matchIconsAndText}>
+                          <p
+                            className={
+                              styles.matchLabelText +
+                              " " +
+                              ((
                                 !matchData.autoUpload &&
                                 !matchData.quickshare &&
                                 !matchData.clipboard &&
@@ -461,75 +445,42 @@ export default function SavedMatches({
                                 !matchData.download &&
                                 !matchData.upload
                               ) ?
-                                "bold"
-                              : "normal",
-                          }}>
-                          {matchData.eventKey +
-                            "_" +
-                            matchLevelAbbrev(matchData.matchLevel) +
-                            matchData.matchNumber}
-                        </Typography>
-                        <Stack
-                          direction="row"
-                          gap={2}>
-                          <Typography
-                            sx={{
-                              fontWeight:
-                                (
-                                  !matchData.autoUpload &&
-                                  !matchData.quickshare &&
-                                  !matchData.clipboard &&
-                                  !matchData.qr &&
-                                  !matchData.download &&
-                                  !matchData.upload
-                                ) ?
-                                  "bold"
-                                : "normal",
-                            }}>
-                            {"\n" +
-                              matchData.alliance +
+                                styles.matchLabelTextNoUpload
+                              : "")
+                            }>
+                            {matchData.alliance +
                               "\u00a0" +
                               (matchData.robotNumber === 4 ?
                                 "HUMAN"
                               : matchData.robotNumber)}
-                          </Typography>
-                          <Stack
-                            direction="row"
-                            sx={{
-                              alignItems: "center",
-                              overflowX: "scroll",
-                            }}>
+                          </p>
+                          <div className={styles.matchIcons}>
                             {matchData.autoUpload && <CloudSync />}
                             {matchData.quickshare && <SendToMobile />}
                             {matchData.clipboard && <ContentCopy />}
                             {matchData.qr && <QrCode />}
                             {matchData.download && <Download />}
                             {matchData.upload && <Upload />}
-                          </Stack>
-                        </Stack>
-                      </Stack>
+                          </div>
+                        </div>
+                      </div>
                       {!matchData.autoUpload &&
                         !matchData.quickshare &&
                         !matchData.clipboard &&
                         !matchData.qr &&
                         !matchData.download &&
                         !matchData.upload && <Star />}
-                    </Stack>
+                    </div>
                   }
                 />
-              </Paper>
+              </div>
             ))}
-          </Stack>
-        </Stack>
+          </div>
+        </div>
         <Divider orientation="vertical" />
-        <Stack
-          sx={{
-            flex: 1,
-            padding: 2,
-          }}
-          gap={2}>
+        <div className={styles.exportMethodsContainer}>
           <Button
-            variant="outlined"
+            className={styles.exportButton}
             onClick={async () => {
               const data: (TeamMatchEntry | HumanPlayerEntry)[] = matches
                 .filter((x) => x.selected)
@@ -569,8 +520,8 @@ export default function SavedMatches({
               if (!exception) {
                 markExportedEntries("quickshare");
               }
-            }}
-            startIcon={<SendToMobile />}>
+            }}>
+            <SendToMobile />
             Share via Quickshare
           </Button>
           <Snackbar
@@ -582,20 +533,17 @@ export default function SavedMatches({
             message={quickshareFailed}
             action={
               <IconButton
+                className={styles.snackbarClose}
                 onClick={() => {
                   setQuickshareFailed("");
                 }}>
-                <Close
-                  sx={{
-                    color: "#ffffff",
-                  }}
-                />
+                <Close />
               </IconButton>
             }
           />
 
           <Button
-            variant="outlined"
+            className={styles.exportButton}
             onClick={() => {
               const data: (TeamMatchEntry | HumanPlayerEntry)[] = matches
                 .filter((x) => x.selected)
@@ -624,13 +572,13 @@ export default function SavedMatches({
               if (!exception) {
                 markExportedEntries("clipboard");
               }
-            }}
-            startIcon={<ContentCopy />}>
+            }}>
+            <ContentCopy />
             Copy to Clipboard
           </Button>
 
           <Button
-            variant="outlined"
+            className={styles.exportButton}
             onClick={() => {
               setQrMatches(
                 matches
@@ -670,8 +618,8 @@ export default function SavedMatches({
                   )
                   .join("")
               );
-            }}
-            startIcon={<QrCode />}>
+            }}>
+            <QrCode />
             Share via QR Code
           </Button>
           <Dialog open={qrMatches.length > 0}>
@@ -679,7 +627,7 @@ export default function SavedMatches({
               QR Code {qrIndex + 1} of {qrMatches.length}
             </DialogTitle>
             <DialogContent>
-              <Box ref={qrRef}>
+              <div ref={qrRef}>
                 <QRCodeSVG
                   value={qrMatches[qrIndex]}
                   size={Math.min(
@@ -688,31 +636,20 @@ export default function SavedMatches({
                   )}
                   marginSize={4}
                 />
-              </Box>
+              </div>
             </DialogContent>
-            <DialogActions
-              sx={{
-                pl: 4,
-                pr: 4,
-                pb: 4,
-              }}>
+            <DialogActions>
               {qrMatches.length === 1 ?
                 <>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       setQrMatches([]);
                     }}>
                     Cancel
                   </Button>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       markExportedEntries("qr");
                       setQrMatches([]);
@@ -723,20 +660,14 @@ export default function SavedMatches({
               : qrIndex === 0 ?
                 <>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       setQrMatches([]);
                     }}>
                     Cancel
                   </Button>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       setQrIndex(qrIndex + 1);
                     }}>
@@ -746,20 +677,14 @@ export default function SavedMatches({
               : qrIndex === qrMatches.length - 1 ?
                 <>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       setQrIndex(qrIndex - 1);
                     }}>
                     Previous
                   </Button>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       markExportedEntries("qr");
                       setQrMatches([]);
@@ -769,20 +694,14 @@ export default function SavedMatches({
                 </>
               : <>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       setQrIndex(qrIndex - 1);
                     }}>
                     Previous
                   </Button>
                   <Button
-                    variant="outlined"
-                    sx={{
-                      flex: 1,
-                    }}
+                    className={styles.qrDialogActionButton}
                     onClick={() => {
                       setQrIndex(qrIndex + 1);
                     }}>
@@ -794,7 +713,7 @@ export default function SavedMatches({
           </Dialog>
 
           <Button
-            variant="outlined"
+            className={styles.exportButton}
             onClick={() => {
               const data: (TeamMatchEntry | HumanPlayerEntry)[] = matches
                 .filter((x) => x.selected)
@@ -847,13 +766,13 @@ export default function SavedMatches({
               } catch {
                 exception = true;
               }
-            }}
-            startIcon={<Download />}>
+            }}>
+            <Download />
             Download Data Files
           </Button>
 
           <Button
-            variant="outlined"
+            className={styles.exportButton}
             onClick={() => {
               console.log(
                 matches
@@ -891,18 +810,12 @@ export default function SavedMatches({
                     )
                   ) as (TeamMatchEntry | HumanPlayerEntry)[]
               );
-            }}
-            startIcon={<Upload />}>
+            }}>
+            <Upload />
             Direct Upload
           </Button>
 
-          <Divider
-            orientation="horizontal"
-            flexItem
-            sx={{
-              margin: 2,
-            }}
-          />
+          <Divider orientation="horizontal" />
 
           <UploadFromSavedMatches
             setStatus={setUploadStatus}
@@ -919,19 +832,16 @@ export default function SavedMatches({
             message={uploadStatus}
             action={
               <IconButton
+                className={styles.snackbarClose}
                 onClick={() => {
                   setUploadStatus("");
                 }}>
-                <Close
-                  sx={{
-                    color: "#ffffff",
-                  }}
-                />
+                <Close />
               </IconButton>
             }
           />
-        </Stack>
-      </Stack>
+        </div>
+      </div>
     </ScoutPageContainer>
   );
 }

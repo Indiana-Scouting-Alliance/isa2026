@@ -14,7 +14,9 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { DeviceSetupObj } from "../setup/DeviceSetup.tsx";
 
 const ScoutLayout = React.lazy(() => import("./ScoutLayout.tsx"));
-const SavedMatches = React.lazy(() => import("./SavedMatches.tsx"));
+const SavedMatches = React.lazy(
+  () => import("./savedmatches/SavedMatches.tsx")
+);
 
 type ScoutProps = {
   deviceSetup: DeviceSetupObj;

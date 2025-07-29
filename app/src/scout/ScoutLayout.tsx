@@ -20,7 +20,7 @@ import Auto from "./robot/Auto.tsx";
 import Postmatch from "./robot/Postmatch.tsx";
 import Prematch from "./robot/Prematch.tsx";
 import { Teleop } from "./robot/Teleop.tsx";
-import { ExportMatchEntry } from "./SavedMatches.tsx";
+import { ExportMatchEntry } from "./savedmatches/SavedMatches.tsx";
 
 export type MatchStage = "prematch" | "auto" | "teleop" | "postmatch" | "human";
 type ScoutLayoutProps = {

@@ -7,16 +7,19 @@ type CheckboxProps = {
   onChange: (value: boolean) => void;
   id: string;
   label?: string | React.ReactNode;
+  className?: string;
 };
 export default function Checkbox({
   value,
   onChange,
   id,
   label,
+  className,
 }: CheckboxProps) {
   return (
     <div className={styles.container}>
       <IconButton
+        className={className}
         onClick={() => {
           onChange(!value);
         }}>

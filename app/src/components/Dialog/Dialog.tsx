@@ -2,7 +2,7 @@ import styles from "./Dialog.module.css";
 
 type DialogProps = {
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children?: React.ReactNode;
 };
 export default function Dialog({ open, onClose, children }: DialogProps) {
@@ -10,7 +10,9 @@ export default function Dialog({ open, onClose, children }: DialogProps) {
       <div
         className={styles.screenDarken}
         onClick={() => {
-          onClose();
+          if (onClose) {
+            onClose();
+          }
         }}>
         <div
           className={styles.dialog}

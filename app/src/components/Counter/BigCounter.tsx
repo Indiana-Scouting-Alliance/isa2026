@@ -1,8 +1,11 @@
 import { Add, Remove } from "@mui/icons-material";
-import { Button, Stack, TextField } from "@mui/material";
+import Button from "../Button/Button.tsx";
+import Input from "../Input/Input.tsx";
+import styles from "./BigCounter.module.css";
 
 type BigCounterProps = {
   value: number;
+  id: string;
   increment: () => void;
   decrement: () => void;
   label: string;
@@ -11,6 +14,7 @@ type BigCounterProps = {
 };
 export default function BigCounter({
   value,
+  id,
   increment,
   decrement,
   label,
@@ -18,36 +22,39 @@ export default function BigCounter({
   disabled = false,
 }: BigCounterProps) {
   return (
-    <Stack
-      direction="row"
-      sx={{
-        width: 1,
-      }}>
+    <div className={styles.container}>
       <Button
+        className={
+          styles.button + " " + (disabled ? styles.buttonDisabled : "")
+        }
         onClick={() => {
           if (value > 0) {
             decrement();
           }
         }}
-        variant="contained"
         disabled={disabled}>
         <Remove />
       </Button>
-      <TextField
+      <Input
+        id={id}
         value={value}
         label={label}
         disabled={disabled}
+        className={styles.input}
+        type="number"
       />
       <Button
+        className={
+          styles.button + " " + (disabled ? styles.buttonDisabled : "")
+        }
         onClick={() => {
           if (max === undefined || value < max) {
             increment();
           }
         }}
-        variant="contained"
         disabled={disabled}>
         <Add />
       </Button>
-    </Stack>
+    </div>
   );
 }

@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.button {
+  height: var(--input-height);
+  width: var(--input-height);
+  min-width: 0;
+  min-height: 0;
+
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+  border: none;
+}
+.buttonDisabled {
+  background-color: color-mix(in srgb, var(--color-primary) 50%, #888 50%);
+  cursor: default;
+}
+.buttonDisabled:hover {
+  filter: none;
+}
+
+.input {
+  flex: 1;
+}

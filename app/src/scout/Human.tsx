@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 import {
   DBEvent,
   HumanPlayerEntry,
@@ -5,18 +6,16 @@ import {
   MatchLevel,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Add, Remove } from "@mui/icons-material";
-import {
-  Divider,
-  FormHelperText,
-  FormLabel,
-  IconButton,
-  MenuItem,
-  Stack,
-  TextField,
-  ToggleButtonGroup,
-} from "@mui/material";
+import Button from "../components/Button/Button.tsx";
+import ToggleButton from "../components/Button/ToggleButton/ToggleButton.tsx";
+import ToggleButtonGroup from "../components/Button/ToggleButton/ToggleButtonGroup.tsx";
+import changeFlexDirection from "../components/ChangeFlexDirection.module.css";
 import BigCounter from "../components/Counter/BigCounter.tsx";
-import { StyledToggleButton } from "../components/StyledToggleButton.tsx";
+import Divider from "../components/Divider/Divider.tsx";
+import Input from "../components/Input/Input.tsx";
+import Select from "../components/Select/Select.tsx";
+import styles from "./Human.module.css";
+import scoutStyles from "./ScoutStyles.module.css";
 
 type HumanProps = {
   match: HumanPlayerEntry;
@@ -25,6 +24,7 @@ type HumanProps = {
   scoutNameError: string;
   scoutTeamNumberError: string;
   teamNumberError: string;
+  matchNumberError?: string;
 };
 export default function Human({
   match,
@@ -33,123 +33,113 @@ export default function Human({
   scoutNameError,
   scoutTeamNumberError,
   teamNumberError,
+  matchNumberError,
 }: HumanProps) {
   const eventMatches = events.find(
     (event) => event.eventKey === match.eventKey
   )?.matches;
 
   return (
-    <Stack
-      direction={{ xs: "column", md: "row" }}
-      sx={{
-        height: "auto",
-        width: "100%",
-        overflow: "auto",
-        pt: 2,
-      }}>
-      <Stack
-        sx={{
-          flex: 1,
-          pl: 2,
-          pr: 2,
-        }}
-        gap={2}>
-        <TextField
+    <div
+      className={
+        scoutStyles.contentContainer +
+        " " +
+        changeFlexDirection.changeFlexDirection
+      }>
+      <div className={scoutStyles.half}>
+        <Input
+          id="scout-name"
           value={match.scoutName}
-          onChange={(event) => {
+          onChange={(value) => {
             setMatch({
               ...match,
-              scoutName: event.currentTarget.value,
+              scoutName: value,
             });
           }}
           type="text"
-          variant="outlined"
           label="Scout Name & Last Initial"
           error={scoutNameError !== ""}
           helperText={scoutNameError}
         />
-        <TextField
+        <Input
+          id="scout-team-number"
           value={isNaN(match.scoutTeamNumber) ? "" : match.scoutTeamNumber}
-          onChange={(event) => {
+          onChange={(value) => {
             setMatch({
               ...match,
-              scoutTeamNumber: parseInt(event.currentTarget.value),
+              scoutTeamNumber: parseInt(value),
             });
           }}
-          variant="outlined"
           label="Scout Team Number"
           error={scoutTeamNumberError !== ""}
           helperText={scoutTeamNumberError}
         />
-        <Stack
-          direction="row"
-          gap={1}
-          sx={{
-            width: 1,
-          }}>
-          <TextField
-            select
+        <div className={scoutStyles.matchInfoContainer}>
+          <Select
+            id="match-level"
             value={match.matchLevel}
             label="Level"
-            onChange={(event) => {
+            onChange={(value) => {
               setMatch({
                 ...match,
-                matchLevel: event.target.value as (typeof MatchLevel)[number],
+                matchLevel: value as (typeof MatchLevel)[number],
               });
             }}
-            sx={{
-              width: "5em",
-            }}>
-            <MenuItem value="None">n</MenuItem>
-            <MenuItem value="Practice">p</MenuItem>
-            <MenuItem value="Qualification">q</MenuItem>
-            <MenuItem value="Playoff">t</MenuItem>
-          </TextField>
-          <TextField
-            value={isNaN(match.matchNumber) ? "" : match.matchNumber}
-            onChange={(event) => {
-              setMatch({
-                ...match,
-                matchNumber: parseInt(event.currentTarget.value),
-                teamNumber: 0,
-              });
-            }}
-            label="Match Number"
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <IconButton
-                    onClick={() => {
-                      if (match.matchNumber > 1) {
-                        setMatch({
-                          ...match,
-                          matchNumber: match.matchNumber - 1,
-                          teamNumber: 0,
-                        });
-                      }
-                    }}>
-                    <Remove />
-                  </IconButton>
-                ),
-                endAdornment: (
-                  <IconButton
-                    onClick={() => {
-                      setMatch({
-                        ...match,
-                        matchNumber: match.matchNumber + 1,
-                        teamNumber: 0,
-                      });
-                    }}>
-                    <Add />
-                  </IconButton>
-                ),
-              },
-            }}
-            sx={{
-              flex: 1,
-            }}
-          />
-        </Stack>
+            className={scoutStyles.matchLevel}>
+            <option value="None">n</option>
+            <option value="Practice">p</option>
+            <option value="Qualification">q</option>
+            <option value="Playoff">t</option>
+          </Select>
+          <div className={scoutStyles.matchNumber}>
+            <div className={scoutStyles.matchNumberButtonContainer}>
+              <p className={scoutStyles.matchNumberButtonSpacer}>X</p>
+              <Button
+                className={scoutStyles.matchNumberButton}
+                onClick={() => {
+                  if (match.matchNumber > 1) {
+                    setMatch({
+                      ...match,
+                      matchNumber: match.matchNumber - 1,
+                      teamNumber: 0,
+                    });
+                  }
+                }}>
+                <Remove />
+              </Button>
+            </div>
+            <Input
+              id="match-number"
+              className={scoutStyles.matchNumberInput}
+              type="number"
+              value={isNaN(match.matchNumber) ? "" : match.matchNumber}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  matchNumber: parseInt(value),
+                  teamNumber: 0,
+                });
+              }}
+              label="Match Number"
+              error={matchNumberError !== ""}
+              helperText={matchNumberError}
+            />
+            <div className={scoutStyles.matchNumberButtonContainer}>
+              <p className={scoutStyles.matchNumberButtonSpacer}>X</p>
+              <Button
+                className={scoutStyles.matchNumberButton}
+                onClick={() => {
+                  setMatch({
+                    ...match,
+                    matchNumber: match.matchNumber + 1,
+                    teamNumber: 0,
+                  });
+                }}>
+                <Add />
+              </Button>
+            </div>
+          </div>
+        </div>
         {(
           eventMatches?.some(
             (x) =>
@@ -157,39 +147,37 @@ export default function Human({
               x.matchLevel === match.matchLevel
           )
         ) ?
-          <Stack
-            sx={{
-              width: 1,
-            }}>
-            <FormLabel>Human Player Team Number</FormLabel>
+          <div className={styles.teamNumberContainer}>
+            <label
+              htmlFor="human-player-team-number"
+              className={styles.teamNumberLabel}>
+              Human Player Team Number
+            </label>
             <ToggleButtonGroup
-              sx={{
-                width: 1,
-                borderWidth: teamNumberError !== "" ? 2 : 0,
-                borderColor: "error.main",
-                borderStyle: "solid",
-              }}
-              value={match.teamNumber}
-              exclusive
-              onChange={(_event, value) => {
+              value={match.teamNumber?.toString() || ""}
+              onChange={(value) => {
                 if (value) {
                   setMatch({
                     ...match,
-                    teamNumber: value,
+                    teamNumber: parseInt(value),
                   });
                 }
               }}>
-              <StyledToggleButton
-                sx={{
-                  flex: 1,
-                }}
-                value={
-                  eventMatches.find(
+              <ToggleButton
+                className={
+                  styles.teamNumberToggleButton +
+                  " " +
+                  (teamNumberError ? styles.teamNumberToggleButtonError : "")
+                }
+                value={eventMatches
+                  .find(
                     (x) =>
                       x.matchNumber === match.matchNumber &&
                       x.matchLevel === match.matchLevel
-                  )![(match.alliance.toLowerCase() + "1") as "red1" | "blue1"]
-                }>
+                  )!
+                  [
+                    (match.alliance.toLowerCase() + "1") as "red1" | "blue1"
+                  ].toString()}>
                 {
                   eventMatches.find(
                     (x) =>
@@ -197,18 +185,22 @@ export default function Human({
                       x.matchLevel === match.matchLevel
                   )![(match.alliance.toLowerCase() + "1") as "red1" | "blue1"]
                 }
-              </StyledToggleButton>
-              <StyledToggleButton
-                sx={{
-                  flex: 1,
-                }}
-                value={
-                  eventMatches.find(
+              </ToggleButton>
+              <ToggleButton
+                className={
+                  styles.teamNumberToggleButton +
+                  " " +
+                  (teamNumberError ? styles.teamNumberToggleButtonError : "")
+                }
+                value={eventMatches
+                  .find(
                     (x) =>
                       x.matchNumber === match.matchNumber &&
                       x.matchLevel === match.matchLevel
-                  )![(match.alliance.toLowerCase() + "2") as "red2" | "blue2"]
-                }>
+                  )!
+                  [
+                    (match.alliance.toLowerCase() + "2") as "red2" | "blue2"
+                  ].toString()}>
                 {
                   eventMatches.find(
                     (x) =>
@@ -216,18 +208,22 @@ export default function Human({
                       x.matchLevel === match.matchLevel
                   )![(match.alliance.toLowerCase() + "2") as "red2" | "blue2"]
                 }
-              </StyledToggleButton>
-              <StyledToggleButton
-                sx={{
-                  flex: 1,
-                }}
-                value={
-                  eventMatches.find(
+              </ToggleButton>
+              <ToggleButton
+                className={
+                  styles.teamNumberToggleButton +
+                  " " +
+                  (teamNumberError ? styles.teamNumberToggleButtonError : "")
+                }
+                value={eventMatches
+                  .find(
                     (x) =>
                       x.matchNumber === match.matchNumber &&
                       x.matchLevel === match.matchLevel
-                  )![(match.alliance.toLowerCase() + "3") as "red3" | "blue3"]
-                }>
+                  )!
+                  [
+                    (match.alliance.toLowerCase() + "3") as "red3" | "blue3"
+                  ].toString()}>
                 {
                   eventMatches.find(
                     (x) =>
@@ -235,54 +231,42 @@ export default function Human({
                       x.matchLevel === match.matchLevel
                   )![(match.alliance.toLowerCase() + "3") as "red3" | "blue3"]
                 }
-              </StyledToggleButton>
+              </ToggleButton>
             </ToggleButtonGroup>
-            <TextField
-              value={isNaN(match.teamNumber!) ? "" : match.teamNumber}
-              onChange={(event) => {
+            <Input
+              id="human-player-team-number"
+              type="number"
+              value={isNaN(match.teamNumber!) ? "" : match.teamNumber || ""}
+              onChange={(value) => {
                 setMatch({
                   ...match,
-                  teamNumber: parseInt(event.currentTarget.value),
+                  teamNumber: parseInt(value),
                 });
               }}
               error={teamNumberError !== ""}
+              helperText={teamNumberError}
             />
-            <FormHelperText
-              color="error"
-              sx={{
-                pl: 2,
-                color: teamNumberError ? "error.main" : "text.secondary",
-              }}>
-              {teamNumberError}
-            </FormHelperText>
-          </Stack>
-        : <TextField
+          </div>
+        : <Input
+            id="human-player-team-number"
+            type="number"
             label="Human Player Team Number"
-            value={isNaN(match.teamNumber!) ? "" : match.teamNumber}
-            onChange={(event) => {
+            value={isNaN(match.teamNumber!) ? "" : match.teamNumber || ""}
+            onChange={(value) => {
               setMatch({
                 ...match,
-                teamNumber: parseInt(event.currentTarget.value),
+                teamNumber: parseInt(value),
               });
             }}
             error={teamNumberError !== ""}
             helperText={teamNumberError}
           />
         }
-      </Stack>
-      <Divider
-        orientation="vertical"
-        variant="middle"
-        flexItem
-      />
-      <Stack
-        sx={{
-          flex: 1,
-          pl: 4,
-          pr: 4,
-        }}
-        gap={2}>
+      </div>
+      <Divider orientation="vertical" />
+      <div className={scoutStyles.half}>
         <BigCounter
+          id="human-attempted-net"
           value={match.humanAttemptedNet!}
           increment={() => {
             setMatch({
@@ -301,6 +285,7 @@ export default function Human({
           disabled={!match.teamNumber}
         />
         <BigCounter
+          id="human-successful-net"
           value={match.humanSuccessfulNet!}
           increment={() => {
             if (match.humanAttemptedNet! < 18) {
@@ -329,7 +314,7 @@ export default function Human({
         {
           //TODO: if adding comments for human players: .replace(/"/g, "'")
         }
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }

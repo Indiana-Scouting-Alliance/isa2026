@@ -24,6 +24,8 @@
 
   --hover-dim: brightness(0.8);
 
+  --input-height: calc(37.6px + 8px);
+
   --z-index-tooltip: 100;
   --z-index-modal: 99;
   --z-index-snackbar: 98;

@@ -620,6 +620,7 @@ export default function ScoutLayout({
                 scoutNameError={scoutNameError}
                 scoutTeamNumberError={scoutTeamNumberError}
                 teamNumberError={teamNumberError}
+                matchNumberError={matchNumberError}
               />
             ),
           }[matchStage]

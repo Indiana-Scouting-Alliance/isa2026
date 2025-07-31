@@ -1,0 +1,19 @@
+.teamNumberContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.teamNumberLabel {
+  font-family: var(--text-font-family);
+  font-size: var(--text-label-size);
+}
+
+.teamNumberToggleButton {
+  flex: 1;
+  height: var(--input-height);
+  min-height: 0;
+}
+button.teamNumberToggleButtonError {
+  border-color: var(--color-error);
+}

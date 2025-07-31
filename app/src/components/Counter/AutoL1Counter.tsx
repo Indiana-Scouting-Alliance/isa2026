@@ -1,12 +1,18 @@
-import { Remove } from "@mui/icons-material";
+import { Add, Remove } from "@mui/icons-material";
 import { IconButton, Stack, SxProps, TextField } from "@mui/material";
 
-type CounterProps = {
+type AutoL1CounterProps = {
   value: number;
   setValue: (value: number) => void;
+  max?: number;
   sx?: SxProps;
 };
-export default function Counter({ value, setValue, sx }: CounterProps) {
+export default function AutoL1Counter({
+  value,
+  setValue,
+  max,
+  sx,
+}: AutoL1CounterProps) {
   const buttonSx: SxProps = {
     color: "primary.contrastText",
     backgroundColor: "primary.main",
@@ -36,12 +42,12 @@ export default function Counter({ value, setValue, sx }: CounterProps) {
           <Remove />
         </IconButton>
         <TextField
-          value={value}
+          value={"L1 - " + value}
           size="small"
           sx={(theme) => ({
             color: "secondary.contrastText",
             backgroundColor: "secondary.main",
-            width: "3em",
+            width: "4em",
             "& .MuiInputBase-input.Mui-disabled": {
               WebkitTextFillColor: theme.palette.text.primary,
               color: theme.palette.text.primary,
@@ -59,14 +65,17 @@ export default function Counter({ value, setValue, sx }: CounterProps) {
             event.stopPropagation();
           }}
         />
-        {/* <IconButton
+        <IconButton
           onClick={(event) => {
             event.stopPropagation();
-            setValue(value + 1);
+            if (max === undefined || value < max) {
+              console.log(max);
+              setValue(value + 1);
+            }
           }}
           sx={buttonSx}>
           <Add />
-        </IconButton> */}
+        </IconButton>
       </Stack>
     </Stack>
   );

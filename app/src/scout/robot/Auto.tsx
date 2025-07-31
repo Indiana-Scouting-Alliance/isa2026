@@ -12,12 +12,14 @@ import {
 } from "@mui/material";
 import EventEmitter from "events";
 import { useEffect, useRef, useState } from "react";
+import AutoReefButton from "../../components/AutoReefButton.tsx";
+import AutoL1Counter from "../../components/Counter/AutoL1Counter.tsx";
+import Counter from "../../components/Counter/Counter.tsx";
 import {
   StyledRedToggleButton,
   StyledToggleButton,
 } from "../../components/StyledToggleButton.tsx";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
-import { AutoL1Counter, AutoReefButton, Counter } from "../Components.tsx";
 
 type AutoProps = {
   match: TeamMatchEntry;

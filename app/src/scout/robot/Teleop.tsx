@@ -4,7 +4,7 @@ import {
   StyledRedToggleButton,
   StyledToggleButton,
 } from "../../components/StyledToggleButton.tsx";
-import { Counter } from "../Components.tsx";
+import Counter from "../../components/Counter/Counter.tsx";
 
 type TeleopProps = {
   match: TeamMatchEntry;

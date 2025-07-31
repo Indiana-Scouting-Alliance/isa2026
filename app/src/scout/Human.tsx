@@ -15,8 +15,8 @@ import {
   TextField,
   ToggleButtonGroup,
 } from "@mui/material";
+import BigCounter from "../components/Counter/BigCounter.tsx";
 import { StyledToggleButton } from "../components/StyledToggleButton.tsx";
-import { BigCounter } from "./Components.tsx";
 
 type HumanProps = {
   match: HumanPlayerEntry;

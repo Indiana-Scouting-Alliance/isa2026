@@ -15,8 +15,8 @@ import {
   TextField,
 } from "@mui/material";
 import { StyledRedToggleButton } from "../../components/StyledToggleButton.tsx";
+import TransparentToggle from "../../components/TransparentToggle.tsx";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
-import { TransparentToggle } from "../Components.tsx";
 
 type PrematchProps = {
   match: TeamMatchEntry;

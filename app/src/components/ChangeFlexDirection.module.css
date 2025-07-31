@@ -1,0 +1,10 @@
+.changeFlexDirection {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 600px) {
+  .changeFlexDirection {
+    flex-direction: column;
+  }
+}

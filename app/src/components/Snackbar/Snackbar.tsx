@@ -8,7 +8,7 @@ type SnackbarProps = {
   message?: string;
   action?: React.ReactNode;
 };
-export function Snackbar({
+export default function Snackbar({
   open,
   autoHideDuration,
   onClose,

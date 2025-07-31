@@ -229,6 +229,7 @@ export default function ExportLayout({
         />
         <Divider orientation="horizontal" />
         <ToggleButtonGroup
+          label="File Type"
           value={fileType}
           onChange={(value) => {
             if (value) {

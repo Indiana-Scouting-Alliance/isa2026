@@ -16,7 +16,7 @@ type ScoutPageContainerProps = {
   onCloseBackdrop?: () => void;
   children?: React.ReactNode;
 };
-export function ScoutPageContainer({
+export default function ScoutPageContainer({
   title,
   nowScouting,
   navButtons,

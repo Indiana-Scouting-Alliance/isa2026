@@ -30,14 +30,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button.tsx";
 import IconButton from "../../components/Button/IconButton/IconButton.tsx";
+import changeFlexDirection from "../../components/ChangeFlexDirection.module.css";
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
 } from "../../components/Dialog/Dialog.tsx";
 import Divider from "../../components/Divider/Divider.tsx";
-import { default as Checkbox2 } from "../../components/Input/Checkbox/Checkbox.tsx";
-import { ScoutPageContainer } from "../../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
+import Checkbox from "../../components/Input/Checkbox/Checkbox.tsx";
+import ScoutPageContainer from "../../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
 import { Snackbar } from "../../components/Snackbar/Snackbar.tsx";
 import {
   deleteEntry,
@@ -243,7 +244,12 @@ export default function SavedMatches({
           )}
         </>
       }>
-      <div className={styles.contentContainer}>
+      <div
+        className={
+          styles.contentContainer +
+          " " +
+          changeFlexDirection.changeFlexDirection
+        }>
         <div className={styles.matchListContainer}>
           <div className={styles.matchListActionContainer}>
             <Button
@@ -367,7 +373,7 @@ export default function SavedMatches({
                     )
                   );
                 }}>
-                <Checkbox2
+                <Checkbox
                   className={styles.matchCheckbox}
                   id={"match-list-item-" + index}
                   onChange={(value) => {

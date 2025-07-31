@@ -170,7 +170,10 @@ export default function UploadFromSavedMatches({
     <>
       <Button
         disabled={putEntriesPending}
-        className={styles.exportButton}>
+        className={styles.exportButton}
+        onClick={() => {
+          fileUploadRef.current?.click();
+        }}>
         <FileUpload />
         Upload TXT Files
         <input

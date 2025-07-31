@@ -25,7 +25,6 @@ import {
   Star,
   Upload,
 } from "@mui/icons-material";
-import { Snackbar } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +38,7 @@ import Dialog, {
 import Divider from "../../components/Divider/Divider.tsx";
 import { default as Checkbox2 } from "../../components/Input/Checkbox/Checkbox.tsx";
 import { ScoutPageContainer } from "../../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
+import { Snackbar } from "../../components/Snackbar/Snackbar.tsx";
 import {
   deleteEntry,
   getDBHumanPlayerEntries,

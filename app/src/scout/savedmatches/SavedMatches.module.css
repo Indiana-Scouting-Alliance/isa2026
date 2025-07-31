@@ -163,8 +163,7 @@
   background-color: var(--color-paper-background);
 }
 
-button.snackbarClose {
-  /* TODO: make var */
-  color: white;
-  background-color: rgb(27, 41, 47);
+.snackbarClose {
+  color: var(--color-primary);
+  background-color: var(--color-paper-background);
 }

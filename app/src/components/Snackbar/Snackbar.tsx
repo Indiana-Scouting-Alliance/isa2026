@@ -26,7 +26,7 @@ export function Snackbar({
 
   return open ?
       <div className={styles.snackbar}>
-        <div>{message}</div>
+        <p className={styles.message}>{message}</p>
         <div>{action}</div>
       </div>
     : <></>;

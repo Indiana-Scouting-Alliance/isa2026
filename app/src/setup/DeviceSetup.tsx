@@ -452,12 +452,6 @@ export default function DeviceSetup({
             setExportEvent={setExportEvent}
             events={events}
           />
-          {/* <CreateEvent
-            createEvent={createEvent}
-            setCreateEvent={setCreateEvent}
-            events={events}
-            setEvents={setEvents}
-          /> */}
         </div>
       </div>
     </ScoutPageContainer>

@@ -12,14 +12,17 @@ import {
 } from "@mui/material";
 import EventEmitter from "events";
 import { useEffect, useRef, useState } from "react";
-import AutoReefButton from "../../components/AutoReefButton.tsx";
+import AutoReefButton from "../../components/Button/ToggleButton/AutoReefButton/AutoReefButton.tsx";
 import AutoL1Counter from "../../components/Counter/AutoL1Counter.tsx";
 import Counter from "../../components/Counter/Counter.tsx";
 import {
   StyledRedToggleButton,
   StyledToggleButton,
 } from "../../components/StyledToggleButton.tsx";
+import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
+import scoutStyles from "../../components/styles/ScoutStyles.module.css";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
+import styles from "./Auto.module.css";
 
 type AutoProps = {
   match: TeamMatchEntry;
@@ -101,34 +104,17 @@ export default function Auto({
   });
 
   return (
-    <Stack
-      direction={{ xs: "column", md: "row" }}
-      sx={{
-        height: "auto",
-        width: "100%",
-        overflow: "auto",
-      }}>
-      <Stack
-        direction="row"
-        sx={{
-          width: { xs: "100%", md: "50%" },
-          padding: 2,
-          alignItems: "center",
-          justifyContent: "center",
-        }}>
-        <Box
-          sx={{
-            aspectRatio: "2547 / 2869",
-            maxHeight: "100%",
-            maxWidth: "100%",
-            position: "relative",
-          }}>
+    <div
+      className={
+        scoutStyles.contentContainer +
+        " " +
+        changeFlexDirection.changeFlexDirection
+      }>
+      <div className={scoutStyles.half + " " + styles.reefContainerContainer}>
+        <div className={styles.reefContainer}>
           <img
             src={import.meta.env.BASE_URL + "assets/Reef.png"}
-            style={{
-              height: "100%",
-              width: "100%",
-            }}
+            className={styles.reefImage}
           />
           <AutoReefButton
             selected={popperReef === "A"}
@@ -143,22 +129,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "A" ? "" : "A");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "A" Location
-                  position: "absolute",
-                  left: "8%",
-                  top: "40%",
-                  transform: "translate(-50%, -50%)",
-                }
-              : {
-                  //Processor-Side "G" Location
-                  position: "absolute",
-                  right: "8%",
-                  bottom: "40%",
-                  transform: "translate(50%, 50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonA
+              : styles.reefButtonG)
             }
           />
           <AutoReefButton
@@ -174,22 +150,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "B" ? "" : "B");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "B" Location
-                  position: "absolute",
-                  left: "8%",
-                  bottom: "40%",
-                  transform: "translate(-50%, 50%)",
-                }
-              : {
-                  //Processor-Side "H" Location
-                  position: "absolute",
-                  right: "8%",
-                  top: "40%",
-                  transform: "translate(50%, -50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonB
+              : styles.reefButtonH)
             }
           />
           <AutoReefButton
@@ -205,22 +171,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "C" ? "" : "C");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "C" Location
-                  position: "absolute",
-                  left: "18%",
-                  bottom: "20%",
-                  transform: "translate(-50%, 50%)",
-                }
-              : {
-                  //Processor-Side "I" Location
-                  position: "absolute",
-                  right: "18%",
-                  top: "20%",
-                  transform: "translate(50%, -50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonC
+              : styles.reefButtonI)
             }
           />
           <AutoReefButton
@@ -236,22 +192,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "D" ? "" : "D");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "D" Location
-                  position: "absolute",
-                  left: "38%",
-                  bottom: "12%",
-                  transform: "translate(-50%, 50%)",
-                }
-              : {
-                  //Processor-Side "J" Location
-                  position: "absolute",
-                  right: "38%",
-                  top: "12%",
-                  transform: "translate(50%, -50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonD
+              : styles.reefButtonJ)
             }
           />
           <AutoReefButton
@@ -267,22 +213,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "E" ? "" : "E");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "E" Location
-                  position: "absolute",
-                  right: "38%",
-                  bottom: "12%",
-                  transform: "translate(50%, 50%)",
-                }
-              : {
-                  //Processor-Side "K" Location
-                  position: "absolute",
-                  left: "38%",
-                  top: "12%",
-                  transform: "translate(-50%, -50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonE
+              : styles.reefButtonK)
             }
           />
           <AutoReefButton
@@ -298,22 +234,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "F" ? "" : "F");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "F" Location
-                  position: "absolute",
-                  right: "18%",
-                  bottom: "20%",
-                  transform: "translate(50%, 50%)",
-                }
-              : {
-                  //Processor-Side "L" Location
-                  position: "absolute",
-                  left: "18%",
-                  top: "20%",
-                  transform: "translate(-50%, -50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonF
+              : styles.reefButtonL)
             }
           />
           <AutoReefButton
@@ -329,22 +255,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "G" ? "" : "G");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "G" Location
-                  position: "absolute",
-                  right: "8%",
-                  bottom: "40%",
-                  transform: "translate(50%, 50%)",
-                }
-              : {
-                  //Processor-Side "A" Location
-                  position: "absolute",
-                  left: "8%",
-                  top: "40%",
-                  transform: "translate(-50%, -50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonG
+              : styles.reefButtonA)
             }
           />
           <AutoReefButton
@@ -360,22 +276,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "H" ? "" : "H");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "H" Location
-                  position: "absolute",
-                  right: "8%",
-                  top: "40%",
-                  transform: "translate(50%, -50%)",
-                }
-              : {
-                  //Processor-Side "B" Location
-                  position: "absolute",
-                  left: "8%",
-                  bottom: "40%",
-                  transform: "translate(-50%, 50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonH
+              : styles.reefButtonB)
             }
           />
           <AutoReefButton
@@ -391,22 +297,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "I" ? "" : "I");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "I" Location
-                  position: "absolute",
-                  right: "18%",
-                  top: "20%",
-                  transform: "translate(50%, -50%)",
-                }
-              : {
-                  //Processor-Side "C" Location
-                  position: "absolute",
-                  left: "18%",
-                  bottom: "20%",
-                  transform: "translate(-50%, 50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonI
+              : styles.reefButtonC)
             }
           />
           <AutoReefButton
@@ -422,22 +318,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "J" ? "" : "J");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "J" Location
-                  position: "absolute",
-                  right: "38%",
-                  top: "12%",
-                  transform: "translate(50%, -50%)",
-                }
-              : {
-                  //Processor-Side "D" Location
-                  position: "absolute",
-                  left: "38%",
-                  bottom: "12%",
-                  transform: "translate(-50%, 50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonJ
+              : styles.reefButtonD)
             }
           />
           <AutoReefButton
@@ -453,22 +339,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "K" ? "" : "K");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "K" Location
-                  position: "absolute",
-                  left: "38%",
-                  top: "12%",
-                  transform: "translate(-50%, -50%)",
-                }
-              : {
-                  //Processor-Side "E" Location
-                  position: "absolute",
-                  right: "38%",
-                  bottom: "12%",
-                  transform: "translate(50%, 50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonK
+              : styles.reefButtonE)
             }
           />
           <AutoReefButton
@@ -484,22 +360,12 @@ export default function Auto({
               teleopTimeoutButtonClick();
               setPopperReef(popperReef === "L" ? "" : "L");
             }}
-            sx={
-              deviceSetup.fieldOrientation === "processor" ?
-                {
-                  //Processor-Side "L" Location
-                  position: "absolute",
-                  left: "18%",
-                  top: "20%",
-                  transform: "translate(-50%, -50%)",
-                }
-              : {
-                  //Processor-Side "F" Location
-                  position: "absolute",
-                  right: "18%",
-                  bottom: "20%",
-                  transform: "translate(50%, 50%)",
-                }
+            className={
+              styles.reefButton +
+              " " +
+              (deviceSetup.fieldOrientation === "processor" ?
+                styles.reefButtonL
+              : styles.reefButtonF)
             }
           />
           <ClickAwayListener
@@ -664,16 +530,10 @@ export default function Auto({
               </ButtonGroup>
             </Popper>
           </ClickAwayListener>
-        </Box>
-      </Stack>
+        </div>
+      </div>
       <Divider orientation="vertical" />
-      <Stack
-        sx={{
-          width: { xs: "100%", md: "50%" },
-          height: "100%",
-          padding: 2,
-        }}
-        gap={2}>
+      <div className={scoutStyles.half}>
         <StyledRedToggleButton
           value="Robot Died?"
           selected={match.died!}
@@ -812,7 +672,7 @@ export default function Auto({
             </Box>
           </Stack>
         </Stack>
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }

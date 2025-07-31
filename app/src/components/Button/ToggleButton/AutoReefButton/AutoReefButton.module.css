@@ -1,0 +1,14 @@
+.button {
+  width: 2em;
+  height: 4em;
+  border: none;
+}
+.buttonSelected {
+  border: 8px solid var(--color-primary);
+}
+@media (max-width: 900px) {
+  .button {
+    width: 1em;
+    height: 2em;
+  }
+}

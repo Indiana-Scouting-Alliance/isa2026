@@ -7,11 +7,12 @@ import {
   TeamMatchEntry,
   TeamMatchEntryNoShowInit,
 } from "@isa2026/api/src/utils/dbtypes.ts";
-import { Box, Button, Stack, Tab, Tabs } from "@mui/material";
 import EventEmitter from "events";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/Button/Button.tsx";
 import ScoutPageContainer from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
+import TabBar from "../components/Tabs/TabBar.tsx";
 import { DeviceSetupObj } from "../setup/DeviceSetup.tsx";
 import { getDBHumanPlayerEntries, putDBEntry } from "../utils/idb.ts";
 import { trpc } from "../utils/trpc.ts";
@@ -21,6 +22,7 @@ import Postmatch from "./robot/Postmatch.tsx";
 import Prematch from "./robot/Prematch.tsx";
 import { Teleop } from "./robot/Teleop.tsx";
 import { ExportMatchEntry } from "./savedmatches/SavedMatches.tsx";
+import styles from "./ScoutLayout.module.css";
 
 export type MatchStage = "prematch" | "auto" | "teleop" | "postmatch" | "human";
 type ScoutLayoutProps = {
@@ -470,61 +472,25 @@ export default function ScoutLayout({
       title={
         match.robotNumber === 4 ?
           "Human Player Data"
-        : <Box
-            sx={{
-              flex: 1,
-              borderBottom: 1,
-              borderColor: "divider",
-              overflowX: "scroll",
-            }}>
-            <Tabs
-              value={matchStage}
-              onChange={(_event, value) => {
-                clearTeleopAnimations();
-                if (recurringTeleopAnimation.current) {
-                  clearInterval(recurringTeleopAnimation.current);
-                  recurringTeleopAnimation.current = null;
-                }
+        : <TabBar
+            value={matchStage}
+            onChange={(value) => {
+              clearTeleopAnimations();
+              if (recurringTeleopAnimation.current) {
+                clearInterval(recurringTeleopAnimation.current);
+                recurringTeleopAnimation.current = null;
+              }
 
-                if (matchStage === "prematch") {
-                  if (!prematchCheck()) {
-                    setMatchStage(value);
-                  }
-                } else {
-                  setMatchStage(value);
+              if (matchStage === "prematch") {
+                if (!prematchCheck()) {
+                  setMatchStage(value as MatchStage);
                 }
-              }}
-              variant="scrollable"
-              scrollButtons
-              allowScrollButtonsMobile>
-              <Tab
-                label="Prematch"
-                value="prematch"
-              />
-              <Tab
-                label="Auto"
-                value="auto"
-                disabled={match.noShow}
-              />
-              <Tab
-                label="Teleop"
-                value="teleop"
-                disabled={match.noShow}
-                sx={{
-                  ...(teleopTabAnimation && {
-                    color: "primary.contrastText",
-                    backgroundColor: "primary.main",
-                  }),
-                  transition: "all " + TELEOP_TAB_FLASH_MS + "ms",
-                }}
-              />
-              <Tab
-                label="Postmatch"
-                value="postmatch"
-                disabled={match.noShow}
-              />
-            </Tabs>
-          </Box>
+              } else {
+                setMatchStage(value as MatchStage);
+              }
+            }}
+            tabs={["prematch", "auto", "teleop", "postmatch"]}
+          />
       }
       nowScouting={{
         teamNumber: match.teamNumber || 0,
@@ -535,18 +501,15 @@ export default function ScoutLayout({
         matchStage === "prematch" ?
           <>
             <Button
-              variant="outlined"
+              className={styles.navButtonBack}
               onClick={() => {
                 navigate("/");
-              }}
-              sx={{
-                mr: "auto",
               }}>
               Exit
             </Button>
             {(match as TeamMatchEntry).noShow && (
               <Button
-                variant="contained"
+                className={styles.navButtonForward}
                 onClick={() => {
                   if ((match as TeamMatchEntry).noShow) {
                     setMatch(noShowTeamMatchEntry(match as TeamMatchEntry));
@@ -567,7 +530,7 @@ export default function ScoutLayout({
           </>
         : matchStage === "postmatch" ?
           <Button
-            variant="contained"
+            className={styles.navButtonForward}
             onClick={() => {
               if ((match as TeamMatchEntry).noShow) {
                 setMatch(noShowTeamMatchEntry(match as TeamMatchEntry));
@@ -587,17 +550,14 @@ export default function ScoutLayout({
         : matchStage === "human" ?
           <>
             <Button
-              variant="outlined"
+              className={styles.navButtonBack}
               onClick={() => {
                 navigate("/");
-              }}
-              sx={{
-                mr: "auto",
               }}>
               Exit
             </Button>
             <Button
-              variant="contained"
+              className={styles.navButtonForward}
               onClick={() => {
                 if (!humanCheck()) {
                   if (match.teamNumber === 0) {
@@ -615,66 +575,56 @@ export default function ScoutLayout({
           </>
         : undefined
       }>
-      <Stack
-        sx={{
-          width: 1,
-          height: 1,
-        }}>
-        <Box
-          sx={{
-            flex: 1,
-            overflowY: "scroll",
-          }}>
+      <div className={styles.contentContainer}>
+        {
           {
-            {
-              prematch: (
-                <Prematch
-                  match={match as TeamMatchEntry}
-                  setMatch={setMatch}
-                  events={events}
-                  deviceSetup={deviceSetup}
-                  matchNumberError={matchNumberError}
-                  scoutNameError={scoutNameError}
-                  scoutTeamNumberError={scoutTeamNumberError}
-                  teamNumberError={teamNumberError}
-                  startingPositionError={startingPositionError}
-                />
-              ),
-              auto: (
-                <Auto
-                  match={match as TeamMatchEntry}
-                  setMatch={setMatch}
-                  deviceSetup={deviceSetup}
-                  eventEmitter={eventEmitter}
-                />
-              ),
-              teleop: (
-                <Teleop
-                  match={match as TeamMatchEntry}
-                  setMatch={setMatch}
-                />
-              ),
-              postmatch: (
-                <Postmatch
-                  match={match as TeamMatchEntry}
-                  setMatch={setMatch}
-                  dataConfidenceError={dataConfidenceError}
-                />
-              ),
-              human: (
-                <Human
-                  match={match as HumanPlayerEntry}
-                  setMatch={setMatch}
-                  events={events}
-                  scoutNameError={scoutNameError}
-                  scoutTeamNumberError={scoutTeamNumberError}
-                  teamNumberError={teamNumberError}
-                />
-              ),
-            }[matchStage]
-          }
-        </Box>
-      </Stack>
+            prematch: (
+              <Prematch
+                match={match as TeamMatchEntry}
+                setMatch={setMatch}
+                events={events}
+                deviceSetup={deviceSetup}
+                matchNumberError={matchNumberError}
+                scoutNameError={scoutNameError}
+                scoutTeamNumberError={scoutTeamNumberError}
+                teamNumberError={teamNumberError}
+                startingPositionError={startingPositionError}
+              />
+            ),
+            auto: (
+              <Auto
+                match={match as TeamMatchEntry}
+                setMatch={setMatch}
+                deviceSetup={deviceSetup}
+                eventEmitter={eventEmitter}
+              />
+            ),
+            teleop: (
+              <Teleop
+                match={match as TeamMatchEntry}
+                setMatch={setMatch}
+              />
+            ),
+            postmatch: (
+              <Postmatch
+                match={match as TeamMatchEntry}
+                setMatch={setMatch}
+                dataConfidenceError={dataConfidenceError}
+              />
+            ),
+            human: (
+              <Human
+                match={match as HumanPlayerEntry}
+                setMatch={setMatch}
+                events={events}
+                scoutNameError={scoutNameError}
+                scoutTeamNumberError={scoutTeamNumberError}
+                teamNumberError={teamNumberError}
+              />
+            ),
+          }[matchStage]
+        }
+      </div>
     </ScoutPageContainer>
   );
 }

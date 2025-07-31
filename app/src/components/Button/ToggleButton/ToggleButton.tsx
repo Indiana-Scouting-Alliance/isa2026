@@ -6,6 +6,7 @@ type ToggleButtonProps = {
   className?: string;
   classNameTrue?: string;
   classNameFalse?: string;
+  disabled?: boolean;
 };
 type ToggleButtonPropsAsStandalone = {
   value: boolean;
@@ -32,6 +33,7 @@ export default function ToggleButton({
   className,
   classNameTrue,
   classNameFalse,
+  disabled,
   ...props
 }: ToggleButtonPropsAsStandalone | ToggleButtonPropsAsChild): React.ReactNode {
   return (
@@ -51,7 +53,8 @@ export default function ToggleButton({
         } else if ("onClick" in props && props.onClick !== undefined) {
           props.onClick();
         }
-      }}>
+      }}
+      disabled={disabled}>
       {children}
     </Button>
   );

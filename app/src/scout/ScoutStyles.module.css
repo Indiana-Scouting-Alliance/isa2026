@@ -54,3 +54,14 @@
   font-size: var(--text-label-size);
   visibility: hidden;
 }
+
+button.redToggleButtonTrue {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+}
+button.redToggleButtonFalse {
+  background-color: #fff;
+  color: #ff0000;
+  border: var(--button-border-width) solid #ff0000;
+}

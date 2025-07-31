@@ -14,7 +14,7 @@
   border: none;
 }
 .buttonDisabled {
-  background-color: color-mix(in srgb, var(--color-primary) 50%, #888 50%);
+  background-color: color-mix(in srgb, var(--color-primary) 50%, #888);
   cursor: default;
 }
 .buttonDisabled:hover {

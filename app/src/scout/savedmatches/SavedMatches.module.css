@@ -56,7 +56,7 @@
   --match-background-color: color-mix(
     in srgb,
     var(--color-background) 50%,
-    #fff 50%
+    #fff
   );
 
   padding: 16px;

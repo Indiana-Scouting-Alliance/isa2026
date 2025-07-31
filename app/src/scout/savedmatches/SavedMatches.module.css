@@ -167,3 +167,7 @@
   color: var(--color-primary);
   background-color: var(--color-paper-background);
 }
+
+.qrTextarea {
+  height: 50vh;
+}

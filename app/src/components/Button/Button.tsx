@@ -6,6 +6,7 @@ type ButtonProps = {
   className?: string;
   style?: React.CSSProperties;
   htmlRef?: React.Ref<HTMLButtonElement>;
+  disabled?: boolean;
 };
 export default function Button({
   onClick,
@@ -13,13 +14,15 @@ export default function Button({
   className,
   style,
   htmlRef,
+  disabled,
 }: ButtonProps) {
   return (
     <button
       onClick={onClick}
       className={styles.button + " " + (className || "")}
       style={style}
-      ref={htmlRef}>
+      ref={htmlRef}
+      disabled={disabled}>
       {children}
     </button>
   );

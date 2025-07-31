@@ -8,18 +8,17 @@ import {
   TeamMatchEntryColumns,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { ContentPaste, FileUpload, QrCodeScanner } from "@mui/icons-material";
-import {
-  Button,
-  Dialog,
+import { useRef, useState } from "react";
+import Button from "../../components/Button/Button.tsx";
+import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
-} from "@mui/material";
-import { useState } from "react";
-import { VisuallyHiddenInput } from "../../components/VisuallyHiddenInput.tsx";
+} from "../../components/Dialog/Dialog.tsx";
+import TextArea from "../../components/Input/Textarea.tsx";
 import { putDBEntry } from "../../utils/idb.ts";
 import { trpc } from "../../utils/trpc.ts";
+import styles from "./SavedMatches.module.css";
 import { ExportMatchEntry } from "./SavedMatches.tsx";
 
 export const QRCODE_UPLOAD_DELIMITER = "`";
@@ -41,6 +40,8 @@ export default function UploadFromSavedMatches({
   setMatches,
 }: UploadFromSavedMatchesProps) {
   const [data, setData] = useState<(TeamMatchEntry | HumanPlayerEntry)[]>([]);
+
+  const fileUploadRef = useRef<HTMLInputElement>(null);
 
   const [putEntriesPending, setPutEntriesPending] = useState(false);
   let putEntriesTimeout: NodeJS.Timeout;
@@ -168,14 +169,15 @@ export default function UploadFromSavedMatches({
   return (
     <>
       <Button
-        component="label"
-        variant="outlined"
-        startIcon={<FileUpload />}
-        disabled={putEntriesPending}>
+        disabled={putEntriesPending}
+        className={styles.exportButton}>
+        <FileUpload />
         Upload TXT Files
-        <VisuallyHiddenInput
+        <input
+          ref={fileUploadRef}
           type="file"
           accept="text/plain"
+          multiple
           onChange={async (event) => {
             if (event.currentTarget.files) {
               const matches: (TeamMatchEntry | HumanPlayerEntry)[] = [];
@@ -195,12 +197,11 @@ export default function UploadFromSavedMatches({
               putEntries.mutate(matches);
             }
           }}
-          multiple
+          hidden
         />
       </Button>
 
       <Button
-        variant="outlined"
         onClick={async () => {
           try {
             const matches = JSON.parse(
@@ -213,28 +214,30 @@ export default function UploadFromSavedMatches({
             setStatus("Error reading clipboard: " + error);
           }
         }}
-        startIcon={<ContentPaste />}
-        disabled={putEntriesPending}>
+        disabled={putEntriesPending}
+        className={styles.exportButton}>
+        <ContentPaste />
         Upload from Clipboard
       </Button>
 
       <Button
-        variant="outlined"
         onClick={() => {
           setQrUpload(true);
         }}
-        startIcon={<QrCodeScanner />}
-        disabled={putEntriesPending}>
+        disabled={putEntriesPending}
+        className={styles.exportButton}>
+        <QrCodeScanner />
         Upload from QR
       </Button>
       <Dialog open={qrUpload}>
         <DialogTitle>Scan QR Codes</DialogTitle>
         <DialogContent>
-          <TextField
-            multiline
+          <TextArea
+            outlineClassName={styles.qrTextarea}
+            id="qr-code-input"
             value={qrData}
-            onChange={(event) => {
-              setQrData(event.currentTarget.value);
+            onChange={(value) => {
+              setQrData(value);
             }}
             helperText={
               "1.Connect the QR code scanner\u00a0\u00a02.Focus the textbox\u00a0\u00a03.Scan QR codes"
@@ -243,12 +246,14 @@ export default function UploadFromSavedMatches({
         </DialogContent>
         <DialogActions>
           <Button
+            className={styles.qrDialogActionButton}
             onClick={() => {
               setQrUpload(false);
             }}>
             Cancel
           </Button>
           <Button
+            className={styles.qrDialogActionButton}
             onClick={() => {
               const matchArrs: string[] = qrData
                 .split(QRCODE_UPLOAD_DELIMITER)

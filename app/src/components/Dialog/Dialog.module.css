@@ -10,7 +10,7 @@
 
   /* TODO: make var */
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  z-index: var(--z-index-modal);
 }
 
 .dialog {

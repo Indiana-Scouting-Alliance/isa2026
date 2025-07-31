@@ -22,6 +22,10 @@
   --border-radius: 4px;
 
   --hover-dim: brightness(0.8);
+
+  --z-index-tooltip: 100;
+  --z-index-modal: 99;
+  --z-index-snackbar: 98;
 }
 
 * {

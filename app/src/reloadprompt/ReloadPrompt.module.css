@@ -16,7 +16,7 @@
 
   border: var(--button-border-width) solid var(--color-primary);
   border-radius: var(--border-radius);
-  z-index: 10;
+  z-index: var(--z-index-snackbar);
   text-align: left;
   background-color: var(--color-paper-background);
 }

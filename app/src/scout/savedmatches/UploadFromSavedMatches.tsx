@@ -15,7 +15,7 @@ import Dialog, {
   DialogContent,
   DialogTitle,
 } from "../../components/Dialog/Dialog.tsx";
-import TextArea from "../../components/Input/Textarea.tsx";
+import TextArea from "../../components/Input/TextArea.tsx";
 import { putDBEntry } from "../../utils/idb.ts";
 import { trpc } from "../../utils/trpc.ts";
 import styles from "./SavedMatches.module.css";

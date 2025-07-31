@@ -9,13 +9,13 @@ import { Add, Remove } from "@mui/icons-material";
 import Button from "../components/Button/Button.tsx";
 import ToggleButton from "../components/Button/ToggleButton/ToggleButton.tsx";
 import ToggleButtonGroup from "../components/Button/ToggleButton/ToggleButtonGroup.tsx";
-import changeFlexDirection from "../components/ChangeFlexDirection.module.css";
 import BigCounter from "../components/Counter/BigCounter.tsx";
 import Divider from "../components/Divider/Divider.tsx";
 import Input from "../components/Input/Input.tsx";
 import Select from "../components/Select/Select.tsx";
+import changeFlexDirection from "../components/styles/ChangeFlexDirection.module.css";
+import scoutStyles from "../components/styles/ScoutStyles.module.css";
 import styles from "./Human.module.css";
-import scoutStyles from "./ScoutStyles.module.css";
 
 type HumanProps = {
   match: HumanPlayerEntry;

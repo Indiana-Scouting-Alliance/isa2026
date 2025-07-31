@@ -8,12 +8,12 @@ import { Add, Remove } from "@mui/icons-material";
 import Button from "../../components/Button/Button.tsx";
 import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
 import TransparentToggle from "../../components/Button/ToggleButton/TransparentToggle/TransparentToggle.tsx";
-import changeFlexDirection from "../../components/ChangeFlexDirection.module.css";
 import Divider from "../../components/Divider/Divider.tsx";
 import Input from "../../components/Input/Input.tsx";
 import Select from "../../components/Select/Select.tsx";
+import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
+import scoutStyles from "../../components/styles/ScoutStyles.module.css";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
-import scoutStyles from "../ScoutStyles.module.css";
 import styles from "./Prematch.module.css";
 
 type PrematchProps = {

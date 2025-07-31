@@ -39,7 +39,7 @@ import Dialog, {
 import Divider from "../../components/Divider/Divider.tsx";
 import Checkbox from "../../components/Input/Checkbox/Checkbox.tsx";
 import ScoutPageContainer from "../../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
-import { Snackbar } from "../../components/Snackbar/Snackbar.tsx";
+import Snackbar from "../../components/Snackbar/Snackbar.tsx";
 import {
   deleteEntry,
   getDBHumanPlayerEntries,

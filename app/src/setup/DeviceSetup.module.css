@@ -94,6 +94,7 @@ button.blueToggleButtonFalse {
 
   border: none;
   border-radius: var(--border-radius);
+  overflow-y: auto;
 }
 .eventsContainerError {
   border: 2px solid var(--color-error);

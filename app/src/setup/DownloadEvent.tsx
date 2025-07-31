@@ -1,30 +1,30 @@
 import { DBEvent, Match } from "@isa2026/api/src/utils/dbtypes.ts";
 import { omit } from "@isa2026/api/src/utils/utils.ts";
-import {
-  Box,
-  Button,
-  Dialog,
+import { useState } from "react";
+import Button from "../components/Button/Button.tsx";
+import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { useState } from "react";
+} from "../components/Dialog/Dialog.tsx";
+import Input from "../components/Input/Input.tsx";
 import { putDBEvent, putDBMatches } from "../utils/idb.ts";
 import { trpc } from "../utils/trpc.ts";
+import styles from "./EventDialogs.module.css";
 
 type DownloadEventProps = {
   downloadEvent: boolean;
   setDownloadEvent: (value: boolean) => void;
   events: (DBEvent & { matches: Match[] })[];
   setEvents: (value: (DBEvent & { matches: Match[] })[]) => void;
+  setCurrentEvent: (value: string) => void;
 };
 export default function DownloadEvent({
   downloadEvent,
   setDownloadEvent,
   events,
   setEvents,
+  setCurrentEvent,
 }: DownloadEventProps) {
   const [eventKey, setEventKey] = useState("");
   const [eventKeyError, setEventKeyError] = useState("");
@@ -54,6 +54,8 @@ export default function DownloadEvent({
 
       putDBEvent(omit(["matches"], data) as DBEvent);
       putDBMatches(data.matches);
+
+      setCurrentEvent(data.eventKey);
     },
     onError(err) {
       setIsaStatus(err.message);
@@ -67,6 +69,8 @@ export default function DownloadEvent({
 
       putDBEvent(omit(["matches"], data) as DBEvent);
       putDBMatches(data.matches);
+
+      setCurrentEvent(data.eventKey);
     },
     onError(err) {
       setFrcStatus(err.message);
@@ -80,6 +84,8 @@ export default function DownloadEvent({
 
       putDBEvent(omit(["matches"], data) as DBEvent);
       putDBMatches(data.matches);
+
+      setCurrentEvent(data.eventKey);
     },
     onError(err) {
       setTbaStatus(err.message);
@@ -94,31 +100,20 @@ export default function DownloadEvent({
       }}>
       <DialogTitle>Download Event</DialogTitle>
       <DialogContent>
-        <Stack
-          sx={{
-            pt: 2,
-          }}
-          gap={2}>
-          <TextField
+        <div className={styles.contentContainer}>
+          <Input
+            id="download-event-event-key"
             value={eventKey}
-            onChange={(event) => {
-              setEventKey(event.currentTarget.value);
+            onChange={(value) => {
+              setEventKey(value);
             }}
-            label="eventKey"
+            label="Event Key"
             error={eventKeyError !== ""}
             helperText={eventKeyError}
           />
-          <Stack
-            direction="row"
-            gap={2}
-            sx={{
-              width: 1,
-            }}>
+          <div className={styles.buttonContainer}>
             <Button
-              variant="outlined"
-              sx={{
-                flex: 1,
-              }}
+              className={styles.button}
               onClick={() => {
                 if (!checkEventKey()) {
                   setFrcStatus("Loading...");
@@ -128,10 +123,7 @@ export default function DownloadEvent({
               FRC
             </Button>
             <Button
-              variant="outlined"
-              sx={{
-                flex: 1,
-              }}
+              className={styles.button}
               onClick={() => {
                 if (!checkEventKey()) {
                   setIsaStatus("Loading...");
@@ -141,10 +133,7 @@ export default function DownloadEvent({
               ISA
             </Button>
             <Button
-              variant="outlined"
-              sx={{
-                flex: 1,
-              }}
+              className={styles.button}
               onClick={() => {
                 if (!checkEventKey()) {
                   setTbaStatus("Loading...");
@@ -153,20 +142,31 @@ export default function DownloadEvent({
               }}>
               TBA
             </Button>
-          </Stack>
-          <Box>
-            {frcStatus ? "FRC API: " + frcStatus : ""}
+          </div>
+          <div className={styles.statusContainer}>
+            {frcStatus ? "FRC Events API: " + frcStatus : ""}
             <br />
             {isaStatus ? "ISA Server: " + isaStatus : ""}
             <br />
             {tbaStatus ? "TBA API: " + tbaStatus : ""}
-          </Box>
-        </Stack>
+            <br />
+          </div>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button
+          className={styles.actionButton}
           onClick={() => {
             setDownloadEvent(false);
+          }}>
+          Cancel
+        </Button>
+        <Button
+          className={styles.actionButton}
+          onClick={() => {
+            if (!checkEventKey()) {
+              setDownloadEvent(false);
+            }
           }}>
           Done
         </Button>

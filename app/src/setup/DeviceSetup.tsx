@@ -430,7 +430,7 @@ export default function DeviceSetup({
                   <Radio
                     id={"event-radio-" + event.eventKey}
                     value={event.eventKey}
-                    label={event.eventName}
+                    label={event.eventKey.slice(0, 4) + " " + event.eventName}
                   />
                 ))}
             </RadioGroup>
@@ -440,6 +440,12 @@ export default function DeviceSetup({
             setDownloadEvent={setDownloadEvent}
             events={events}
             setEvents={setEvents}
+            setCurrentEvent={(value) => {
+              setDeviceSetup({
+                ...deviceSetup,
+                currentEvent: value,
+              });
+            }}
           />
           <ExportEvent
             exportEvent={exportEvent}

@@ -411,7 +411,9 @@ export default function Auto({
                 }}>
                 L2
               </ToggleButton>
-              <SmallCounter id='auto-L1-counter' insideLabel='L1 - '
+              <SmallCounter
+                id="auto-L1-counter"
+                insideLabel="L1 - "
                 value={
                   match[
                     ("autoCoral" +
@@ -474,8 +476,7 @@ export default function Auto({
             });
           }}
           classNameTrue={scoutStyles.redToggleButtonTrue}
-          classNameFalse={scoutStyles.redToggleButtonFalse}
-        >
+          classNameFalse={scoutStyles.redToggleButtonFalse}>
           Robot Died
         </ToggleButton>
         <ToggleButton
@@ -488,8 +489,7 @@ export default function Auto({
             });
           }}
           classNameTrue={scoutStyles.normalToggleButtonTrue}
-          classNameFalse={scoutStyles.normalToggleButtonFalse}
-      >
+          classNameFalse={scoutStyles.normalToggleButtonFalse}>
           Removed Algae from Reef
         </ToggleButton>
         <ToggleButton
@@ -502,8 +502,7 @@ export default function Auto({
             });
           }}
           classNameTrue={scoutStyles.normalToggleButtonTrue}
-          classNameFalse={scoutStyles.normalToggleButtonFalse}
-       >
+          classNameFalse={scoutStyles.normalToggleButtonFalse}>
           Crossed Robot Starting Line
         </ToggleButton>
         <div className={styles.bargeAndProcessorContainer}>
@@ -532,6 +531,7 @@ export default function Auto({
                 className={scoutStyles.image}
               />
               <HalfSmallCounter
+                id="auto-processor-counter"
                 value={match.autoProcessor!}
                 setValue={(value) => {
                   teleopTimeoutButtonClick();
@@ -568,6 +568,7 @@ export default function Auto({
                 className={scoutStyles.image}
               />
               <HalfSmallCounter
+                id="auto-net-counter"
                 value={match.autoNet!}
                 setValue={(value) => {
                   teleopTimeoutButtonClick();

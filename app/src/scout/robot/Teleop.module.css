@@ -1,0 +1,23 @@
+.L4Counter {
+  position: absolute;
+  left: 0%;
+  bottom: 70%;
+}
+
+.L3Counter {
+  position: absolute;
+  left: 0%;
+  bottom: 50%;
+}
+
+.L2Counter {
+  position: absolute;
+  left: 0%;
+  bottom: 30%;
+}
+
+.L1Counter {
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+}

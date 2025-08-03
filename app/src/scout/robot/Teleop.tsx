@@ -5,6 +5,8 @@ import {
   StyledRedToggleButton,
   StyledToggleButton,
 } from "../../components/StyledToggleButton.tsx";
+import scoutStyles from "../../components/styles/ScoutStyles.module.css";
+import styles from "./Teleop.module.css";
 
 type TeleopProps = {
   match: TeamMatchEntry;
@@ -72,17 +74,14 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                 }}
               />
               <HalfSmallCounter
+                id="teleop-L4-counter"
+                className={styles.L4Counter}
                 value={match.teleopL4!}
                 setValue={(value) => {
                   setMatch({
                     ...match,
                     teleopL4: value,
                   });
-                }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "70%",
                 }}
               />
               <Box
@@ -114,11 +113,8 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                     teleopL3: value,
                   });
                 }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "50%",
-                }}
+                className={styles.L3Counter}
+                id="teleop-L3-counter"
               />
               <Box
                 sx={(theme) => ({
@@ -149,11 +145,8 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                     teleopL2: value,
                   });
                 }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "30%",
-                }}
+                className={styles.L2Counter}
+                id="teleop-L2-counter"
               />
               <Box
                 sx={(theme) => ({
@@ -184,11 +177,8 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                     teleopL1: value,
                   });
                 }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "0%",
-                }}
+                className={styles.L1Counter}
+                id="teleop-L1-counter"
               />
             </Box>
           </Box>
@@ -230,11 +220,8 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                   teleopNet: value,
                 });
               }}
-              sx={{
-                position: "absolute",
-                left: "0%",
-                bottom: "0%",
-              }}
+              className={scoutStyles.imageCounter}
+              id="teleop-net-counter"
             />
           </Box>
           <Box
@@ -272,11 +259,8 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                     teleopProcessor: value,
                   });
                 }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "0%",
-                }}
+                className={scoutStyles.imageCounter}
+                id="teleop-processor-counter"
               />
             </Box>
           </Box>

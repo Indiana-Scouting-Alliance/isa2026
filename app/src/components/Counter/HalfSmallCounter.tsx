@@ -1,81 +1,43 @@
 import { Remove } from "@mui/icons-material";
-import { IconButton, Stack, SxProps, TextField } from "@mui/material";
+import Button from "../Button/Button.tsx";
+import Input from "../Input/Input.tsx";
+import styles from "./SmallCounter.module.css";
 
 type HalfSmallCounterProps = {
   value: number;
   setValue: (value: number) => void;
-  sx?: SxProps;
   className?: string;
+  id: string;
 };
 export default function HalfSmallCounter({
   value,
   setValue,
-  sx,
   className,
+  id,
 }: HalfSmallCounterProps) {
-  const buttonSx: SxProps = {
-    color: "primary.contrastText",
-    backgroundColor: "primary.main",
-    borderRadius: 2,
-    pl: 0,
-    pr: 0,
-    "&:hover": {
-      backgroundColor: "primary.main",
-    },
-  };
-
   return (
-    <Stack
-      sx={sx}
-      className={className}>
-      <Stack
-        direction="row"
-        sx={{
-          alignItems: "center",
+    <div
+      className={styles.container + " " + (className || "")}
+      onClick={(event) => {
+        event.stopPropagation();
+      }}>
+      <Button
+        className={styles.button}
+        onClick={(event) => {
+          event.stopPropagation();
+          if (value > 0) {
+            setValue(value - 1);
+          }
         }}>
-        <IconButton
-          onClick={(event) => {
-            event.stopPropagation();
-            if (value > 0) {
-              setValue(value - 1);
-            }
-          }}
-          sx={buttonSx}>
-          <Remove />
-        </IconButton>
-        <TextField
-          value={value}
-          size="small"
-          sx={(theme) => ({
-            color: "secondary.contrastText",
-            backgroundColor: "secondary.main",
-            width: "3em",
-            "& .MuiInputBase-input.Mui-disabled": {
-              WebkitTextFillColor: theme.palette.text.primary,
-              color: theme.palette.text.primary,
-            },
-          })}
-          slotProps={{
-            htmlInput: {
-              sx: {
-                padding: "2px",
-              },
-            },
-          }}
-          disabled
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-        />
-        {/* <IconButton
-          onClick={(event) => {
-            event.stopPropagation();
-            setValue(value + 1);
-          }}
-          sx={buttonSx}>
-          <Add />
-        </IconButton> */}
-      </Stack>
-    </Stack>
+        <Remove />
+      </Button>
+      <Input
+        id={id}
+        value={value}
+        className={styles.input}
+        outlineClassName={styles.inputOutline}
+        disabled
+      />
+    </div>
   );
 }

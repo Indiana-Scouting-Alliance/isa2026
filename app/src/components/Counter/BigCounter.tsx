@@ -19,7 +19,7 @@ export default function BigCounter({
   decrement,
   label,
   max,
-  disabled = false,
+  disabled,
 }: BigCounterProps) {
   return (
     <div className={styles.container}>

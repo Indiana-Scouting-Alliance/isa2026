@@ -12,6 +12,8 @@ type TextAreaProps = {
   disabled?: boolean;
   className?: string;
   outlineClassName?: string;
+  rows?: number;
+  inputClassName?: string;
 };
 export default function TextArea({
   value,
@@ -25,6 +27,8 @@ export default function TextArea({
   disabled,
   className,
   outlineClassName,
+  rows,
+  inputClassName,
 }: TextAreaProps) {
   return (
     <div className={styles.container + " " + (className || "")}>
@@ -45,7 +49,11 @@ export default function TextArea({
         }>
         <textarea
           className={
-            styles.input + " " + (disabled ? styles.inputDisabled : "")
+            styles.input +
+            " " +
+            (disabled ? styles.inputDisabled : "") +
+            " " +
+            (inputClassName || "")
           }
           value={value}
           onChange={(event) => {
@@ -56,7 +64,8 @@ export default function TextArea({
           id={id}
           onKeyDown={onKeyDown}
           placeholder={placeholder}
-          disabled={disabled}></textarea>
+          disabled={disabled}
+          rows={rows}></textarea>
       </div>
       {helperText && (
         <p

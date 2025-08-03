@@ -1,17 +1,12 @@
 import { TeamMatchEntry } from "@isa2026/api/src/utils/dbtypes.ts";
-import {
-  Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  FormLabel,
-  Stack,
-  TextField,
-  ToggleButtonGroup,
-} from "@mui/material";
-import { StyledToggleButton } from "../../components/StyledToggleButton.tsx";
+import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
+import ToggleButtonGroup from "../../components/Button/ToggleButton/ToggleButtonGroup.tsx";
+import Divider from "../../components/Divider/Divider.tsx";
+import Checkbox from "../../components/Input/Checkbox/Checkbox.tsx";
+import TextArea from "../../components/Input/TextArea.tsx";
+import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
+import scoutStyles from "../../components/styles/ScoutStyles.module.css";
+import styles from "./Postmatch.module.css";
 
 type PostmatchProps = {
   match: TeamMatchEntry;
@@ -24,264 +19,193 @@ export default function Postmatch({
   dataConfidenceError,
 }: PostmatchProps) {
   return (
-    <Stack
-      direction={{ xs: "column", md: "row" }}
-      sx={{
-        height: "auto",
-        width: "100%",
-        overflow: "auto",
-      }}>
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 2,
-          pl: 4,
-        }}>
-        <FormControl>
-          <FormLabel>
-            Did they do any of the following exceptionally well?
-          </FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtCoralL1!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtCoralL1: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+    <div
+      className={
+        scoutStyles.contentContainer +
+        " " +
+        changeFlexDirection.changeFlexDirection
+      }>
+      <div className={scoutStyles.half}>
+        <label className={styles.goodAtLabel}>
+          Did they do any of the following exceptionally well?
+          <div className={styles.goodAtCheckboxes}>
+            <Checkbox
+              id="good-at-coral-l1"
               label="Coral L1"
+              value={match.goodAtCoralL1!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtCoralL1: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtCoralL2!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtCoralL2: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-coral-l2"
               label="Coral L2"
+              value={match.goodAtCoralL2!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtCoralL2: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtCoralL3!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtCoralL3: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-coral-l3"
               label="Coral L3"
+              value={match.goodAtCoralL3!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtCoralL3: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtCoralL4!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtCoralL4: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-coral-l4"
               label="Coral L4"
+              value={match.goodAtCoralL4!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtCoralL4: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtAlgaeNet!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtAlgaeNet: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-algae-net"
               label="Algae in Net"
+              value={match.goodAtAlgaeNet!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtAlgaeNet: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtAlgaeProcessor!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtAlgaeProcessor: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-algae-processor"
               label="Algae in Processor"
+              value={match.goodAtAlgaeProcessor!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtAlgaeProcessor: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtClimb!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtClimb: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-climb"
               label="Climb"
+              value={match.goodAtClimb!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtClimb: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtDefense!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtDefense: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-defense"
               label="Defense"
+              value={match.goodAtDefense!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtDefense: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtWorkingWithAlliance!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtWorkingWithAlliance: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-working-with-alliance"
               label="Working with Alliance"
+              value={match.goodAtWorkingWithAlliance!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtWorkingWithAlliance: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtDriving!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtDriving: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-driving"
               label="Driving"
+              value={match.goodAtDriving!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtDriving: value,
+                });
+              }}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={match.goodAtAuto!}
-                  onChange={(event) => {
-                    setMatch({
-                      ...match,
-                      goodAtAuto: event.currentTarget.checked,
-                    });
-                  }}
-                />
-              }
+            <Checkbox
+              id="good-at-auto"
               label="Auto"
+              value={match.goodAtAuto!}
+              onChange={(value) => {
+                setMatch({
+                  ...match,
+                  goodAtAuto: value,
+                });
+              }}
             />
-          </FormGroup>
-        </FormControl>
-      </Stack>
-      <Divider
-        orientation="vertical"
-        flexItem
-      />
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 2,
-        }}
-        gap={4}>
-        <Stack
-          sx={{
-            width: 1,
-          }}>
-          <FormLabel>Data Confidence</FormLabel>
-          <ToggleButtonGroup
-            sx={{
-              width: 1,
-            }}>
-            <StyledToggleButton
-              value="Low Data Confidence?"
-              selected={match.dataConfidence === "low"}
-              onChange={() => {
-                setMatch({
-                  ...match,
-                  dataConfidence: "low",
-                });
-              }}
-              sx={{
-                flex: 1,
-              }}>
-              Low
-            </StyledToggleButton>
-            <StyledToggleButton
-              value="Neutral Data Confidence?"
-              selected={match.dataConfidence === "neutral"}
-              onChange={() => {
-                setMatch({
-                  ...match,
-                  dataConfidence: "neutral",
-                });
-              }}
-              sx={{
-                flex: 1,
-              }}>
-              Neutral
-            </StyledToggleButton>
-            <StyledToggleButton
-              value="High Data Confidence?"
-              selected={match.dataConfidence === "high"}
-              onChange={() => {
-                setMatch({
-                  ...match,
-                  dataConfidence: "high",
-                });
-              }}
-              sx={{
-                flex: 1,
-              }}>
-              High
-            </StyledToggleButton>
-          </ToggleButtonGroup>
-          <FormHelperText
-            color="error"
-            sx={{
-              pl: 2,
-              color: "error.main",
-            }}>
-            {dataConfidenceError}
-          </FormHelperText>
-        </Stack>
-        <TextField
-          label="Comments"
-          value={match.comments}
-          onChange={(event) => {
+          </div>
+        </label>
+      </div>
+      <Divider orientation="vertical" />
+      <div className={scoutStyles.half}>
+        <ToggleButtonGroup
+          value={match.dataConfidence || ""}
+          onChange={(value) => {
             setMatch({
               ...match,
-              comments: event.currentTarget.value.replace(/"/g, "'"),
+              dataConfidence: (value === "" ? null : value) as
+                | "low"
+                | "neutral"
+                | "high"
+                | null,
             });
           }}
-          multiline
+          label="Data Confidence"
+          error={dataConfidenceError !== ""}
+          helperText={dataConfidenceError}>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            className={styles.dataConfidenceToggle}
+            value="low">
+            Low
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            className={styles.dataConfidenceToggle}
+            value="neutral">
+            Neutral
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            className={styles.dataConfidenceToggle}
+            value="high">
+            High
+          </ToggleButton>
+        </ToggleButtonGroup>
+        <TextArea
+          id="postmatch-comments"
+          label="Comments"
+          rows={5}
+          inputClassName={styles.commentsInput}
+          value={match.comments!}
+          onChange={(value) => {
+            setMatch({
+              ...match,
+              comments: value.replace(/"/g, "'"),
+            });
+          }}
         />
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }

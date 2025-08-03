@@ -1,7 +1,7 @@
 import styles from "./IconButton.module.css";
 
 type IconButtonProps = {
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
   className?: string;
 };

@@ -1,82 +1,58 @@
 import { Add, Remove } from "@mui/icons-material";
-import { IconButton, Stack, SxProps, TextField } from "@mui/material";
+import Button from "../Button/Button.tsx";
+import Input from "../Input/Input.tsx";
+import styles from "./SmallCounter.module.css";
 
 type SmallCounterProps = {
+  id: string;
   value: number;
   setValue: (value: number) => void;
   max?: number;
-  sx?: SxProps;
+  className?: string;
+  insideLabel?: string;
 };
 export default function SmallCounter({
+  id,
   value,
   setValue,
   max,
-  sx,
+  className,
+  insideLabel,
 }: SmallCounterProps) {
-  const buttonSx: SxProps = {
-    color: "primary.contrastText",
-    backgroundColor: "primary.main",
-    borderRadius: 2,
-    pl: 0,
-    pr: 0,
-    "&:hover": {
-      backgroundColor: "primary.main",
-    },
-  };
-
   return (
-    <Stack sx={sx}>
-      <Stack
-        direction="row"
-        sx={{
-          alignItems: "center",
-        }}>
-        <IconButton
-          onClick={(event) => {
-            event.stopPropagation();
-            if (value > 0) {
-              setValue(value - 1);
-            }
-          }}
-          sx={buttonSx}>
-          <Remove />
-        </IconButton>
-        <TextField
-          value={"L1 - " + value}
-          size="small"
-          sx={(theme) => ({
-            color: "secondary.contrastText",
-            backgroundColor: "secondary.main",
-            width: "4em",
-            "& .MuiInputBase-input.Mui-disabled": {
-              WebkitTextFillColor: theme.palette.text.primary,
-              color: theme.palette.text.primary,
-            },
-          })}
-          slotProps={{
-            htmlInput: {
-              sx: {
-                padding: "2px",
-              },
-            },
-          }}
-          disabled
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-        />
-        <IconButton
-          onClick={(event) => {
-            event.stopPropagation();
-            if (max === undefined || value < max) {
-              console.log(max);
-              setValue(value + 1);
-            }
-          }}
-          sx={buttonSx}>
-          <Add />
-        </IconButton>
-      </Stack>
-    </Stack>
+    <div
+      className={styles.container + " " + (className || "")}
+      onClick={(event) => {
+        event.stopPropagation();
+      }}>
+      <Button
+        onClick={(event) => {
+          event.stopPropagation();
+          if (value > 0) {
+            setValue(value - 1);
+          }
+        }}
+        className={styles.button}>
+        <Remove />
+      </Button>
+      <Input
+        id={id}
+        value={(insideLabel || "") + value}
+        className={styles.input}
+        outlineClassName={styles.inputOutline}
+        disabled
+      />
+      <Button
+        onClick={(event) => {
+          event.stopPropagation();
+          if (max === undefined || value < max) {
+            console.log(max);
+            setValue(value + 1);
+          }
+        }}
+        className={styles.button}>
+        <Add />
+      </Button>
+    </div>
   );
 }

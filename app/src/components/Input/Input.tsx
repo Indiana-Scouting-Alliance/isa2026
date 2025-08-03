@@ -14,6 +14,7 @@ type InputProps = {
   helperText?: string;
   disabled?: boolean;
   className?: string;
+  outlineClassName?: string;
 };
 export default function Input({
   value,
@@ -29,6 +30,7 @@ export default function Input({
   helperText,
   disabled,
   className,
+  outlineClassName,
 }: InputProps) {
   return (
     <div className={styles.container + " " + (className || "")}>
@@ -40,7 +42,13 @@ export default function Input({
         </label>
       )}
       <div
-        className={styles.outline + " " + (error ? styles.errorOutline : "")}>
+        className={
+          styles.outline +
+          " " +
+          (outlineClassName || "") +
+          " " +
+          (error ? styles.errorOutline : "")
+        }>
         {startIcon}
         <input
           className={

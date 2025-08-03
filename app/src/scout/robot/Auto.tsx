@@ -35,24 +35,6 @@ export default function Auto({
     setPopperReef("");
   });
 
-  const toggleButtonRefs = [
-    useRef<HTMLButtonElement>(null),
-    useRef<HTMLButtonElement>(null),
-    useRef<HTMLButtonElement>(null),
-  ];
-  // const [height, setHeight] = useState(0);
-  // useEffect(() => {
-  //   if (toggleButtonRefs.every((ref) => ref.current !== null)) {
-  //     setHeight(
-  //       toggleButtonRefs.reduce(
-  //         (acc, ref) => acc + ref.current!.getBoundingClientRect().height,
-  //         0
-  //       ) + 48
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const teleopTimeoutHasRun = useRef(false);
   const teleopTimeout = useRef<NodeJS.Timeout | null>(null);
   console.log("---", teleopTimeout.current);
@@ -429,7 +411,7 @@ export default function Auto({
                 }}>
                 L2
               </ToggleButton>
-              <SmallCounter
+              <SmallCounter id='auto-L1-counter' insideLabel='L1 - '
                 value={
                   match[
                     ("autoCoral" +
@@ -493,7 +475,7 @@ export default function Auto({
           }}
           classNameTrue={scoutStyles.redToggleButtonTrue}
           classNameFalse={scoutStyles.redToggleButtonFalse}
-          ref={toggleButtonRefs[0]}>
+        >
           Robot Died
         </ToggleButton>
         <ToggleButton
@@ -507,7 +489,7 @@ export default function Auto({
           }}
           classNameTrue={scoutStyles.normalToggleButtonTrue}
           classNameFalse={scoutStyles.normalToggleButtonFalse}
-          ref={toggleButtonRefs[1]}>
+      >
           Removed Algae from Reef
         </ToggleButton>
         <ToggleButton
@@ -521,7 +503,7 @@ export default function Auto({
           }}
           classNameTrue={scoutStyles.normalToggleButtonTrue}
           classNameFalse={scoutStyles.normalToggleButtonFalse}
-          ref={toggleButtonRefs[2]}>
+       >
           Crossed Robot Starting Line
         </ToggleButton>
         <div className={styles.bargeAndProcessorContainer}>

@@ -506,7 +506,6 @@ export default function Auto({
           Crossed Robot Starting Line
         </ToggleButton>
         <div className={styles.bargeAndProcessorContainer}>
-          {/* height: `calc(100% - ${height}px)`, */}
           <div
             className={
               styles.processorContainerContainer +

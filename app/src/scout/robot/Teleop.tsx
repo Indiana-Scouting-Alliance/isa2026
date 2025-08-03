@@ -1,10 +1,10 @@
 import { TeamMatchEntry } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Box, Divider, Stack, ToggleButtonGroup } from "@mui/material";
+import HalfSmallCounter from "../../components/Counter/HalfSmallCounter.tsx";
 import {
   StyledRedToggleButton,
   StyledToggleButton,
 } from "../../components/StyledToggleButton.tsx";
-import Counter from "../../components/Counter/Counter.tsx";
 
 type TeleopProps = {
   match: TeamMatchEntry;
@@ -71,7 +71,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                   }
                 }}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.teleopL4!}
                 setValue={(value) => {
                   setMatch({
@@ -106,7 +106,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                   }
                 }}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.teleopL3!}
                 setValue={(value) => {
                   setMatch({
@@ -141,7 +141,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                   }
                 }}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.teleopL2!}
                 setValue={(value) => {
                   setMatch({
@@ -176,7 +176,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                   }
                 }}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.teleopL1!}
                 setValue={(value) => {
                   setMatch({
@@ -222,7 +222,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                 width: "100%",
               }}
             />
-            <Counter
+            <HalfSmallCounter
               value={match.teleopNet!}
               setValue={(value) => {
                 setMatch({
@@ -264,7 +264,7 @@ export function Teleop({ match, setMatch }: TeleopProps) {
                   width: "100%",
                 }}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.teleopProcessor!}
                 setValue={(value) => {
                   setMatch({

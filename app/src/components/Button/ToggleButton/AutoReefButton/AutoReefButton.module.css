@@ -1,6 +1,8 @@
 .button {
   width: 2em;
   height: 4em;
+  padding: 0;
+
   border: none;
 }
 .buttonSelected {

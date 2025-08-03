@@ -2,26 +2,17 @@ import {
   TeamMatchEntry,
   TeamMatchEntryColumn,
 } from "@isa2026/api/src/utils/dbtypes.ts";
-import {
-  Box,
-  ButtonGroup,
-  ClickAwayListener,
-  Divider,
-  Popper,
-  Stack,
-} from "@mui/material";
 import EventEmitter from "events";
 import { useEffect, useRef, useState } from "react";
 import AutoReefButton from "../../components/Button/ToggleButton/AutoReefButton/AutoReefButton.tsx";
-import AutoL1Counter from "../../components/Counter/AutoL1Counter.tsx";
-import Counter from "../../components/Counter/Counter.tsx";
-import {
-  StyledRedToggleButton,
-  StyledToggleButton,
-} from "../../components/StyledToggleButton.tsx";
+import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
+import HalfSmallCounter from "../../components/Counter/HalfSmallCounter.tsx";
+import SmallCounter from "../../components/Counter/SmallCounter.tsx";
+import Divider from "../../components/Divider/Divider.tsx";
 import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
 import scoutStyles from "../../components/styles/ScoutStyles.module.css";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
+import useClickAwayListener from "../../utils/clickAwayListener.ts";
 import styles from "./Auto.module.css";
 
 type AutoProps = {
@@ -39,24 +30,28 @@ export default function Auto({
   const [popperReef, setPopperReef] = useState<
     "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | ""
   >("");
+  const popperRef = useRef<HTMLDivElement>(null);
+  useClickAwayListener(popperRef, () => {
+    setPopperReef("");
+  });
 
   const toggleButtonRefs = [
     useRef<HTMLButtonElement>(null),
     useRef<HTMLButtonElement>(null),
     useRef<HTMLButtonElement>(null),
   ];
-  const [height, setHeight] = useState(0);
-  useEffect(() => {
-    if (toggleButtonRefs.every((ref) => ref.current !== null)) {
-      setHeight(
-        toggleButtonRefs.reduce(
-          (acc, ref) => acc + ref.current!.getBoundingClientRect().height,
-          0
-        ) + 48
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // const [height, setHeight] = useState(0);
+  // useEffect(() => {
+  //   if (toggleButtonRefs.every((ref) => ref.current !== null)) {
+  //     setHeight(
+  //       toggleButtonRefs.reduce(
+  //         (acc, ref) => acc + ref.current!.getBoundingClientRect().height,
+  //         0
+  //       ) + 48
+  //     );
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const teleopTimeoutHasRun = useRef(false);
   const teleopTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -110,11 +105,19 @@ export default function Auto({
         " " +
         changeFlexDirection.changeFlexDirection
       }>
-      <div className={scoutStyles.half + " " + styles.reefContainerContainer}>
-        <div className={styles.reefContainer}>
+      <div
+        className={
+          scoutStyles.half +
+          " " +
+          styles.reefContainerContainer +
+          " " +
+          scoutStyles.imageContainerContainer
+        }>
+        <div
+          className={styles.reefContainer + " " + scoutStyles.imageContainer}>
           <img
             src={import.meta.env.BASE_URL + "assets/Reef.png"}
-            className={styles.reefImage}
+            className={scoutStyles.image}
           />
           <AutoReefButton
             selected={popperReef === "A"}
@@ -368,230 +371,171 @@ export default function Auto({
               : styles.reefButtonF)
             }
           />
-          <ClickAwayListener
-            onClickAway={() => {
-              setPopperReef("");
-            }}>
-            <Popper
-              open={popperReef !== ""}
-              slotProps={{
-                root: {
-                  style: {
-                    position: "absolute",
-                    left: "50%",
-                    top: "50%",
-                    transform: "translate(-50%, -50%)",
-                  },
-                },
-              }}
-              disablePortal
-              modifiers={[
-                {
-                  name: "flip",
-                  enabled: true,
-                  options: {
-                    altBoundary: true,
-                    rootBoundary: "viewport",
-                    padding: 8,
-                  },
-                },
-                {
-                  name: "preventOverflow",
-                  enabled: true,
-                  options: {
-                    altAxis: true,
-                    altBoundary: true,
-                    tether: true,
-                    rootBoundary: "document",
-                    padding: 8,
-                  },
-                },
-              ]}>
-              <ButtonGroup
-                orientation="vertical"
-                sx={{
-                  backgroundColor: "background.paper",
+          {popperReef !== "" && (
+            <div
+              className={styles.popper}
+              ref={popperRef}>
+              <ToggleButton
+                className={styles.popperButton}
+                value={
+                  match[
+                    ("autoCoral" + popperReef + "L4") as TeamMatchEntryColumn
+                  ] as boolean
+                }
+                onChange={(value) => {
+                  if (popperReef) {
+                    setMatch({
+                      ...match,
+                      ["autoCoral" + popperReef + "L4"]: value,
+                    });
+                    setPopperReef("");
+                  }
                 }}>
-                <StyledToggleButton
-                  value="L4"
-                  selected={
-                    match[
-                      ("autoCoral" + popperReef + "L4") as TeamMatchEntryColumn
-                    ] as boolean
+                L4
+              </ToggleButton>
+              <ToggleButton
+                className={styles.popperButton}
+                value={
+                  match[
+                    ("autoCoral" + popperReef + "L3") as TeamMatchEntryColumn
+                  ] as boolean
+                }
+                onChange={(value) => {
+                  if (popperReef) {
+                    setMatch({
+                      ...match,
+                      ["autoCoral" + popperReef + "L3"]: value,
+                    });
+                    setPopperReef("");
                   }
-                  onClick={() => {
-                    if (popperReef) {
-                      setMatch({
-                        ...match,
-                        ["autoCoral" + popperReef + "L4"]: !(match[
-                          ("autoCoral" +
-                            popperReef +
-                            "L4") as TeamMatchEntryColumn
-                        ] as boolean),
-                      });
-                      setPopperReef("");
-                    }
-                  }}>
-                  L4
-                </StyledToggleButton>
-                <StyledToggleButton
-                  value="L3"
-                  selected={
-                    match[
-                      ("autoCoral" + popperReef + "L3") as TeamMatchEntryColumn
-                    ] as boolean
+                }}>
+                L3
+              </ToggleButton>
+              <ToggleButton
+                className={styles.popperButton}
+                value={
+                  match[
+                    ("autoCoral" + popperReef + "L2") as TeamMatchEntryColumn
+                  ] as boolean
+                }
+                onChange={(value) => {
+                  if (popperReef) {
+                    setMatch({
+                      ...match,
+                      ["autoCoral" + popperReef + "L2"]: value,
+                    });
+                    setPopperReef("");
                   }
-                  onClick={() => {
-                    if (popperReef) {
-                      setMatch({
-                        ...match,
-                        ["autoCoral" + popperReef + "L3"]: !(match[
-                          ("autoCoral" +
-                            popperReef +
-                            "L3") as TeamMatchEntryColumn
-                        ] as boolean),
-                      });
-                      setPopperReef("");
-                    }
-                  }}>
-                  L3
-                </StyledToggleButton>
-                <StyledToggleButton
-                  value="L2"
-                  selected={
-                    match[
-                      ("autoCoral" + popperReef + "L2") as TeamMatchEntryColumn
-                    ] as boolean
+                }}>
+                L2
+              </ToggleButton>
+              <SmallCounter
+                value={
+                  match[
+                    ("autoCoral" +
+                      {
+                        A: "AB",
+                        B: "AB",
+                        C: "CD",
+                        D: "CD",
+                        E: "EF",
+                        F: "EF",
+                        G: "GH",
+                        H: "GH",
+                        I: "IJ",
+                        J: "IJ",
+                        K: "KL",
+                        L: "KL",
+                      }[popperReef] +
+                      "L1") as TeamMatchEntryColumn
+                  ] as number
+                }
+                setValue={(value) => {
+                  if (popperReef) {
+                    setMatch({
+                      ...match,
+                      ["autoCoral" +
+                      {
+                        A: "AB",
+                        B: "AB",
+                        C: "CD",
+                        D: "CD",
+                        E: "EF",
+                        F: "EF",
+                        G: "GH",
+                        H: "GH",
+                        I: "IJ",
+                        J: "IJ",
+                        K: "KL",
+                        L: "KL",
+                      }[popperReef] +
+                      "L1"]: value,
+                    });
+                    setPopperReef("");
                   }
-                  onClick={() => {
-                    if (popperReef) {
-                      setMatch({
-                        ...match,
-                        ["autoCoral" + popperReef + "L2"]: !(match[
-                          ("autoCoral" +
-                            popperReef +
-                            "L2") as TeamMatchEntryColumn
-                        ] as boolean),
-                      });
-                      setPopperReef("");
-                    }
-                  }}>
-                  L2
-                </StyledToggleButton>
-                <AutoL1Counter
-                  value={
-                    popperReef !== "" ?
-                      (match[
-                        ("autoCoral" +
-                          {
-                            A: "AB",
-                            B: "AB",
-                            C: "CD",
-                            D: "CD",
-                            E: "EF",
-                            F: "EF",
-                            G: "GH",
-                            H: "GH",
-                            I: "IJ",
-                            J: "IJ",
-                            K: "KL",
-                            L: "KL",
-                          }[popperReef] +
-                          "L1") as TeamMatchEntryColumn
-                      ] as number)
-                    : 0
-                  }
-                  setValue={(value) => {
-                    if (popperReef) {
-                      setMatch({
-                        ...match,
-                        ["autoCoral" +
-                        {
-                          A: "AB",
-                          B: "AB",
-                          C: "CD",
-                          D: "CD",
-                          E: "EF",
-                          F: "EF",
-                          G: "GH",
-                          H: "GH",
-                          I: "IJ",
-                          J: "IJ",
-                          K: "KL",
-                          L: "KL",
-                        }[popperReef] +
-                        "L1"]: value,
-                      });
-                      setPopperReef("");
-                    }
-                  }}
-                  max={6}
-                />
-              </ButtonGroup>
-            </Popper>
-          </ClickAwayListener>
+                }}
+                max={6}
+              />
+            </div>
+          )}
         </div>
       </div>
       <Divider orientation="vertical" />
       <div className={scoutStyles.half}>
-        <StyledRedToggleButton
-          value="Robot Died?"
-          selected={match.died!}
-          onChange={() => {
+        <ToggleButton
+          value={match.died!}
+          onChange={(value) => {
             teleopTimeoutButtonClick();
             setMatch({
               ...match,
-              died: !match.died,
+              died: value,
             });
           }}
+          classNameTrue={scoutStyles.redToggleButtonTrue}
+          classNameFalse={scoutStyles.redToggleButtonFalse}
           ref={toggleButtonRefs[0]}>
           Robot Died
-        </StyledRedToggleButton>
-        <StyledToggleButton
-          value="Removed Algae from Reef?"
-          selected={match.removedAlgaeFromReef!}
-          onChange={() => {
+        </ToggleButton>
+        <ToggleButton
+          value={match.removedAlgaeFromReef!}
+          onChange={(value) => {
             teleopTimeoutButtonClick();
             setMatch({
               ...match,
-              removedAlgaeFromReef: !match.removedAlgaeFromReef,
+              removedAlgaeFromReef: value,
             });
           }}
+          classNameTrue={scoutStyles.normalToggleButtonTrue}
+          classNameFalse={scoutStyles.normalToggleButtonFalse}
           ref={toggleButtonRefs[1]}>
           Removed Algae from Reef
-        </StyledToggleButton>
-        <StyledToggleButton
-          value="Crossed Robot Starting Line?"
-          selected={match.autoCrossedRSL!}
-          onChange={() => {
+        </ToggleButton>
+        <ToggleButton
+          value={match.autoCrossedRSL!}
+          onChange={(value) => {
             teleopTimeoutButtonClick();
             setMatch({
               ...match,
-              autoCrossedRSL: !match.autoCrossedRSL,
+              autoCrossedRSL: value,
             });
           }}
+          classNameTrue={scoutStyles.normalToggleButtonTrue}
+          classNameFalse={scoutStyles.normalToggleButtonFalse}
           ref={toggleButtonRefs[2]}>
           Crossed Robot Starting Line
-        </StyledToggleButton>
-        <Stack
-          direction="row"
-          sx={{
-            flex: 1,
-            height: `calc(100% - ${height}px)`,
-          }}>
-          <Stack
-            sx={{
-              width: "65%",
-              alignItems: "center",
-              padding: 1,
-            }}>
-            <Box
-              sx={{
-                aspectRatio: "2547 / 2311",
-                maxWidth: "100%",
-                maxHeight: "100%",
-                position: "relative",
-              }}
+        </ToggleButton>
+        <div className={styles.bargeAndProcessorContainer}>
+          {/* height: `calc(100% - ${height}px)`, */}
+          <div
+            className={
+              styles.processorContainerContainer +
+              " " +
+              scoutStyles.imageContainerContainer
+            }>
+            <div
+              className={
+                styles.processorContainer + " " + scoutStyles.imageContainer
+              }
               onClick={() => {
                 teleopTimeoutButtonClick();
                 if (match.autoProcessor! < 10) {
@@ -603,12 +547,9 @@ export default function Auto({
               }}>
               <img
                 src={import.meta.env.BASE_URL + "assets/Processor.png"}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
+                className={scoutStyles.image}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.autoProcessor!}
                 setValue={(value) => {
                   teleopTimeoutButtonClick();
@@ -617,27 +558,20 @@ export default function Auto({
                     autoProcessor: value,
                   });
                 }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "0%",
-                }}
+                className={scoutStyles.imageCounter}
               />
-            </Box>
-          </Stack>
-          <Stack
-            sx={{
-              width: "35%",
-              alignItems: "center",
-              padding: 1,
-            }}>
-            <Box
-              sx={{
-                aspectRatio: "1670 / 2881",
-                maxWidth: "100%",
-                maxHeight: "100%",
-                position: "relative",
-              }}
+            </div>
+          </div>
+          <div
+            className={
+              styles.bargeContainerContainer +
+              " " +
+              scoutStyles.imageContainerContainer
+            }>
+            <div
+              className={
+                styles.bargeContainer + " " + scoutStyles.imageContainer
+              }
               onClick={() => {
                 teleopTimeoutButtonClick();
                 if (match.autoNet! < 10) {
@@ -649,12 +583,9 @@ export default function Auto({
               }}>
               <img
                 src={import.meta.env.BASE_URL + "assets/Net.png"}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
+                className={scoutStyles.image}
               />
-              <Counter
+              <HalfSmallCounter
                 value={match.autoNet!}
                 setValue={(value) => {
                   teleopTimeoutButtonClick();
@@ -663,15 +594,11 @@ export default function Auto({
                     autoNet: value,
                   });
                 }}
-                sx={{
-                  position: "absolute",
-                  left: "0%",
-                  bottom: "0%",
-                }}
+                className={scoutStyles.imageCounter}
               />
-            </Box>
-          </Stack>
-        </Stack>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,18 @@
 import { Remove } from "@mui/icons-material";
 import { IconButton, Stack, SxProps, TextField } from "@mui/material";
 
-type CounterProps = {
+type HalfSmallCounterProps = {
   value: number;
   setValue: (value: number) => void;
   sx?: SxProps;
+  className?: string;
 };
-export default function Counter({ value, setValue, sx }: CounterProps) {
+export default function HalfSmallCounter({
+  value,
+  setValue,
+  sx,
+  className,
+}: HalfSmallCounterProps) {
   const buttonSx: SxProps = {
     color: "primary.contrastText",
     backgroundColor: "primary.main",
@@ -19,7 +25,9 @@ export default function Counter({ value, setValue, sx }: CounterProps) {
   };
 
   return (
-    <Stack sx={sx}>
+    <Stack
+      sx={sx}
+      className={className}>
       <Stack
         direction="row"
         sx={{

@@ -1,19 +1,52 @@
 .reefContainerContainer {
   padding: 16px;
-  align-items: center;
-  justify-content: center;
 }
 
 .reefContainer {
   aspect-ratio: 2547 / 2869;
-  max-width: 100%;
-  max-height: 100%;
-  position: relative;
 }
 
-.reefImage {
+.popper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--color-paper-background);
+  border: var(--button-border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+}
+
+.popperButton {
   width: 100%;
+  padding: 0;
+  min-height: 0;
+}
+
+.bargeAndProcessorContainer {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.processorContainerContainer {
+  width: 65%;
   height: 100%;
+  padding: 8px;
+}
+
+.processorContainer {
+  aspect-ratio: 2547 / 2311;
+}
+
+.bargeContainerContainer {
+  width: 35%;
+  height: 100%;
+  padding: 8px;
+}
+
+.bargeContainer {
+  aspect-ratio: 1670 / 2881;
 }
 
 /* ! Locations are based on Red/Blue on Left field orientation */

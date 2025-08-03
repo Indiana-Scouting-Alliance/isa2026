@@ -1,18 +1,18 @@
 import { Add, Remove } from "@mui/icons-material";
 import { IconButton, Stack, SxProps, TextField } from "@mui/material";
 
-type AutoL1CounterProps = {
+type SmallCounterProps = {
   value: number;
   setValue: (value: number) => void;
   max?: number;
   sx?: SxProps;
 };
-export default function AutoL1Counter({
+export default function SmallCounter({
   value,
   setValue,
   max,
   sx,
-}: AutoL1CounterProps) {
+}: SmallCounterProps) {
   const buttonSx: SxProps = {
     color: "primary.contrastText",
     backgroundColor: "primary.main",

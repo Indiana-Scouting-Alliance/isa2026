@@ -7,6 +7,7 @@ type ToggleButtonProps = {
   classNameTrue?: string;
   classNameFalse?: string;
   disabled?: boolean;
+  ref?: React.Ref<HTMLButtonElement>;
 };
 type ToggleButtonPropsAsStandalone = {
   value: boolean;
@@ -34,10 +35,12 @@ export default function ToggleButton({
   classNameTrue,
   classNameFalse,
   disabled,
+  ref,
   ...props
 }: ToggleButtonPropsAsStandalone | ToggleButtonPropsAsChild): React.ReactNode {
   return (
     <Button
+      htmlRef={ref}
       className={
         ((
           "selected" in props ? props.selected : value

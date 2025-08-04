@@ -15,8 +15,6 @@
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.6",
     "@mui/icons-material": "^6.5.0",
-    "@mui/lab": "6.0.0-beta.15",
-    "@mui/material": "^6.5.0",
     "@tanstack/react-query": "^5.83.0",
     "@trpc/client": "11.0.0-rc.608",
     "@trpc/react-query": "11.0.0-rc.608",

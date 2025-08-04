@@ -1,4 +1,4 @@
-import CloseIcon from "@mui/icons-material/Close";
+import { Close } from "@mui/icons-material";
 import IconButton from "../../Button/IconButton/IconButton.tsx";
 import Dialog, { DialogContent, DialogTitle } from "../Dialog.tsx";
 import styles from "./HelpDialog.module.css";
@@ -16,7 +16,7 @@ export default function HelpDialog({ open, onClose }: HelpDialogProps) {
       <DialogTitle className={styles.dialogTitle}>
         Help
         <IconButton onClick={onClose}>
-          <CloseIcon />
+          <Close />
         </IconButton>
       </DialogTitle>
       <DialogContent>

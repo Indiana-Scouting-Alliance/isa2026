@@ -1,5 +1,4 @@
 import { DBEvent, Match } from "@isa2026/api/src/utils/dbtypes.ts";
-import { Box } from "@mui/material";
 import { useState } from "react";
 import Button from "../components/Button/Button.tsx";
 import Dialog, {
@@ -168,11 +167,11 @@ export default function ExportEvent({
               Local
             </Button>
           </div>
-          <Box>
+          <div className={styles.statusContainer}>
             {isaStatus ? "ISA Server: " + isaStatus : ""}
             <br />
             {localStatus ? "Local: " + localStatus : ""}
-          </Box>
+          </div>
         </div>
       </DialogContent>
       <DialogActions>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Tab from "./Tab.tsx";
 import TabBar from "./TabBar.tsx";
 import styles from "./Tabs.module.css";
 
@@ -14,9 +15,15 @@ export default function Tabs({ tabs }: TabsProps) {
         value={currentTab}
         onChange={(value) => {
           setCurrentTab(value);
-        }}
-        tabs={Object.keys(tabs)}
-      />
+        }}>
+        {Object.keys(tabs).map((tab) => (
+          <Tab
+            key={tab}
+            value={tab}>
+            {tab}
+          </Tab>
+        ))}
+      </TabBar>
       <div className={styles.contentContainer}>{tabs[currentTab]}</div>
     </div>
   );

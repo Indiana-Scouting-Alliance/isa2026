@@ -4,6 +4,7 @@ import {
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { useState } from "react";
 import { Route, Routes, useNavigate, useResolvedPath } from "react-router-dom";
+import Tab from "../../components/Tabs/Tab.tsx";
 import TabBar from "../../components/Tabs/TabBar.tsx";
 import { trpc } from "../../utils/trpc.ts";
 import styles from "./Export.module.css";
@@ -12,7 +13,7 @@ import ExportLayout from "./ExportLayout.tsx";
 export default function Export() {
   const navigate = useNavigate();
   const resolvedPath = useResolvedPath("");
-  const pathend = resolvedPath.pathname.split("/").pop();
+  const pathend = resolvedPath.pathname.split("/").pop()!;
 
   const [showPublicApiToken, setShowPublicApiToken] = useState(false);
   const [linkIncludesToken, setLinkIncludesToken] = useState(false);
@@ -62,26 +63,23 @@ export default function Export() {
   return (
     <div className={styles.container}>
       <TabBar
-        value={
-          {
-            robots: "Robot Data",
-            humans: "Human Data",
-          }[pathend === "" ? "/" : pathend!]!
-        }
+        value={pathend === "" ? "/" : pathend}
         onChange={(value) => {
           navigate(
             resolvedPath.pathname.split("/").slice(0, -1).join("/") +
               "/" +
-              {
-                "Robot Data": "robots",
-                "Human Data": "humans",
-              }[value]
+              value
           );
-        }}
-        tabs={["Robot Data", "Human Data"]}
-      />
+        }}>
+        <Tab value="robots">Robot Data</Tab>
+        <Tab value="humans">Human Data</Tab>
+      </TabBar>
       <div className={styles.contentContainer}>
         <Routes>
+          <Route
+            path="/"
+            element={<div>Please select robot or human data.</div>}
+          />
           <Route
             path="robots"
             element={

@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  align-items: stretch;
+}
+
+button.button {
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 0;
+
+  color: var(--color-primary-contrastText);
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius);
+}
+
+.input {
+  width: 4.5em;
+
+  color: var(--color-secondary-contrastText);
+  background-color: var(--color-secondary);
+}
+
+.inputOutline {
+  padding: 1px;
+}

@@ -1,0 +1,45 @@
+.screenDarken {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* TODO: make var */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-index-modal);
+}
+
+.dialog {
+  max-width: 80vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+
+  background-color: var(--color-paper-background);
+  border-radius: var(--border-radius);
+  border: var(--button-border-width) solid var(--color-primary);
+}
+
+.dialogTitle {
+  margin-bottom: 16px;
+
+  font-family: var(--text-font-family);
+  font-size: var(--text-h2-size);
+}
+
+.dialogContent {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

@@ -14,11 +14,11 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250724.0",
+    "@cloudflare/workers-types": "^4.20250731.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
-    "wrangler": "^4.26.0"
+    "wrangler": "^4.26.1"
   }
 }

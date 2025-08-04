@@ -5,18 +5,16 @@ import {
   TeamMatchEntry,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Add, Remove } from "@mui/icons-material";
-import {
-  Box,
-  Divider,
-  FormHelperText,
-  IconButton,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { StyledRedToggleButton } from "../../components/StyledToggleButton.tsx";
+import Button from "../../components/Button/Button.tsx";
+import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
+import TransparentToggle from "../../components/Button/ToggleButton/TransparentToggle/TransparentToggle.tsx";
+import Divider from "../../components/Divider/Divider.tsx";
+import Input from "../../components/Input/Input.tsx";
+import Select from "../../components/Select/Select.tsx";
+import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
+import scoutStyles from "../../components/styles/ScoutStyles.module.css";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
-import { TransparentToggle } from "../Components.tsx";
+import styles from "./Prematch.module.css";
 
 type PrematchProps = {
   match: TeamMatchEntry;
@@ -41,259 +39,238 @@ export default function Prematch({
   startingPositionError,
 }: PrematchProps) {
   return (
-    <Stack
-      direction={{ xs: "column", md: "row" }}
-      sx={{
-        height: "auto",
-        width: "100%",
-        overflow: "auto",
-      }}>
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 2,
-          overflowY: "scroll",
-        }}
-        gap={2}>
-        <TextField
+    <div
+      className={
+        scoutStyles.contentContainer +
+        " " +
+        changeFlexDirection.changeFlexDirection
+      }>
+      <div className={scoutStyles.half}>
+        <Input
+          id="scout-name"
           value={match.scoutName}
-          onChange={(event) => {
+          onChange={(value) => {
             setMatch({
               ...match,
-              scoutName: event.currentTarget.value,
+              scoutName: value,
             });
           }}
           type="text"
-          variant="outlined"
           label="Scout Name & Last Initial"
           error={scoutNameError !== ""}
           helperText={scoutNameError}
         />
-        <TextField
+        <Input
+          id="scout-team-number"
+          type="number"
           value={isNaN(match.scoutTeamNumber) ? "" : match.scoutTeamNumber}
-          onChange={(event) => {
+          onChange={(value) => {
             setMatch({
               ...match,
-              scoutTeamNumber: parseInt(event.currentTarget.value),
+              scoutTeamNumber: parseInt(value),
             });
           }}
-          variant="outlined"
           label="Scout Team Number"
           error={scoutTeamNumberError !== ""}
           helperText={scoutTeamNumberError}
         />
-
-        <Stack
-          direction="row"
-          gap={1}
-          sx={{
-            width: 1,
-          }}>
-          <TextField
-            select
+        <div className={scoutStyles.matchInfoContainer}>
+          <Select
+            id="match-level"
             value={match.matchLevel}
             label="Level"
-            onChange={(event) => {
+            onChange={(value) => {
               setMatch({
                 ...match,
-                matchLevel: event.target.value as (typeof MatchLevel)[number],
+                matchLevel: value as (typeof MatchLevel)[number],
               });
             }}
-            sx={{
-              width: "5em",
-            }}>
-            <MenuItem value="None">n</MenuItem>
-            <MenuItem value="Practice">p</MenuItem>
-            <MenuItem value="Qualification">q</MenuItem>
-            <MenuItem value="Playoff">t</MenuItem>
-          </TextField>
-          <TextField
-            value={isNaN(match.matchNumber) ? "" : match.matchNumber}
-            onChange={(event) => {
-              const eventMatches = events.find(
-                (event) => event.eventKey === match.eventKey
-              )?.matches;
-              if (
-                eventMatches?.some(
-                  (x) =>
-                    x.matchNumber === parseInt(event.currentTarget.value) &&
-                    x.matchLevel === match.matchLevel
-                )
-              ) {
-                setMatch({
-                  ...match,
-                  matchNumber: parseInt(event.currentTarget.value),
-                  teamNumber: eventMatches.find(
-                    (x) =>
-                      x.matchNumber === parseInt(event.currentTarget.value) &&
-                      x.matchLevel === match.matchLevel
-                  )![
-                    (deviceSetup.alliance.toLowerCase() +
-                      deviceSetup.robotNumber) as
-                      | "red1"
-                      | "red2"
-                      | "red3"
-                      | "blue1"
-                      | "blue2"
-                      | "blue3"
-                  ],
-                });
-              } else {
-                setMatch({
-                  ...match,
-                  matchNumber: parseInt(event.currentTarget.value),
-                  teamNumber: 0,
-                });
-              }
-            }}
-            error={matchNumberError !== ""}
-            helperText={matchNumberError}
-            label="Match Number"
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <IconButton
-                    onClick={() => {
-                      if (match.matchNumber > 1) {
-                        const eventMatches = events.find(
-                          (event) => event.eventKey === deviceSetup.currentEvent
-                        )?.matches;
-                        if (
-                          eventMatches?.some(
-                            (x) =>
-                              x.matchNumber === match.matchNumber - 1 &&
-                              x.matchLevel === match.matchLevel
-                          )
-                        ) {
-                          setMatch({
-                            ...match,
-                            matchNumber: match.matchNumber - 1,
-                            teamNumber: eventMatches.find(
-                              (x) =>
-                                x.matchNumber === match.matchNumber - 1 &&
-                                x.matchLevel === match.matchLevel
-                            )![
-                              (deviceSetup.alliance.toLowerCase() +
-                                deviceSetup.robotNumber) as
-                                | "red1"
-                                | "red2"
-                                | "red3"
-                                | "blue1"
-                                | "blue2"
-                                | "blue3"
-                            ],
-                          });
-                        } else {
-                          setMatch({
-                            ...match,
-                            matchNumber: match.matchNumber - 1,
-                            teamNumber: 0,
-                          });
-                        }
-                      }
-                    }}>
-                    <Remove />
-                  </IconButton>
-                ),
-                endAdornment: (
-                  <IconButton
-                    onClick={() => {
-                      const eventMatches = events.find(
-                        (event) => event.eventKey === deviceSetup.currentEvent
-                      )?.matches;
-                      if (
-                        eventMatches?.some(
+            className={scoutStyles.matchLevel}>
+            <option value="None">n</option>
+            <option value="Practice">p</option>
+            <option value="Qualification">q</option>
+            <option value="Playoff">t</option>
+          </Select>
+          <div className={scoutStyles.matchNumber}>
+            <div className={scoutStyles.matchNumberButtonContainer}>
+              <p className={scoutStyles.matchNumberButtonSpacer}>X</p>
+              <Button
+                className={scoutStyles.matchNumberButton}
+                onClick={() => {
+                  if (match.matchNumber > 1) {
+                    const eventMatches = events.find(
+                      (event) => event.eventKey === deviceSetup.currentEvent
+                    )?.matches;
+                    if (
+                      eventMatches?.some(
+                        (x) =>
+                          x.matchNumber === match.matchNumber - 1 &&
+                          x.matchLevel === match.matchLevel
+                      )
+                    ) {
+                      setMatch({
+                        ...match,
+                        matchNumber: match.matchNumber - 1,
+                        teamNumber: eventMatches.find(
                           (x) =>
-                            x.matchNumber === match.matchNumber + 1 &&
+                            x.matchNumber === match.matchNumber - 1 &&
                             x.matchLevel === match.matchLevel
-                        )
-                      ) {
-                        setMatch({
-                          ...match,
-                          matchNumber: match.matchNumber + 1,
-                          teamNumber: eventMatches.find(
-                            (x) =>
-                              x.matchNumber === match.matchNumber + 1 &&
-                              x.matchLevel === match.matchLevel
-                          )![
-                            (deviceSetup.alliance.toLowerCase() +
-                              deviceSetup.robotNumber) as
-                              | "red1"
-                              | "red2"
-                              | "red3"
-                              | "blue1"
-                              | "blue2"
-                              | "blue3"
-                          ],
-                        });
-                      } else {
-                        setMatch({
-                          ...match,
-                          matchNumber: match.matchNumber + 1,
-                          teamNumber: 0,
-                        });
-                      }
-                    }}>
-                    <Add />
-                  </IconButton>
-                ),
-              },
-            }}
-            sx={{
-              flex: 1,
-            }}
-          />
-        </Stack>
-        <TextField
+                        )![
+                          (deviceSetup.alliance.toLowerCase() +
+                            deviceSetup.robotNumber) as
+                            | "red1"
+                            | "red2"
+                            | "red3"
+                            | "blue1"
+                            | "blue2"
+                            | "blue3"
+                        ],
+                      });
+                    } else {
+                      setMatch({
+                        ...match,
+                        matchNumber: match.matchNumber - 1,
+                        teamNumber: 0,
+                      });
+                    }
+                  }
+                }}>
+                <Remove />
+              </Button>
+            </div>
+            <Input
+              id="match-number"
+              className={scoutStyles.matchNumberInput}
+              type="number"
+              value={isNaN(match.matchNumber) ? "" : match.matchNumber}
+              onChange={(value) => {
+                const eventMatches = events.find(
+                  (event) => event.eventKey === match.eventKey
+                )?.matches;
+                if (
+                  eventMatches?.some(
+                    (x) =>
+                      x.matchNumber === parseInt(value) &&
+                      x.matchLevel === match.matchLevel
+                  )
+                ) {
+                  setMatch({
+                    ...match,
+                    matchNumber: parseInt(value),
+                    teamNumber: eventMatches.find(
+                      (x) =>
+                        x.matchNumber === parseInt(value) &&
+                        x.matchLevel === match.matchLevel
+                    )![
+                      (deviceSetup.alliance.toLowerCase() +
+                        deviceSetup.robotNumber) as
+                        | "red1"
+                        | "red2"
+                        | "red3"
+                        | "blue1"
+                        | "blue2"
+                        | "blue3"
+                    ],
+                  });
+                } else {
+                  setMatch({
+                    ...match,
+                    matchNumber: parseInt(value),
+                    teamNumber: 0,
+                  });
+                }
+              }}
+              label="Match Number"
+              error={matchNumberError !== ""}
+              helperText={matchNumberError}
+            />
+            <div className={scoutStyles.matchNumberButtonContainer}>
+              <p className={scoutStyles.matchNumberButtonSpacer}>X</p>
+              <Button
+                className={scoutStyles.matchNumberButton}
+                onClick={() => {
+                  const eventMatches = events.find(
+                    (event) => event.eventKey === deviceSetup.currentEvent
+                  )?.matches;
+                  if (
+                    eventMatches?.some(
+                      (x) =>
+                        x.matchNumber === match.matchNumber + 1 &&
+                        x.matchLevel === match.matchLevel
+                    )
+                  ) {
+                    setMatch({
+                      ...match,
+                      matchNumber: match.matchNumber + 1,
+                      teamNumber: eventMatches.find(
+                        (x) =>
+                          x.matchNumber === match.matchNumber + 1 &&
+                          x.matchLevel === match.matchLevel
+                      )![
+                        (deviceSetup.alliance.toLowerCase() +
+                          deviceSetup.robotNumber) as
+                          | "red1"
+                          | "red2"
+                          | "red3"
+                          | "blue1"
+                          | "blue2"
+                          | "blue3"
+                      ],
+                    });
+                  } else {
+                    setMatch({
+                      ...match,
+                      matchNumber: match.matchNumber + 1,
+                      teamNumber: 0,
+                    });
+                  }
+                }}>
+                <Add />
+              </Button>
+            </div>
+          </div>
+        </div>
+        <Input
+          id="team-number"
+          type="number"
           label="Robot Team Number"
           value={isNaN(match.teamNumber) ? "" : match.teamNumber}
-          onChange={(event) => {
+          onChange={(value) => {
             setMatch({
               ...match,
-              teamNumber: parseInt(event.currentTarget.value),
+              teamNumber: parseInt(value),
             });
           }}
           error={teamNumberError !== ""}
           helperText={teamNumberError}
         />
-        <Divider />
-        <StyledRedToggleButton
-          value="No Show?"
-          selected={match.noShow}
-          onChange={() => {
+        <Divider orientation="horizontal" />
+        <ToggleButton
+          value={match.noShow}
+          onChange={(value) => {
             setMatch({
               ...match,
-              noShow: !match.noShow,
+              noShow: value,
             });
-          }}>
+          }}
+          classNameTrue={scoutStyles.redToggleButtonTrue}
+          classNameFalse={scoutStyles.redToggleButtonFalse}>
           No Show
-        </StyledRedToggleButton>
-      </Stack>
-      <Divider
-        orientation="vertical"
-        variant="middle"
-        flexItem
-      />
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 2,
-          height: 1,
-        }}>
-        <Box
-          sx={{
-            height: startingPositionError ? "calc(100% - 2em)" : "100%",
-          }}>
-          <Box
-            sx={{
-              aspectRatio: "1700 / 1650",
-              maxWidth: "100%",
-              maxHeight: "100%",
-              position: "relative",
-            }}>
+        </ToggleButton>
+      </div>
+      <Divider orientation="vertical" />
+      <div className={scoutStyles.half}>
+        <div
+          className={
+            startingPositionError ?
+              styles.startingPositionContainerContainerError
+            : styles.startingPositionContainerContainer
+          }>
+          <div className={styles.startingPositionContainer}>
             <img
               src={
                 import.meta.env.BASE_URL +
+                "assets/" +
                 (match.alliance === "Red" ?
                   deviceSetup.fieldOrientation === "barge" ?
                     "RedBarge.png"
@@ -301,13 +278,9 @@ export default function Prematch({
                 : deviceSetup.fieldOrientation === "barge" ? "BlueBarge.png"
                 : "BlueProcessor.png")
               }
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
+              className={styles.startingPositionImage}
             />
             <TransparentToggle
-              label="A"
               value={match.startingLocationA!}
               setValue={(value) => {
                 if (value) {
@@ -326,24 +299,14 @@ export default function Prematch({
               }}
               disabled={match.noShow}
               error={startingPositionError !== ""}
-              sx={
+              className={
                 deviceSetup.fieldOrientation === "barge" ?
-                  {
-                    left: "8%",
-                    top: "13%",
-                    width: "20%",
-                    height: "27%",
-                  }
-                : {
-                    right: "8%",
-                    top: "59%",
-                    width: "20%",
-                    height: "28%",
-                  }
-              }
-            />
+                  styles.startingPositionLeftA
+                : styles.startingPositionRightA
+              }>
+              A
+            </TransparentToggle>
             <TransparentToggle
-              label="B"
               value={match.startingLocationB!}
               setValue={(value) => {
                 if (value) {
@@ -362,24 +325,14 @@ export default function Prematch({
               }}
               disabled={match.noShow}
               error={startingPositionError !== ""}
-              sx={
+              className={
                 deviceSetup.fieldOrientation === "barge" ?
-                  {
-                    left: "8%",
-                    top: "40%",
-                    width: "20%",
-                    height: "27%",
-                  }
-                : {
-                    right: "8%",
-                    top: "32%",
-                    width: "20%",
-                    height: "27%",
-                  }
-              }
-            />
+                  styles.startingPositionLeftB
+                : styles.startingPositionRightB
+              }>
+              B
+            </TransparentToggle>
             <TransparentToggle
-              label="C"
               value={match.startingLocationC!}
               setValue={(value) => {
                 if (value) {
@@ -398,37 +351,21 @@ export default function Prematch({
               }}
               disabled={match.noShow}
               error={startingPositionError !== ""}
-              sx={
+              className={
                 deviceSetup.fieldOrientation === "barge" ?
-                  {
-                    left: "8%",
-                    top: "67%",
-                    width: "20%",
-                    height: "27%",
-                  }
-                : {
-                    right: "8%",
-                    top: "5%",
-                    width: "20%",
-                    height: "27%",
-                  }
-              }
-            />
-          </Box>
-        </Box>
+                  styles.startingPositionLeftC
+                : styles.startingPositionRightC
+              }>
+              C
+            </TransparentToggle>
+          </div>
+        </div>
         {startingPositionError && (
-          <FormHelperText
-            sx={{
-              height: "2em",
-              border: "1px solid red",
-              pl: 1,
-              color: "error.main",
-              backgroundColor: "white",
-            }}>
+          <p className={styles.startingPositionError}>
             {startingPositionError}
-          </FormHelperText>
+          </p>
         )}
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }

@@ -14,34 +14,16 @@ import {
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  IconButton,
-  lighten,
-  Stack,
-  styled,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  Tooltip,
-  Typography,
-} from "@mui/material";
 import { useState } from "react";
-
-const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  borderWidth: 3,
-  "&.Mui-selected": {
-    color: theme.palette.primary.main,
-    backgroundColor: lighten(theme.palette.primary.light, 0.5),
-    "&:hover": {
-      backgroundColor: lighten(theme.palette.primary.light, 0.5),
-    },
-  },
-}));
+import Button from "../../components/Button/Button.tsx";
+import IconButton from "../../components/Button/IconButton/IconButton.tsx";
+import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
+import ToggleButtonGroup from "../../components/Button/ToggleButton/ToggleButtonGroup.tsx";
+import Divider from "../../components/Divider/Divider.tsx";
+import Checkbox from "../../components/Input/Checkbox/Checkbox.tsx";
+import Input from "../../components/Input/Input.tsx";
+import Tooltip from "../../components/Tooltip/Tooltip.tsx";
+import styles from "./ExportLayout.module.css";
 
 type ExportLayoutProps = {
   showPublicApiToken: boolean;
@@ -111,67 +93,30 @@ export default function ExportLayout({
   };
 
   return (
-    <Stack
-      sx={{
-        width: 1,
-        height: 1,
-        padding: 2,
-      }}
-      direction="row">
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 1,
-          height: 1,
-        }}>
+    <div className={styles.container}>
+      <div className={styles.half}>
         {robotColumnsState.length > 0 && (
           <>
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              sx={{
-                textWrap: "wrap",
-              }}>
+            <p className={styles.columnsHeader}>
               Select columns to include in robot data
-            </Typography>
-            <Stack
-              sx={{
-                flex: 1,
-                height: 1,
-                overflowY: "scroll",
-                mb: 2,
-              }}>
+            </p>
+            <div className={styles.columnsContainer}>
               {TeamMatchEntryColumns.map((column, columnIndex) => {
                 return (
-                  <FormControlLabel
+                  <Checkbox
+                    value={robotColumnsState[columnIndex]}
                     key={column}
-                    checked={robotColumnsState[columnIndex]}
-                    onChange={(_event, checked) => {
+                    id={column + "-checkbox"}
+                    onChange={(checked) => {
                       setRobotColumnsState(
                         robotColumnsState.map((value, valueIndex) =>
                           valueIndex === columnIndex ? checked : value
                         )
                       );
                     }}
-                    control={<Checkbox />}
                     label={
-                      <Stack
-                        direction="row"
-                        sx={{
-                          alignItems: "center",
-                        }}
-                        gap={1}>
-                        <Typography>
-                          {column.startsWith("auto") ?
-                            column.replace("auto", "auto\u200b")
-                          : column.startsWith("teleop") ?
-                            column.replace("teleop", "teleop\u200b")
-                          : column.startsWith("endgame") ?
-                            column.replace("endgame", "endgame\u200b")
-                          : column.startsWith("postmatch") ?
-                            column.replace("postmatch", "postmatch\u200b")
-                          : column}
-                        </Typography>
+                      <div className={styles.columnLabelContainer}>
+                        <p className={styles.columnLabel}>{column}</p>
                         {
                           {
                             boolean: <DataTypeIcon dataType="boolean" />,
@@ -198,54 +143,41 @@ export default function ExportLayout({
                                 ].includes(column)
                               ) ?
                                 <DataTypeIcon dataType="boolean" />
+                              : column === "dataConfidence" ?
+                                <DataTypeIcon dataType='"low" | "neutral" | "high"' />
                               : <DataTypeIcon dataType="error" />,
                             undefined: <DataTypeIcon dataType="error" />,
                           }[typeof TeamMatchEntryInit[column]]
                         }
-                      </Stack>
+                      </div>
                     }
                   />
                 );
               })}
-            </Stack>
+            </div>
           </>
         )}
         {humanColumnsState.length > 0 && (
           <>
-            <Typography
-              variant="body1"
-              fontWeight="bold"
-              sx={{
-                textWrap: "wrap",
-              }}>
+            <p className={styles.columnsHeader}>
               Select columns to include in human data
-            </Typography>
-            <Stack
-              sx={{
-                flex: 1,
-                height: 1,
-                overflowY: "scroll",
-              }}>
+            </p>
+            <div className={styles.columnsContainer}>
               {HumanPlayerEntryColumns.map((column, columnIndex) => (
-                <FormControlLabel
+                <Checkbox
                   key={column}
-                  checked={humanColumnsState[columnIndex]}
-                  onChange={(_event, checked) => {
+                  id={column + "-checkbox"}
+                  value={humanColumnsState[columnIndex]}
+                  onChange={(checked) => {
                     setHumanColumnsState(
                       humanColumnsState.map((value, valueIndex) =>
                         valueIndex === columnIndex ? checked : value
                       )
                     );
                   }}
-                  control={<Checkbox />}
                   label={
-                    <Stack
-                      direction="row"
-                      sx={{
-                        alignItems: "center",
-                      }}
-                      gap={1}>
-                      <Typography>{column}</Typography>
+                    <div className={styles.columnLabelContainer}>
+                      <p className={styles.columnLabel}>{column}</p>
                       {
                         {
                           boolean: <DataTypeIcon dataType="boolean" />,
@@ -269,185 +201,136 @@ export default function ExportLayout({
                           undefined: <DataTypeIcon dataType="error" />,
                         }[typeof HumanPlayerEntryInit[column]]
                       }
-                    </Stack>
+                    </div>
                   }
                 />
               ))}
-            </Stack>
+            </div>
           </>
         )}
-      </Stack>
+      </div>
       <Divider orientation="vertical" />
-      <Stack
-        sx={{
-          flex: 1,
-          padding: 2,
-          overflowY: "scroll",
-        }}
-        gap={1}>
-        <TextField
+      <div className={styles.half}>
+        <Input
+          id="events-filter"
           value={events}
-          onChange={(event) => {
-            setEvents(event.currentTarget.value);
+          onChange={(value) => {
+            setEvents(value);
           }}
           label="Events (comma-separated)"
         />
-        <TextField
+        <Input
+          id="teams-filter"
           value={teams}
-          onChange={(event) => {
-            setTeams(event.currentTarget.value);
+          onChange={(value) => {
+            setTeams(value);
           }}
           label="Teams (comma-separated)"
         />
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
+        <Divider orientation="horizontal" />
         <ToggleButtonGroup
+          label="File Type"
           value={fileType}
-          exclusive
-          onChange={(_event, value) => {
+          onChange={(value) => {
             if (value) {
-              setFileType(value);
+              setFileType(value as "json" | "csv" | "xlsx");
             }
-          }}
-          color="primary"
-          sx={{
-            width: 1,
           }}>
-          <StyledToggleButton value="json">JSON</StyledToggleButton>
-          <StyledToggleButton value="csv">CSV</StyledToggleButton>
-          {/* <StyledToggleButton value="xlsx">XLSX</StyledToggleButton> */}
+          <ToggleButton
+            value="json"
+            className={styles.toggleButton}>
+            JSON
+          </ToggleButton>
+          <ToggleButton
+            value="csv"
+            className={styles.toggleButton}>
+            CSV
+          </ToggleButton>
+          {/* <ToggleButton2 value="xlsx">XLSX</ToggleButton2> */}
         </ToggleButtonGroup>
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
-        <TextField
+        <Divider orientation="horizontal" />
+        <Input
+          id="public-api-token"
           value={publicApiToken ?? ""}
-          slotProps={{
-            input: {
-              endAdornment: (
-                <>
-                  <IconButton
-                    onClick={() => {
-                      setShowPublicApiToken(!showPublicApiToken);
-                    }}>
-                    {showPublicApiToken ?
-                      <VisibilityOff />
-                    : <Visibility />}
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      if (publicApiToken) {
-                        navigator.clipboard.writeText(publicApiToken);
-                      }
-                    }}>
-                    <ContentCopy />
-                  </IconButton>
-                </>
-              ),
-            },
-            inputLabel: {
-              shrink: true,
-            },
-          }}
+          endIcon={
+            <>
+              <IconButton
+                onClick={() => {
+                  setShowPublicApiToken(!showPublicApiToken);
+                }}>
+                {showPublicApiToken ?
+                  <VisibilityOff />
+                : <Visibility />}
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  if (publicApiToken) {
+                    navigator.clipboard.writeText(publicApiToken);
+                  }
+                }}>
+                <ContentCopy />
+              </IconButton>
+            </>
+          }
           type={showPublicApiToken ? "text" : "password"}
           disabled
           label="publicApiToken"
-          variant="outlined"
-          sx={(theme) => {
-            return {
-              "& .MuiInputBase-input.Mui-disabled": {
-                WebkitTextFillColor: theme.palette.text.primary,
-                color: theme.palette.text.primary,
-              },
-            };
-          }}
         />
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={linkIncludesToken}
-              onChange={(event) => {
-                setLinkIncludesToken(event.currentTarget.checked);
-              }}
-            />
-          }
+        <Divider orientation="horizontal" />
+        <Checkbox
+          id="include-token-in-link"
           label="Include token in link"
+          value={linkIncludesToken}
+          onChange={(value) => {
+            setLinkIncludesToken(value);
+          }}
         />
-        <TextField
+        <Input
           value={getApiLink()}
-          slotProps={{
-            input: {
-              endAdornment: (
+          endIcon={
+            <IconButton
+              onClick={() => {
+                if (publicApiToken) {
+                  navigator.clipboard.writeText(getApiLink());
+                }
+              }}>
+              <ContentCopy />
+            </IconButton>
+          }
+          label="API Link"
+          id="api-link"
+        />
+        {!linkIncludesToken && (
+          <Input
+            value={"Bearer " + publicApiToken}
+            endIcon={
+              <>
+                <IconButton
+                  onClick={() => {
+                    setShowAuthorization(!showAuthorization);
+                  }}>
+                  {showAuthorization ?
+                    <VisibilityOff />
+                  : <Visibility />}
+                </IconButton>
                 <IconButton
                   onClick={() => {
                     if (publicApiToken) {
-                      navigator.clipboard.writeText(getApiLink());
+                      navigator.clipboard.writeText("Bearer " + publicApiToken);
                     }
                   }}>
                   <ContentCopy />
                 </IconButton>
-              ),
-            },
-          }}
-          label="API Link"
-          sx={{
-            mb: 1,
-          }}
-        />
-        {!linkIncludesToken && (
-          <TextField
-            value={"Bearer " + publicApiToken}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <>
-                    <IconButton
-                      onClick={() => {
-                        setShowAuthorization(!showAuthorization);
-                      }}>
-                      {showAuthorization ?
-                        <VisibilityOff />
-                      : <Visibility />}
-                    </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        if (publicApiToken) {
-                          navigator.clipboard.writeText(
-                            "Bearer " + publicApiToken
-                          );
-                        }
-                      }}>
-                      <ContentCopy />
-                    </IconButton>
-                  </>
-                ),
-              },
-            }}
+              </>
+            }
             type={showAuthorization ? "text" : "password"}
             label='"Authorization" Header'
+            id="authorization-header"
           />
         )}
-        <Divider
-          sx={{
-            mt: 2,
-            mb: 2,
-          }}
-        />
+        <Divider orientation="horizontal" />
         <Button
-          variant="outlined"
+          className={styles.downloadButton}
           onClick={async () => {
             const res = await (
               await fetch(getApiLink(), {
@@ -474,7 +357,7 @@ export default function ExportLayout({
           Download File
         </Button>
         <Button
-          variant="outlined"
+          className={styles.downloadButton}
           onClick={async () => {
             const res = await (
               await fetch(getApiLink(), {
@@ -500,11 +383,12 @@ export default function ExportLayout({
           }}>
           Download as TXT
         </Button>
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }
 
+// TODO: move to /components
 type DataTypeIconProps = {
   dataType: string;
 };
@@ -512,18 +396,14 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
   switch (dataType) {
     case "string": {
       return (
-        <Tooltip
-          title={<Typography>string</Typography>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>string</p>}>
           <FormatQuote />
         </Tooltip>
       );
     }
     case "integer": {
       return (
-        <Tooltip
-          title={<Typography>integer</Typography>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>integer</p>}>
           <Numbers />
         </Tooltip>
       );
@@ -531,8 +411,7 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "boolean": {
       return (
         <Tooltip
-          title={<Typography>boolean (0 | 1)</Typography>}
-          arrow>
+          content={<p className={styles.tooltipLabel}>boolean (0 | 1)</p>}>
           <Contrast />
         </Tooltip>
       );
@@ -540,8 +419,11 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "error": {
       return (
         <Tooltip
-          title={<Typography>invalid type (contact dev)</Typography>}
-          arrow>
+          content={
+            <p className={styles.tooltipLabel}>
+              invalid type (contact dev): {dataType}
+            </p>
+          }>
           <Error />
         </Tooltip>
       );
@@ -549,18 +431,14 @@ function DataTypeIcon({ dataType }: DataTypeIconProps) {
     case "1 | 2 | 3":
     case "4": {
       return (
-        <Tooltip
-          title={<Typography>{dataType}</Typography>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>{dataType}</p>}>
           <Numbers />
         </Tooltip>
       );
     }
     default: {
       return (
-        <Tooltip
-          title={<Typography>{dataType}</Typography>}
-          arrow>
+        <Tooltip content={<p className={styles.tooltipLabel}>{dataType}</p>}>
           <FormatQuote />
         </Tooltip>
       );

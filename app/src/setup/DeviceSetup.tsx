@@ -8,31 +8,22 @@ import {
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { omit } from "@isa2026/api/src/utils/utils.ts";
 import { Close, OpenInNew } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
-  IconButton,
-  Radio,
-  RadioGroup,
-  Snackbar,
-  Stack,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { StyledToggleButton } from "../components/StyledToggleButton.tsx";
-import { VisuallyHiddenInput } from "../components/VisuallyHiddenInput.tsx";
-import { ScoutPageContainer } from "../scout/ScoutPageContainer.tsx";
+import changeFlexDirection from "../components//styles/ChangeFlexDirection.module.css";
+import Button from "../components/Button/Button.tsx";
+import IconButton from "../components/Button/IconButton/IconButton.tsx";
+import ToggleButton from "../components/Button/ToggleButton/ToggleButton.tsx";
+import ToggleButtonGroup from "../components/Button/ToggleButton/ToggleButtonGroup.tsx";
+import Divider from "../components/Divider/Divider.tsx";
+import Input from "../components/Input/Input.tsx";
+import Radio from "../components/Input/Radio/Radio.tsx";
+import RadioGroup from "../components/Input/Radio/RadioGroup.tsx";
+import ScoutPageContainer from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
+import Snackbar from "../components/Snackbar/Snackbar.tsx";
 import { putDBEvent, putDBMatches } from "../utils/idb.ts";
 import { trpc } from "../utils/trpc.ts";
+import styles from "./DeviceSetup.module.css";
 import DownloadEvent from "./DownloadEvent.tsx";
 import ExportEvent from "./ExportEvent.tsx";
 
@@ -57,6 +48,8 @@ export default function DeviceSetup({
   setEvents,
 }: DeviceSetupProps) {
   const navigate = useNavigate();
+
+  const scheduleUploadRef = useRef<HTMLInputElement>(null);
 
   const [deviceTeamNumberError, setDeviceTeamNumberError] = useState("");
   const [deviceIdError, setDeviceIdError] = useState("");
@@ -92,16 +85,14 @@ export default function DeviceSetup({
       navButtons={
         <>
           <Button
+            className={styles.exitButton}
             onClick={() => {
               navigate("/");
-            }}
-            variant="outlined"
-            sx={{
-              mr: "auto",
             }}>
             Exit
           </Button>
           <Button
+            className={styles.doneButton}
             onClick={() => {
               let error = false;
 
@@ -164,19 +155,17 @@ export default function DeviceSetup({
               if (!error) {
                 navigate("/scout");
               }
-            }}
-            variant="contained">
+            }}>
             Done
           </Button>
         </>
       }>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        sx={{
-          height: "auto",
-          width: "100%",
-          overflow: "auto",
-        }}>
+      <div
+        className={
+          styles.contentContainer +
+          " " +
+          changeFlexDirection.changeFlexDirection
+        }>
         <Snackbar
           open={status !== ""}
           autoHideDuration={3000}
@@ -186,46 +175,40 @@ export default function DeviceSetup({
           message={status}
           action={
             <IconButton
+              className={styles.snackbarClose}
               onClick={() => {
                 setStatus("");
               }}>
-              <Close
-                sx={{
-                  color: "#ffffff",
-                }}
-              />
+              <Close />
             </IconButton>
           }
         />
-        <Stack
-          sx={{
-            flex: 1,
-            padding: 2,
-            overflowY: "scroll",
-          }}
-          gap={2}>
-          <TextField
+        <div className={styles.deviceInfoContainer}>
+          <Input
+            id="device-team-number"
+            type="number"
             value={
               isNaN(deviceSetup.deviceTeamNumber) ? "" : (
                 deviceSetup.deviceTeamNumber
               )
             }
-            onChange={(event) => {
+            onChange={(value) => {
               setDeviceSetup({
                 ...deviceSetup,
-                deviceTeamNumber: parseInt(event.currentTarget.value),
+                deviceTeamNumber: parseInt(value),
               });
             }}
             label="Device Team Number"
             helperText={deviceTeamNumberError || "What team owns this device?"}
             error={deviceTeamNumberError !== ""}
           />
-          <TextField
+          <Input
+            id="device-id"
             value={deviceSetup.deviceId}
-            onChange={(event) => {
+            onChange={(value) => {
               setDeviceSetup({
                 ...deviceSetup,
-                deviceId: event.currentTarget.value,
+                deviceId: value,
               });
             }}
             type="text"
@@ -233,215 +216,115 @@ export default function DeviceSetup({
             helperText={deviceIdError || "Must be unique within each team"}
             error={deviceIdError !== ""}
           />
-          <Divider flexItem />
-          <Stack
-            sx={{
-              width: 1,
-            }}>
-            <FormLabel>Alliance</FormLabel>
-            <ToggleButtonGroup
-              value={deviceSetup.alliance}
-              exclusive
-              onChange={(_event, value) => {
-                if (value) {
-                  setDeviceSetup({
-                    ...deviceSetup,
-                    alliance: value,
-                  });
-                }
-              }}
-              color="primary"
-              sx={{
-                width: 1,
-                borderWidth: allianceError !== "" ? 2 : 0,
-                borderColor: "error.main",
-                borderStyle: "solid",
-              }}>
-              <ToggleButton
-                value="Red"
-                sx={{
-                  flex: 1,
-                  "&.Mui-selected, &.Mui-selected:hover": {
-                    color: "white",
-                    backgroundColor: "#ff0000",
-                  },
-                  "&:hover": {
-                    backgroundColor: "#dddddd",
-                  },
-                  color: "#ff0000",
-                  borderColor: "#ff0000",
-                  backgroundColor: "white",
-                }}>
-                Red
-              </ToggleButton>
-              <ToggleButton
-                value="Blue"
-                sx={{
-                  flex: 1,
-                  "&.Mui-selected, &.Mui-selected:hover": {
-                    color: "white",
-                    backgroundColor: "#0000ff",
-                  },
-                  "&:hover": {
-                    backgroundColor: "#dddddd",
-                  },
-                  color: "#0000ff",
-                  borderColor: "#0000ff",
-                  backgroundColor: "white",
-                }}>
-                Blue
-              </ToggleButton>
-            </ToggleButtonGroup>
-            <FormHelperText
-              color="error"
-              sx={{
-                pl: 2,
-                color: "error.main",
-              }}>
-              {allianceError}
-            </FormHelperText>
-          </Stack>
-          <Stack
-            sx={{
-              width: 1,
-            }}>
-            <FormLabel>Robot Number</FormLabel>
-            <ToggleButtonGroup
-              value={deviceSetup.robotNumber}
-              exclusive
-              onChange={(_event, value) => {
-                if (value) {
-                  setDeviceSetup({
-                    ...deviceSetup,
-                    robotNumber: value,
-                  });
-                }
-              }}
-              color="primary"
-              sx={{
-                width: 1,
-                borderWidth: robotNumberError !== "" ? 2 : 0,
-                borderColor: "error.main",
-                borderStyle: "solid",
-              }}>
-              <StyledToggleButton
-                value={1}
-                sx={{
-                  flex: 1,
-                  padding: 2,
-                }}>
-                1
-              </StyledToggleButton>
-              <StyledToggleButton
-                value={2}
-                sx={{
-                  flex: 1,
-                  padding: 2,
-                }}>
-                2
-              </StyledToggleButton>
-              <StyledToggleButton
-                value={3}
-                sx={{
-                  flex: 1,
-                  padding: 2,
-                }}>
-                3
-              </StyledToggleButton>
-              <StyledToggleButton
-                value={4}
-                sx={{
-                  flex: 1,
-                  padding: 2,
-                }}>
-                Human
-              </StyledToggleButton>
-            </ToggleButtonGroup>
-            <FormHelperText
-              color="error"
-              sx={{
-                pl: 2,
-                color: robotNumberError ? "error.main" : "text.secondary",
-              }}>
-              {robotNumberError}
-            </FormHelperText>
-          </Stack>
-          <Stack
-            sx={{
-              width: 1,
-            }}>
-            <FormLabel>Field Orientation</FormLabel>
-            <ToggleButtonGroup
-              value={deviceSetup.fieldOrientation}
-              exclusive
-              onChange={(_event, value) => {
-                if (value) {
-                  setDeviceSetup({
-                    ...deviceSetup,
-                    fieldOrientation: value,
-                  });
-                }
-              }}
-              color="primary"
-              sx={{
-                width: 1,
-                borderWidth: fieldOrientationError !== "" ? 2 : 0,
-                borderColor: "error.main",
-                borderStyle: "solid",
-              }}>
-              <StyledToggleButton
-                value="processor"
-                sx={{
-                  flex: 1,
-                }}>
-                {deviceSetup.alliance === "Red" ?
-                  "Red on Left"
-                : "Blue on Left"}
-              </StyledToggleButton>
-              <StyledToggleButton
-                value="barge"
-                sx={{
-                  flex: 1,
-                }}>
-                {deviceSetup.alliance === "Red" ?
-                  "Red on Right"
-                : "Blue on Right"}
-              </StyledToggleButton>
-            </ToggleButtonGroup>
-            <FormHelperText
-              color="error"
-              sx={{
-                pl: 2,
-                color: "error.main",
-              }}>
-              {fieldOrientationError}
-            </FormHelperText>
-          </Stack>
-        </Stack>
-        <Divider
-          orientation="vertical"
-          flexItem
-        />
-        <Stack
-          sx={{
-            flex: 1,
-            padding: 2,
-          }}
-          gap={2}>
-          <Stack
-            direction="row"
-            gap={2}>
+          <Divider orientation="horizontal" />
+          <ToggleButtonGroup
+            className={styles.toggleButtonGroup}
+            value={deviceSetup.alliance}
+            label="Alliance"
+            onChange={(value) => {
+              if (value) {
+                setDeviceSetup({
+                  ...deviceSetup,
+                  alliance: value as TeamMatchEntry["alliance"],
+                });
+              }
+            }}
+            error={allianceError !== ""}
+            helperText={allianceError}>
+            <ToggleButton
+              value="Red"
+              className={styles.toggleButton}
+              classNameTrue={styles.redToggleButtonTrue}
+              classNameFalse={styles.redToggleButtonFalse}>
+              Red
+            </ToggleButton>
+            <ToggleButton
+              value="Blue"
+              className={styles.toggleButton}
+              classNameTrue={styles.blueToggleButtonTrue}
+              classNameFalse={styles.blueToggleButtonFalse}>
+              Blue
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <ToggleButtonGroup
+            className={styles.toggleButtonGroup}
+            value={deviceSetup.robotNumber.toString()}
+            onChange={(value) => {
+              if (value) {
+                setDeviceSetup({
+                  ...deviceSetup,
+                  robotNumber: parseInt(value),
+                });
+              }
+            }}
+            label="Robot Number"
+            error={robotNumberError !== ""}
+            helperText={robotNumberError}>
+            <ToggleButton
+              value="1"
+              className={styles.toggleButton}>
+              1
+            </ToggleButton>
+            <ToggleButton
+              value="2"
+              className={styles.toggleButton}>
+              2
+            </ToggleButton>
+            <ToggleButton
+              value="3"
+              className={styles.toggleButton}>
+              3
+            </ToggleButton>
+            <ToggleButton
+              value="4"
+              className={styles.toggleButton}>
+              Human
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <ToggleButtonGroup
+            value={deviceSetup.fieldOrientation}
+            onChange={(value) => {
+              if (value) {
+                setDeviceSetup({
+                  ...deviceSetup,
+                  fieldOrientation: value as DeviceSetupObj["fieldOrientation"],
+                });
+              }
+            }}
+            error={fieldOrientationError !== ""}
+            helperText={fieldOrientationError}
+            className={styles.toggleButtonGroup}
+            label="Field Orientation">
+            <ToggleButton
+              value="processor"
+              className={styles.toggleButton}>
+              {deviceSetup.alliance === "Red" ? "Red on Left" : "Blue on Left"}
+            </ToggleButton>
+            <ToggleButton
+              value="barge"
+              className={styles.toggleButton}>
+              {deviceSetup.alliance === "Red" ?
+                "Red on Right"
+              : "Blue on Right"}
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+        <Divider orientation="vertical" />
+        <div className={styles.scheduleContainer}>
+          <div className={styles.scheduleButtonsContainer}>
             <Button
-              component="label"
-              variant="outlined"
-              sx={{
-                textAlign: "center",
-                flex: 1,
+              className={
+                styles.scheduleButton + " " + styles.scheduleTextButton
+              }
+              onClick={() => {
+                scheduleUploadRef.current?.click();
               }}>
               Upload Schedule
-              <VisuallyHiddenInput
+              <input
+                ref={scheduleUploadRef}
                 type="file"
                 accept="text/csv"
+                multiple
                 onChange={async (event) => {
                   try {
                     if (event.currentTarget.files) {
@@ -500,83 +383,77 @@ export default function DeviceSetup({
                     setStatus("Error (see console)");
                   }
                 }}
-                multiple
+                hidden
               />
             </Button>
             <Button
-              variant="outlined"
+              className={
+                styles.scheduleButton + " " + styles.scheduleTextButton
+              }
               onClick={() => {
                 setDownloadEvent(true);
-              }}
-              sx={{
-                textAlign: "center",
-                flex: 1,
               }}>
               Download Schedule
             </Button>
             <Button
-              variant="outlined"
+              className={styles.scheduleButton}
               onClick={() => {
                 setExportEvent(true);
               }}>
               <OpenInNew />
             </Button>
-          </Stack>
+          </div>
           {
             //TODO: Create/edit event GUI
           }
-          <Box
-            sx={{
-              flex: 1,
-              padding: 2,
-              borderColor: "error.main",
-              borderStyle: "solid",
-              borderWidth: currentEventError !== "" ? 2 : 0,
-            }}>
-            <FormControl error={currentEventError !== ""}>
-              <RadioGroup
-                value={deviceSetup.currentEvent}
-                onChange={(event) => {
-                  setDeviceSetup({
-                    ...deviceSetup,
-                    currentEvent: event.currentTarget.value,
-                  });
-                }}>
-                {events
-                  .sort((a, b) => (a.eventKey < b.eventKey ? -1 : 1))
-                  .map((event) => (
-                    <FormControlLabel
-                      key={event.eventKey}
-                      value={event.eventKey}
-                      control={<Radio />}
-                      label={event.eventKey}
-                    />
-                  ))}
-              </RadioGroup>
-              <FormHelperText component="div">
-                <Typography fontSize="body2">{currentEventError}</Typography>
-              </FormHelperText>
-            </FormControl>
-          </Box>
+          <div
+            className={
+              styles.eventsContainer +
+              " " +
+              (currentEventError !== "" ? styles.eventsContainerError : "")
+            }>
+            <RadioGroup
+              label="Current Event"
+              value={deviceSetup.currentEvent}
+              onChange={(value) => {
+                setDeviceSetup({
+                  ...deviceSetup,
+                  currentEvent: value,
+                });
+              }}
+              name="current-event"
+              error={currentEventError !== ""}
+              helperText={currentEventError}>
+              {events
+                .sort((a, b) => (a.eventKey < b.eventKey ? -1 : 1))
+                .map((event) => (
+                  <Radio
+                    id={"event-radio-" + event.eventKey}
+                    value={event.eventKey}
+                    label={event.eventKey.slice(0, 4) + " " + event.eventName}
+                  />
+                ))}
+            </RadioGroup>
+          </div>
           <DownloadEvent
             downloadEvent={downloadEvent}
             setDownloadEvent={setDownloadEvent}
             events={events}
             setEvents={setEvents}
+            setCurrentEvent={(value) => {
+              setDeviceSetup({
+                ...deviceSetup,
+                currentEvent: value,
+              });
+            }}
           />
           <ExportEvent
             exportEvent={exportEvent}
             setExportEvent={setExportEvent}
             events={events}
           />
-          {/* <CreateEvent
-            createEvent={createEvent}
-            setCreateEvent={setCreateEvent}
-            events={events}
-            setEvents={setEvents}
-          /> */}
-        </Stack>
-      </Stack>
+        </div>
+      </div>
     </ScoutPageContainer>
   );
 }

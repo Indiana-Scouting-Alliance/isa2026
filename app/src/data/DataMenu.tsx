@@ -1,20 +1,14 @@
 import { User } from "@isa2026/api/src/utils/dbtypes.ts";
-import { Stack } from "@mui/material";
-import { LinkButton } from "../components/LinkButton.tsx";
+import { LinkButton } from "../components/Button/LinkButton/LinkButton.tsx";
+import styles from "./DataMenu.module.css";
 
 type DataMenuProps = {
   permLevel: User["permLevel"];
 };
 export default function DataMenu({ permLevel }: DataMenuProps) {
   return (
-    <Stack
-      sx={{
-        width: 1,
-        height: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}>
-      <Stack gap={2}>
+    <div className={styles.container}>
+      <div className={styles.menuGroup}>
         {
           //TODO: uncomment when data viewer actually works well
           // ["demo", "team", "datamanage", "admin"].includes(permLevel) && (
@@ -28,32 +22,32 @@ export default function DataMenu({ permLevel }: DataMenuProps) {
         {["team", "datamanage", "admin"].includes(permLevel) && (
           <LinkButton
             to="/data/export/robots"
-            color="primary">
+            className={styles.menuButton}>
             Export Data
           </LinkButton>
         )}
         {["datamanage", "admin"].includes(permLevel) && (
           <LinkButton
             to="/data/review"
-            color="primary">
+            className={styles.menuButton}>
             Review Data
           </LinkButton>
         )}
         {["admin"].includes(permLevel) && (
           <LinkButton
             to="/data/users"
-            color="primary">
+            className={styles.menuButton}>
             Manage Users
           </LinkButton>
         )}
         {["admin"].includes(permLevel) && (
           <LinkButton
             to="/data/util"
-            color="primary">
+            className={styles.menuButton}>
             Util
           </LinkButton>
         )}
-      </Stack>
-    </Stack>
+      </div>
+    </div>
   );
 }

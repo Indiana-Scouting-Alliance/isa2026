@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+}
+
+.half {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  padding: 8px;
+  gap: 16px;
+
+  overflow-y: scroll;
+}
+
+.columnsHeader {
+  font-family: var(--text-font-family);
+  font-weight: bold;
+  text-wrap: wrap;
+  font-size: var(--text-body-size);
+}
+
+.columnsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-right: 6px;
+  padding-bottom: 6px;
+
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+.columnLabelContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.columnLabel {
+  font-family: var(--text-font-family);
+  font-size: 1em;
+}
+
+.downloadButton {
+  color: var(--color-primary);
+  border: var(--button-border-width) solid var(--color-primary);
+  background-color: var(--color-background);
+}
+
+.toggleButton {
+  flex-grow: 1;
+}
+
+.tooltipLabel {
+  font-family: var(--text-font-family);
+  font-size: var(--text-label-size);
+  /* TODO: make variable */
+  color: white;
+  text-wrap: nowrap;
+  z-index: inherit;
+}

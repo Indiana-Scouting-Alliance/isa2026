@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.outline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-family: var(--text-font-family);
+  font-size: var(--text-label-size);
+}
+
+.helperText {
+  margin: 4px 8px;
+
+  font-family: var(--text-font-family);
+  font-size: 0.75em;
+  color: var(--color-primary);
+}
+.helperTextError {
+  color: var(--color-error);
+}

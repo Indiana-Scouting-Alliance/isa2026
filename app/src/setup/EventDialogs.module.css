@@ -1,0 +1,32 @@
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.button {
+  flex: 1;
+
+  background-color: var(--color-paper-background);
+  color: var(--color-primary);
+  border: var(--button-border-width) solid var(--color-primary);
+}
+
+.actionButton {
+  flex: 1;
+
+  background-color: var(--color-paper-background);
+  color: var(--color-primary);
+  border: var(--button-border-width) solid var(--color-primary);
+}
+
+.statusContainer {
+  font-size: var(--text-body-size);
+  font-family: var(--text-font-family);
+}

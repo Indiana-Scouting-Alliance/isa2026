@@ -1,0 +1,25 @@
+.navButtonBack {
+  margin-right: auto;
+
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border: var(--button-border-width) solid var(--color-primary);
+}
+
+.navButtonForward {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+  border: none;
+}
+
+.contentContainer {
+  height: 100%;
+  width: 100%;
+
+  overflow-y: scroll;
+}
+
+.teleopTabHighlight {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+}

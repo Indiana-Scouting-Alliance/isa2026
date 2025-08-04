@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "clinyong.vscode-css-modules",
+    "pucelle.vscode-css-navigation",
+    "aaron-bond.better-comments",
+    "streetsidesoftware.code-spell-checker",
+    "irongeek.vscode-env",
+    "dbaeumer.vscode-eslint",
+    "tamasfe.even-better-toml",
+    "eamodio.gitlens",
+    "renesaarsoo.sql-formatter-vsc"
+  ]
+}

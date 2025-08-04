@@ -1,0 +1,101 @@
+.exitButton {
+  margin-right: auto;
+
+  background-color: var(--color-background);
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.doneButton {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+  border: none;
+}
+
+.scheduleButton {
+  background-color: var(--color-background);
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.scheduleTextButton {
+  flex: 1;
+}
+
+.contentContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  overflow-y: hidden;
+}
+
+.snackbarClose {
+  color: var(--color-primary);
+  background-color: var(--color-paper-background);
+}
+
+.deviceInfoContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px;
+  height: 100%;
+  gap: 16px;
+
+  overflow-y: auto;
+}
+
+.toggleButtonGroup {
+  width: 100%;
+}
+
+.toggleButton {
+  flex: 1;
+}
+
+button.redToggleButtonTrue {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+}
+button.redToggleButtonFalse {
+  background-color: #fff;
+  color: #ff0000;
+  border: var(--button-border-width) solid #ff0000;
+}
+button.blueToggleButtonTrue {
+  background-color: #0000ff;
+  color: #fff;
+  border: none;
+}
+button.blueToggleButtonFalse {
+  background-color: #fff;
+  color: #0000ff;
+  border: var(--button-border-width) solid #0000ff;
+}
+
+.scheduleContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  flex: 1;
+}
+
+.scheduleButtonsContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.eventsContainer {
+  flex: 1;
+  padding: 16px;
+
+  border: none;
+  border-radius: var(--border-radius);
+  overflow-y: auto;
+}
+.eventsContainerError {
+  border: 2px solid var(--color-error);
+}

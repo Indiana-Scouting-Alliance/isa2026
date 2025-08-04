@@ -1,0 +1,32 @@
+.grid {
+  display: grid;
+  grid-template-columns:
+    var(--grid-border-margin-width) calc(
+      (100% - (var(--grid-border-margin-width) * 2)) -
+        (var(--grid-border-border-width) * 2)
+    )
+    var(--grid-border-margin-width);
+  grid-template-rows:
+    var(--grid-border-margin-width) calc(
+      (100% - (var(--grid-border-margin-width) * 2)) -
+        (var(--grid-border-border-width) * 2)
+    )
+    var(--grid-border-margin-width);
+  column-gap: var(--grid-border-border-width);
+  row-gap: var(--grid-border-border-width);
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+}
+
+.gridCell {
+  background-color: var(--color-background);
+  position: relative;
+}
+
+.contentGridCell {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  background-color: var(--color-background);
+}

@@ -1,8 +1,9 @@
-import "./ReloadPrompt.css";
+import Button from "../components/Button/Button.tsx";
+import styles from "./ReloadPrompt.module.css";
 
 import { useRegisterSW } from "virtual:pwa-register/react";
 
-function ReloadPrompt() {
+export default function ReloadPrompt() {
   const {
     offlineReady: [offlineReady, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],
@@ -30,33 +31,30 @@ function ReloadPrompt() {
   };
 
   return (
-    <div className="ReloadPrompt-container">
+    <div className={styles.container}>
       {(offlineReady || needRefresh) && (
-        <div className="ReloadPrompt-toast">
-          <div className="ReloadPrompt-message">
+        <div className={styles.toast}>
+          <div className={styles.message}>
             {!needRefresh ?
-              <span>App ready to work offline</span>
-            : <span>
-                New content available, click on reload button to update.
-              </span>
-            }
+              "App ready to work offline"
+            : "New content available, click on reload button to update."}
           </div>
-          {needRefresh && (
-            <button
-              className="ReloadPrompt-toast-button"
-              onClick={() => updateServiceWorker(true)}>
-              Reload
-            </button>
-          )}
-          <button
-            className="ReloadPrompt-toast-button"
-            onClick={() => close()}>
-            Close
-          </button>
+          <div className={styles.buttonContainer}>
+            {needRefresh && (
+              <Button
+                className={styles.toastButton}
+                onClick={() => updateServiceWorker(true)}>
+                Reload
+              </Button>
+            )}
+            <Button
+              className={styles.toastButton}
+              onClick={() => close()}>
+              Close
+            </Button>
+          </div>
         </div>
       )}
     </div>
   );
 }
-
-export default ReloadPrompt;

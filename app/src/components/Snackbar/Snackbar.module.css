@@ -1,0 +1,21 @@
+.snackbar {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 16px;
+  padding: 8px 16px;
+  align-items: center;
+  max-width: 500px;
+  z-index: var(--z-index-snackbar);
+
+  background-color: var(--color-paper-background);
+  border: var(--button-border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+}
+
+.message {
+  font-family: var(--text-font-family);
+  font-size: var(--text-label-size);
+  color: var(--color-paper-background-contrastText);
+}

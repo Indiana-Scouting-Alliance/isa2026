@@ -1,0 +1,122 @@
+.imagesContainer {
+  flex-direction: row;
+}
+
+.branchContainerContainer {
+  width: 40%;
+  height: 100%;
+  padding: 8px;
+}
+
+.branchContainer {
+  aspect-ratio: 1015 / 3069;
+
+  --L4-height: 30%;
+  --L3-height: 20%;
+  --L2-height: 20%;
+  --L1-height: 30%;
+}
+
+.branchIncrementRect {
+  position: absolute;
+  border: var(--button-border-width) solid var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.L4IncrementRect {
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: var(--L4-height);
+}
+
+.L4Counter {
+  position: absolute;
+  left: 0%;
+  bottom: calc(var(--L1-height) + var(--L2-height) + var(--L3-height));
+}
+
+.L3IncrementRect {
+  top: var(--L4-height);
+  left: 0%;
+  width: 100%;
+  height: var(--L3-height);
+}
+
+.L3Counter {
+  position: absolute;
+  left: 0%;
+  bottom: calc(var(--L1-height) + var(--L2-height));
+}
+
+.L2IncrementRect {
+  top: calc(var(--L4-height) + var(--L3-height));
+  left: 0%;
+  width: 100%;
+  height: var(--L2-height);
+}
+
+.L2Counter {
+  position: absolute;
+  left: 0%;
+  bottom: var(--L1-height);
+}
+
+.L1IncrementRect {
+  top: calc(var(--L4-height) + var(--L3-height) + var(--L2-height));
+  left: 0%;
+  width: 100%;
+  height: var(--L1-height);
+}
+
+.L1Counter {
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+}
+
+.bargeAndProcessorContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 60%;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.bargeContainerContainer {
+  width: 100%;
+  height: 65%;
+}
+
+.bargeContainer {
+  aspect-ratio: 1670 / 2881;
+}
+
+.processorContainerContainer {
+  width: 100%;
+  height: 35%;
+}
+
+.processorContainer {
+  aspect-ratio: 2547 / 2311;
+}
+
+.climbToggleButtons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.climbToggleButtonRow {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.climbToggle {
+  flex: 1;
+}

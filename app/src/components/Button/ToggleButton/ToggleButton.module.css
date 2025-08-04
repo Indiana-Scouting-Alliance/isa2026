@@ -1,0 +1,11 @@
+.buttonFalse {
+  color: var(--color-primary);
+  border: var(--button-border-width) solid var(--color-primary);
+  background-color: var(--color-background);
+}
+
+.buttonTrue {
+  color: var(--color-primary-contrastText);
+  border: none;
+  background-color: var(--color-primary);
+}

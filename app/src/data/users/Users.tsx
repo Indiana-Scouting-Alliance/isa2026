@@ -5,24 +5,16 @@ import {
   UserPermLevel,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Delete, Edit, FilterAltOff, Refresh } from "@mui/icons-material";
-import {
-  Button,
-  IconButton,
-  MenuItem,
-  Paper,
-  Stack,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
 import { useState } from "react";
-import { BorderedTable, Td, Th } from "../../components/Table.tsx";
+import Button from "../../components/Button/Button.tsx";
+import IconButton from "../../components/Button/IconButton/IconButton.tsx";
+import Input from "../../components/Input/Input.tsx";
+import Select from "../../components/Select/Select.tsx";
+import { Table, TableHead, Td, Th } from "../../components/Table/Table.tsx";
 import { trpc } from "../../utils/trpc.ts";
 import CreateUser from "./CreateUser.tsx";
 import EditUser from "./EditUser.tsx";
+import styles from "./Users.module.css";
 
 type UsersProps = {
   logoutFunction: () => void;
@@ -72,73 +64,46 @@ export default function Users({ logoutFunction }: UsersProps) {
   const [createUser, setCreateUser] = useState(false);
 
   return (
-    <Stack
-      gap={2}
-      sx={{
-        width: 1,
-        height: 1,
-        padding: 2,
-      }}>
-      <Paper
-        sx={{
-          display: "flex",
-          gap: 2,
-        }}
-        square>
-        <Stack
-          direction="row"
-          gap={2}
-          sx={{
-            flex: 1,
-            overflowX: "scroll",
-            padding: 1,
-          }}>
-          <TextField
-            value={searchUsername}
-            onChange={(event) => {
-              setSearchUsername(event.currentTarget.value);
-            }}
-            label="username"
-            size="small"
-            sx={{
-              width: 175,
-            }}
-          />
-          <TextField
-            value={searchPermLevel}
-            onChange={(event) => {
-              setSearchPermLevel(event.target.value as User["permLevel"] | "");
-            }}
-            select
-            label="permLevel"
-            size="small"
-            sx={{
-              width: 175,
-            }}>
-            <MenuItem value={""}>-</MenuItem>
-            {UserPermLevel.map((perm) => (
-              <MenuItem
-                key={perm}
-                value={perm}>
-                {perm}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Button
-            onClick={() => {
-              setCreateUser(true);
-            }}
-            variant="outlined">
-            Create User
-          </Button>
-        </Stack>
+    <div className={styles.screenContainer}>
+      <div className={styles.paper}>
+        <Input
+          id="search-username"
+          value={searchUsername}
+          onChange={(value) => {
+            setSearchUsername(value);
+          }}
+          label="Username"
+          className={styles.paperInput}
+        />
+        <Select
+          id="search-permLevel"
+          value={searchPermLevel}
+          onChange={(value) => {
+            setSearchPermLevel(value as User["permLevel"] | "");
+          }}
+          label="PermLevel"
+          className={styles.paperInput}>
+          <option value="">-</option>
+          {UserPermLevel.map((perm) => (
+            <option
+              key={perm}
+              value={perm}>
+              {perm}
+            </option>
+          ))}
+        </Select>
+        <Button
+          onClick={() => {
+            setCreateUser(true);
+          }}
+          className={styles.paperButton}>
+          Create User
+        </Button>
         <IconButton
           onClick={() => {
             users.refetch();
           }}
-          sx={{
-            width: "max-content",
-          }}>
+          className={styles.paperIconButton}>
           <Refresh />
         </IconButton>
         <IconButton
@@ -146,30 +111,31 @@ export default function Users({ logoutFunction }: UsersProps) {
             setSearchUsername("");
             setSearchPermLevel("");
           }}
-          sx={{
-            mr: 1,
-            width: "max-content",
-          }}>
+          className={styles.paperIconButton}>
           <FilterAltOff />
         </IconButton>
-      </Paper>
-      <TableContainer
-        sx={{
-          width: 1,
-          height: 1,
-        }}>
-        <BorderedTable>
+      </div>
+      <div className={styles.tableContainer}>
+        <Table className={styles.table}>
           <TableHead>
-            <TableRow>
+            <tr>
               {UserColumns.map((column) =>
                 column !== "hashedPassword" ?
-                  <Th key={column}>{column}</Th>
+                  <Th key={column}>
+                    {
+                      {
+                        username: "Username",
+                        permLevel: "Permissions",
+                        teamNumber: "Team",
+                      }[column]
+                    }
+                  </Th>
                 : null
               )}
               <Th>Actions</Th>
-            </TableRow>
+            </tr>
           </TableHead>
-          <TableBody>
+          <tbody>
             {users.data?.map((user) => {
               if (searchUsername) {
                 if (!user.username.includes(searchUsername)) {
@@ -182,39 +148,36 @@ export default function Users({ logoutFunction }: UsersProps) {
                 }
               }
               return (
-                <TableRow key={user.username}>
+                <tr key={user.username}>
                   {UserColumns.map((column) =>
                     column !== "hashedPassword" ?
-                      <Td key={column}>
-                        <Typography>{user[column as UserColumn]}</Typography>
-                      </Td>
+                      <Td key={column}>{user[column as UserColumn]}</Td>
                     : null
                   )}
                   <Td>
-                    <Stack
-                      direction="row"
-                      sx={{
-                        width: 1,
-                        height: 1,
-                        justifyContent: "space-around",
-                      }}>
+                    <div className={styles.tableActions}>
                       <IconButton
                         onClick={() => {
                           openEditUser(user.username);
-                        }}>
-                        <Edit color="primary" />
+                        }}
+                        className={styles.editButton}>
+                        <Edit />
                       </IconButton>
-                      <IconButton>
-                        <Delete color="error" />
+                      <IconButton
+                        onClick={() => {
+                          //TODO
+                        }}
+                        className={styles.deleteButton}>
+                        <Delete />
                       </IconButton>
-                    </Stack>
+                    </div>
                   </Td>
-                </TableRow>
+                </tr>
               );
             })}
-          </TableBody>
-        </BorderedTable>
-      </TableContainer>
+          </tbody>
+        </Table>
+      </div>
       <EditUser
         editUserUsername={editUserUsername}
         setEditUserUsername={setEditUserUsername}
@@ -235,6 +198,6 @@ export default function Users({ logoutFunction }: UsersProps) {
           users.refetch();
         }}
       />
-    </Stack>
+    </div>
   );
 }

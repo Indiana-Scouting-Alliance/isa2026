@@ -1,0 +1,166 @@
+.outlinedNavButton {
+  border-color: var(--color-primary);
+  border-style: solid;
+  border-width: var(--button-border-width);
+  color: var(--color-primary);
+  background-color: var(--color-background);
+}
+
+.filledNavButton {
+  border: none;
+  color: var(--color-primary-contrastText);
+  background-color: var(--color-primary);
+}
+
+.contentContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.matchListContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  overflow-y: hidden;
+}
+
+.matchListActionContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.matchListActionButton {
+  flex: 1;
+
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-background);
+}
+
+.matchList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  height: auto;
+
+  overflow-y: scroll;
+}
+
+.match {
+  --match-background-color: color-mix(
+    in srgb,
+    var(--color-background) 50%,
+    #fff
+  );
+
+  padding: 16px;
+
+  border-radius: var(--border-radius);
+  border-color: var(--color-primary);
+  border-width: 2px;
+  border-style: solid;
+  background-color: var(--match-background-color);
+  cursor: pointer;
+}
+
+.matchCheckbox {
+  background-color: var(--match-background-color);
+  color: var(--color-primary);
+}
+
+.matchLabelContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.matchLabel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.matchLabelText {
+  font-family: var(--text-font-family);
+  /* TODO: make var */
+  font-size: 1em;
+  font-weight: normal;
+}
+.matchLabelTextNoUpload {
+  font-weight: bold;
+}
+
+.matchIconsAndText {
+  display: flex;
+  gap: 16px;
+}
+
+.matchIcons {
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+}
+
+.deleteDialogContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteDialogText {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}
+
+.deleteDialogList {
+  padding-left: 32px;
+}
+
+.deleteDialogListItem {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}
+
+.deleteDialogActionButton {
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-paper-background);
+}
+
+.exportMethodsContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+
+  overflow-y: auto;
+}
+
+.exportButton {
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-background);
+}
+
+.qrDialogActionButton {
+  flex: 1;
+
+  border: var(--button-border-width) solid var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-paper-background);
+}
+
+.snackbarClose {
+  color: var(--color-primary);
+  background-color: var(--color-paper-background);
+}
+
+.qrTextarea {
+  height: 50vh;
+}

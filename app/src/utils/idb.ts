@@ -6,7 +6,7 @@ import {
   TeamMatchEntry,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { DBSchema, openDB } from "idb";
-import { ExportMatchEntry } from "../scout/SavedMatches.tsx";
+import { ExportMatchEntry } from "../scout/savedmatches/SavedMatches.tsx";
 
 const version = 1;
 const dbname = "isa2026-idb";

@@ -1,89 +1,73 @@
 import { dateFileName } from "@isa2026/api/src/utils/utils.ts";
-import { Close, Download, FileUpload, Send } from "@mui/icons-material";
-import { Button, IconButton, Snackbar, Stack, TextField } from "@mui/material";
-import { useState } from "react";
-import { VisuallyHiddenInput } from "../components/VisuallyHiddenInput.tsx";
+import { Download, FileUpload, Send } from "@mui/icons-material";
+import { useRef, useState } from "react";
+import Button from "../components/Button/Button.tsx";
+import IconButton from "../components/Button/IconButton/IconButton.tsx";
+import Input from "../components/Input/Input.tsx";
 import { trpc } from "../utils/trpc.ts";
+import styles from "./Util.module.css";
 
 export default function Util() {
   const exportData = trpc.maintenance.exportData.useQuery();
   const [importDataString, setImportDataString] = useState("");
   const importData = trpc.maintenance.importData.useMutation();
-  const [importDataStatus, setImportDataStatus] = useState("");
+
+  const fileUploadRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Stack
-      sx={{
-        padding: 4,
-      }}
-      gap={2}>
-      <TextField
+    <div className={styles.container}>
+      <Input
         value={JSON.stringify(exportData.data)}
-        slotProps={{
-          input: {
-            endAdornment: (
-              <IconButton
-                onClick={() => {
-                  if (exportData.data) {
-                    const a = document.createElement("a");
-                    a.setAttribute(
-                      "href",
-                      URL.createObjectURL(
-                        new Blob([JSON.stringify(exportData.data)], {
-                          type: "application/json",
-                        })
-                      )
-                    );
-                    a.setAttribute("download", dateFileName() + ".json");
-                    a.setAttribute("target", "_blank");
-                    a.click();
-                  }
-                }}>
-                <Download />
-              </IconButton>
-            ),
-          },
-          inputLabel: {
-            shrink: true,
-          },
-        }}
+        endIcon={
+          <IconButton
+            onClick={() => {
+              if (exportData.data) {
+                const a = document.createElement("a");
+                a.setAttribute(
+                  "href",
+                  URL.createObjectURL(
+                    new Blob([JSON.stringify(exportData.data)], {
+                      type: "application/json",
+                    })
+                  )
+                );
+                a.setAttribute("download", dateFileName() + ".json");
+                a.setAttribute("target", "_blank");
+                a.click();
+              }
+            }}>
+            <Download />
+          </IconButton>
+        }
         disabled
         label="Stringified Export Data"
-        variant="outlined"
-        sx={(theme) => {
-          return {
-            "& .MuiInputBase-input.Mui-disabled": {
-              WebkitTextFillColor: theme.palette.text.primary,
-              color: theme.palette.text.primary,
-            },
-          };
-        }}
+        id="stringified-export-data"
       />
-      <TextField
+      <Input
         value={importDataString}
-        onChange={(event) => {
-          setImportDataString(event.currentTarget.value);
+        onChange={(value) => {
+          setImportDataString(value);
         }}
-        slotProps={{
-          input: {
-            endAdornment: (
-              <IconButton
-                onClick={() => {
-                  importData.mutate(JSON.parse(importDataString));
-                }}>
-                <Send />
-              </IconButton>
-            ),
-          },
-        }}
+        endIcon={
+          <IconButton
+            onClick={() => {
+              importData.mutate(JSON.parse(importDataString));
+            }}>
+            <Send />
+          </IconButton>
+        }
         label="Stringified Import Data"
-        variant="outlined"
+        id="stringified-import-data"
       />
       <Button
-        component="label"
-        startIcon={<FileUpload />}>
+        className={styles.fileUploadButton}
+        onClick={() => {
+          fileUploadRef.current?.click();
+        }}>
+        <FileUpload />
         Upload JSON File
-        <VisuallyHiddenInput
+        <input
+          ref={fileUploadRef}
           type="file"
           accept="application/json"
           onChange={async (event) => {
@@ -94,28 +78,9 @@ export default function Util() {
               importData.mutate(data);
             }
           }}
+          hidden
         />
       </Button>
-      <Snackbar
-        open={importDataStatus !== ""}
-        autoHideDuration={3000}
-        onClose={() => {
-          setImportDataStatus("");
-        }}
-        message={status}
-        action={
-          <IconButton
-            onClick={() => {
-              setImportDataStatus("");
-            }}>
-            <Close
-              sx={{
-                color: "#ffffff",
-              }}
-            />
-          </IconButton>
-        }
-      />
-    </Stack>
+    </div>
   );
 }

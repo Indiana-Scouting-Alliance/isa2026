@@ -1,16 +1,14 @@
 import { DBEvent, Match } from "@isa2026/api/src/utils/dbtypes.ts";
-import {
-  Box,
-  Button,
-  Dialog,
+import { useState } from "react";
+import Button from "../components/Button/Button.tsx";
+import Dialog, {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { useState } from "react";
+} from "../components/Dialog/Dialog.tsx";
+import Input from "../components/Input/Input.tsx";
 import { trpc } from "../utils/trpc.ts";
+import styles from "./EventDialogs.module.css";
 
 type ExportEventProps = {
   exportEvent: boolean;
@@ -92,32 +90,21 @@ export default function ExportEvent({
       }}>
       <DialogTitle>Export Event</DialogTitle>
       <DialogContent>
-        <Stack
-          sx={{
-            pt: 2,
-          }}
-          gap={2}>
-          <TextField
+        <div className={styles.contentContainer}>
+          <Input
+            id="export-event-event-key"
             value={eventKey}
-            onChange={(event) => {
-              setEventKey(event.currentTarget.value);
+            onChange={(value) => {
+              setEventKey(value);
             }}
             label="eventKey"
             error={eventKeyError !== ""}
             helperText={eventKeyError}
           />
 
-          <Stack
-            direction="row"
-            gap={2}
-            sx={{
-              width: 1,
-            }}>
+          <div className={styles.buttonContainer}>
             <Button
-              variant="outlined"
-              sx={{
-                flex: 1,
-              }}
+              className={styles.button}
               onClick={() => {
                 if (!checkEventKey()) {
                   setIsaStatus("Loading...");
@@ -127,10 +114,7 @@ export default function ExportEvent({
               ISA
             </Button>
             <Button
-              variant="outlined"
-              sx={{
-                flex: 1,
-              }}
+              className={styles.button}
               onClick={() => {
                 const currentEvent = events.find(
                   (event) => event.eventKey === eventKey
@@ -182,18 +166,28 @@ export default function ExportEvent({
               }}>
               Local
             </Button>
-          </Stack>
-          <Box>
+          </div>
+          <div className={styles.statusContainer}>
             {isaStatus ? "ISA Server: " + isaStatus : ""}
             <br />
             {localStatus ? "Local: " + localStatus : ""}
-          </Box>
-        </Stack>
+          </div>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button
+          className={styles.actionButton}
           onClick={() => {
             setExportEvent(false);
+          }}>
+          Cancel
+        </Button>
+        <Button
+          className={styles.actionButton}
+          onClick={() => {
+            if (!checkEventKey()) {
+              setExportEvent(false);
+            }
           }}>
           Done
         </Button>

@@ -1,0 +1,27 @@
+.goodAtLabel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  overflow-y: hidden;
+}
+
+.goodAtCheckboxes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  overflow-y: auto;
+}
+
+.dataConfidenceToggle {
+  flex: 1;
+}
+
+.commentsInput {
+  resize: vertical;
+}

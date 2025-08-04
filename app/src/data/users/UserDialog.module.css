@@ -1,0 +1,16 @@
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.showPasswordButton {
+  background-color: var(--color-paper-background);
+  color: var(--color-primary);
+}
+
+.actionButton {
+  background-color: var(--color-paper-background);
+  border: none;
+  color: var(--color-primary);
+}

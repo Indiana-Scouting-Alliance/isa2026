@@ -1,0 +1,53 @@
+.dialog {
+  background-color: var(--color-background);
+}
+
+.dialogTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contentContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7rem;
+}
+
+.climbs {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1em;
+}
+
+.cagesContainer {
+  width: 100%;
+  flex: 1;
+  margin-bottom: 1em;
+}
+
+.startingLine {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  gap: 1em;
+}
+
+.lineCrossContainer {
+  width: 100%;
+  flex: 1;
+}
+
+.label {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  font-weight: bold;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}

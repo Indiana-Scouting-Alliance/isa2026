@@ -1,0 +1,136 @@
+.reefContainerContainer {
+  padding: 16px;
+}
+
+.reefContainer {
+  aspect-ratio: 2547 / 2869;
+}
+
+.popper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--color-paper-background);
+  border: var(--button-border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+}
+
+.popperButton {
+  width: 100%;
+  padding: 0;
+  min-height: 0;
+}
+
+.bargeAndProcessorContainer {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.processorContainerContainer {
+  width: 65%;
+  height: 100%;
+  padding: 8px;
+}
+
+.processorContainer {
+  aspect-ratio: 2547 / 2311;
+}
+
+.bargeContainerContainer {
+  width: 35%;
+  height: 100%;
+  padding: 8px;
+}
+
+.bargeContainer {
+  aspect-ratio: 1670 / 2881;
+}
+
+/* ! Locations are based on Red/Blue on Left field orientation */
+
+.reefButton {
+  position: absolute;
+
+  --x-distance-1: 8%;
+  --x-distance-2: 18%;
+  --x-distance-3: 38%;
+
+  --y-distance-1: 12%;
+  --y-distance-2: 20%;
+  --y-distance-3: 40%;
+}
+
+.reefButtonA {
+  left: var(--x-distance-1);
+  top: var(--y-distance-3);
+  transform: translate(-50%, -50%);
+}
+
+.reefButtonB {
+  left: var(--x-distance-1);
+  bottom: var(--y-distance-3);
+  transform: translate(-50%, 50%);
+}
+
+.reefButtonC {
+  left: var(--x-distance-2);
+  bottom: var(--y-distance-2);
+  transform: translate(-50%, 50%);
+}
+
+.reefButtonD {
+  left: var(--x-distance-3);
+  bottom: var(--y-distance-1);
+  transform: translate(-50%, 50%);
+}
+
+.reefButtonE {
+  right: var(--x-distance-3);
+  bottom: var(--y-distance-1);
+  transform: translate(50%, 50%);
+}
+
+.reefButtonF {
+  right: var(--x-distance-2);
+  bottom: var(--y-distance-2);
+  transform: translate(50%, 50%);
+}
+
+.reefButtonG {
+  right: var(--x-distance-1);
+  bottom: var(--y-distance-3);
+  transform: translate(50%, 50%);
+}
+
+.reefButtonH {
+  right: var(--x-distance-1);
+  top: var(--y-distance-3);
+  transform: translate(50%, -50%);
+}
+
+.reefButtonI {
+  right: var(--x-distance-2);
+  top: var(--y-distance-2);
+  transform: translate(50%, -50%);
+}
+
+.reefButtonJ {
+  right: var(--x-distance-3);
+  top: var(--y-distance-1);
+  transform: translate(50%, -50%);
+}
+
+.reefButtonK {
+  left: var(--x-distance-3);
+  top: var(--y-distance-1);
+  transform: translate(-50%, -50%);
+}
+
+.reefButtonL {
+  left: var(--x-distance-2);
+  top: var(--y-distance-2);
+  transform: translate(-50%, -50%);
+}

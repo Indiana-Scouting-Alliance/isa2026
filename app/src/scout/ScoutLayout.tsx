@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
 import ScoutPageContainer from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
+import Tab from "../components/Tabs/Tab.tsx";
 import TabBar from "../components/Tabs/TabBar.tsx";
 import { DeviceSetupObj } from "../setup/DeviceSetup.tsx";
 import { getDBHumanPlayerEntries, putDBEntry } from "../utils/idb.ts";
@@ -356,6 +357,7 @@ export default function ScoutLayout({
   const matchStageRef = useRef(matchStage);
   useEffect(() => {
     matchStageRef.current = matchStage;
+    console.log("matchStageRef", matchStageRef.current);
   }, [matchStage]);
   if (eventEmitter.listenerCount("teleop-animation") === 0) {
     eventEmitter.on("teleop-animation", () => {
@@ -488,9 +490,19 @@ export default function ScoutLayout({
               } else {
                 setMatchStage(value as MatchStage);
               }
-            }}
-            tabs={["prematch", "auto", "teleop", "postmatch"]}
-          />
+            }}>
+            <Tab value="prematch">Prematch</Tab>
+            <Tab value="auto">Auto</Tab>
+            <Tab
+              value="teleop"
+              style={{
+                transition: "all " + TELEOP_TAB_FLASH_MS + "ms",
+              }}
+              className={teleopTabAnimation ? styles.teleopTabHighlight : ""}>
+              Teleop
+            </Tab>
+            <Tab value="postmatch">Postmatch</Tab>
+          </TabBar>
       }
       nowScouting={{
         teamNumber: match.teamNumber || 0,

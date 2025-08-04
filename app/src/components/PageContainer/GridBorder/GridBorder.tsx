@@ -1,4 +1,4 @@
-import BackdropComponent from "../../BackdropComponent.tsx";
+import Backdrop from "../../Backdrop/Backdrop.tsx";
 import styles from "./GridBorder.module.css";
 
 type GridBorderProps = {
@@ -18,8 +18,13 @@ export default function GridBorder({
           gridColumn: 1,
           gridRow: 1,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -29,8 +34,13 @@ export default function GridBorder({
           gridColumn: 2,
           gridRow: 1,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -40,8 +50,13 @@ export default function GridBorder({
           gridColumn: 3,
           gridRow: 1,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -51,8 +66,13 @@ export default function GridBorder({
           gridColumn: 1,
           gridRow: 2,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -62,8 +82,13 @@ export default function GridBorder({
           gridColumn: 3,
           gridRow: 2,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -73,8 +98,13 @@ export default function GridBorder({
           gridColumn: 1,
           gridRow: 3,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -84,8 +114,13 @@ export default function GridBorder({
           gridColumn: 2,
           gridRow: 3,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />
@@ -95,8 +130,13 @@ export default function GridBorder({
           gridColumn: 3,
           gridRow: 3,
         }}
-        className={styles.gridCell}>
-        <BackdropComponent
+        className={styles.gridCell}
+        onClick={() => {
+          if (backdrop && onCloseBackdrop) {
+            onCloseBackdrop();
+          }
+        }}>
+        <Backdrop
           open={backdrop}
           onClose={onCloseBackdrop}
         />

@@ -2,22 +2,3 @@
   display: flex;
   width: 100%;
 }
-
-.tab {
-  padding: 0.5em;
-
-  cursor: pointer;
-  color: var(--color-primary);
-  font-family: var(--text-font-family);
-  font-size: var(--text-body-size);
-  text-transform: uppercase;
-  font-weight: 500;
-  background-color: var(--color-background);
-}
-.tab:hover {
-  filter: var(--hover-dim);
-}
-.activeTab {
-  font-weight: 700;
-  border-bottom: 4px solid var(--color-primary);
-}

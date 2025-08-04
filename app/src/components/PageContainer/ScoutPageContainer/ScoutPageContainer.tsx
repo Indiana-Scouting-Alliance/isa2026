@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BackdropComponent from "../../BackdropComponent.tsx";
+import Backdrop from "../../Backdrop/Backdrop.tsx";
 import Button from "../../Button/Button.tsx";
 import HelpDialog from "../../Dialog/HelpDialog/HelpDialog.tsx";
 import GridBorder from "../GridBorder/GridBorder.tsx";
@@ -58,17 +58,29 @@ export default function ScoutPageContainer({
             </Button>
           )}
         </div>
-        <div className={styles.contentContainer}>
+        <div
+          className={styles.contentContainer}
+          onClick={() => {
+            if (backdrop && onCloseBackdrop) {
+              onCloseBackdrop();
+            }
+          }}>
           {children}
-          <BackdropComponent
+          <Backdrop
             open={backdrop}
             onClose={onCloseBackdrop}
           />
         </div>
         {navButtons && (
-          <div className={styles.navContainer}>
+          <div
+            className={styles.navContainer}
+            onClick={() => {
+              if (backdrop && onCloseBackdrop) {
+                onCloseBackdrop();
+              }
+            }}>
             {navButtons}
-            <BackdropComponent
+            <Backdrop
               open={backdrop}
               onClose={onCloseBackdrop}
             />

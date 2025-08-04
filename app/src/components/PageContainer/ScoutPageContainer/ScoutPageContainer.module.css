@@ -37,6 +37,7 @@
   width: 100%;
   flex: 1;
   overflow-y: scroll;
+  position: relative;
 }
 
 .navContainer {
@@ -44,4 +45,5 @@
   justify-content: right;
   padding: 32px;
   gap: 24px;
+  position: relative;
 }

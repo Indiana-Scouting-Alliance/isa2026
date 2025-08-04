@@ -18,3 +18,8 @@
 
   overflow-y: scroll;
 }
+
+.teleopTabHighlight {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+}

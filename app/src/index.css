@@ -1,9 +1,9 @@
 :root {
-  --color-primary: #000f5d;
+  --color-primary: #000f5d; /* Indiana Flag Blue */
   --color-primary-contrastText: #fff;
-  --color-secondary: #ffb900;
+  --color-secondary: #ffb900; /* Indiana Flag Gold */
   --color-secondary-contrastText: #000;
-  --color-background: #89cff0;
+  --color-background: #89cff0; /* Light Blue */
   --color-background-contrastText: #000;
   --color-paper-background: #dddddd;
   --color-paper-background-contrastText: #000;

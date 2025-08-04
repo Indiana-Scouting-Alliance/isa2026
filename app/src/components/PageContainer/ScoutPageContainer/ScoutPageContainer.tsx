@@ -1,8 +1,9 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import BackdropComponent from "../../BackdropComponent.tsx";
-import HelpDialog from "../../HelpDialog.tsx";
-import { GridBorder } from "../GridBorder/GridBorder.tsx";
+import Button from "../../Button/Button.tsx";
+import HelpDialog from "../../Dialog/HelpDialog/HelpDialog.tsx";
+import GridBorder from "../GridBorder/GridBorder.tsx";
+import styles from "./ScoutPageContainer.module.css";
 
 type ScoutPageContainerProps = {
   title: string | React.ReactNode;
@@ -30,36 +31,20 @@ export default function ScoutPageContainer({
     <GridBorder
       backdrop={backdrop}
       onCloseBackdrop={onCloseBackdrop}>
-      <Stack
-        sx={{
-          width: 1,
-          height: 1,
-        }}>
-        <Stack
-          sx={{
-            width: 1,
-            padding: 2,
-            overflowX: "scroll",
-          }}
-          direction="row">
+      <div className={styles.container}>
+        <div className={styles.topBar}>
           {typeof title === "string" ?
-            <Typography
-              variant="h2"
-              fontWeight="bold">
-              {title.toUpperCase()}
-            </Typography>
+            <h2 className={styles.title}>{title.toUpperCase()}</h2>
           : title}
           {nowScouting && (
             <Button
-              sx={{
-                backgroundColor:
-                  nowScouting.alliance === "Blue" ? "#0000ff" : "#ff0000",
-                color: "white",
-                ml: "auto",
-                fontSize: "large",
-                height: 1,
-                width: "max-content",
-              }}
+              className={
+                styles.nowScouting +
+                " " +
+                (nowScouting.alliance === "Red" ?
+                  styles.nowScoutingRed
+                : styles.nowScoutingBlue)
+              }
               onClick={() => {
                 setHelpOpen(true);
               }}>
@@ -72,37 +57,24 @@ export default function ScoutPageContainer({
                 : nowScouting.robotPosition)}
             </Button>
           )}
-        </Stack>
-        <Box
-          sx={{
-            width: 1,
-            flex: 1,
-            overflowY: "scroll",
-            position: "relative",
-          }}>
+        </div>
+        <div className={styles.contentContainer}>
           {children}
           <BackdropComponent
             open={backdrop}
             onClose={onCloseBackdrop}
           />
-        </Box>
+        </div>
         {navButtons && (
-          <Stack
-            sx={{
-              padding: 4,
-              justifyContent: "right",
-              position: "relative",
-            }}
-            direction="row"
-            gap={3}>
+          <div className={styles.navContainer}>
             {navButtons}
             <BackdropComponent
               open={backdrop}
               onClose={onCloseBackdrop}
             />
-          </Stack>
+          </div>
         )}
-      </Stack>
+      </div>
       <HelpDialog
         open={helpOpen}
         onClose={() => {

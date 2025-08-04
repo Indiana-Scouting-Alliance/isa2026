@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.title {
+  font-family: var(--text-font-family);
+  font-size: var(--text-h2-size);
+  font-weight: bold;
+}
+
+.nowScouting {
+  color: #fff;
+  margin-left: auto;
+  width: max-content;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.nowScoutingRed {
+  background-color: #ff0000;
+}
+.nowScoutingBlue {
+  background-color: #0000ff;
+}
+
+.contentContainer {
+  width: 100%;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: right;
+  padding: 32px;
+  gap: 24px;
+}

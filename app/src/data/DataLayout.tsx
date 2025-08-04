@@ -2,7 +2,7 @@ import { User } from "@isa2026/api/src/utils/dbtypes.ts";
 import React from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
-import { GridBorder } from "../components/PageContainer/GridBorder/GridBorder.tsx";
+import GridBorder from "../components/PageContainer/GridBorder/GridBorder.tsx";
 import styles from "./DataLayout.module.css";
 
 const DataMenu = React.lazy(() => import("./DataMenu.tsx"));

@@ -6,7 +6,7 @@ type GridBorderProps = {
   onCloseBackdrop?: () => void;
   children?: React.ReactNode;
 };
-export function GridBorder({
+export default function GridBorder({
   backdrop = false,
   onCloseBackdrop,
   children,

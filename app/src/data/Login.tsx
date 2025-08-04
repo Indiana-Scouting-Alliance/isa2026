@@ -6,7 +6,7 @@ import Button from "../components/Button/Button.tsx";
 import IconButton from "../components/Button/IconButton/IconButton.tsx";
 import Input from "../components/Input/Input.tsx";
 import { TextFieldDoubleLabel } from "../components/Input/TextFieldLabel/TextFieldLabel.tsx";
-import { GridBorder } from "../components/PageContainer/GridBorder/GridBorder.tsx";
+import GridBorder from "../components/PageContainer/GridBorder/GridBorder.tsx";
 import { trpc } from "../utils/trpc.ts";
 import styles from "./Login.module.css";
 

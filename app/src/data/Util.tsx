@@ -1,6 +1,5 @@
 import { dateFileName } from "@isa2026/api/src/utils/utils.ts";
-import { Close, Download, FileUpload, Send } from "@mui/icons-material";
-import { Snackbar } from "@mui/material";
+import { Download, FileUpload, Send } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import Button from "../components/Button/Button.tsx";
 import IconButton from "../components/Button/IconButton/IconButton.tsx";
@@ -12,7 +11,6 @@ export default function Util() {
   const exportData = trpc.maintenance.exportData.useQuery();
   const [importDataString, setImportDataString] = useState("");
   const importData = trpc.maintenance.importData.useMutation();
-  const [importDataStatus, setImportDataStatus] = useState("");
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
@@ -83,26 +81,6 @@ export default function Util() {
           hidden
         />
       </Button>
-      <Snackbar
-        open={importDataStatus !== ""}
-        autoHideDuration={3000}
-        onClose={() => {
-          setImportDataStatus("");
-        }}
-        message={status}
-        action={
-          <IconButton
-            onClick={() => {
-              setImportDataStatus("");
-            }}>
-            <Close
-              sx={{
-                color: "#ffffff",
-              }}
-            />
-          </IconButton>
-        }
-      />
     </div>
   );
 }

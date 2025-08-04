@@ -4,8 +4,14 @@ type DialogProps = {
   open: boolean;
   onClose?: () => void;
   children?: React.ReactNode;
+  className?: string;
 };
-export default function Dialog({ open, onClose, children }: DialogProps) {
+export default function Dialog({
+  open,
+  onClose,
+  children,
+  className,
+}: DialogProps) {
   return open ?
       <div
         className={styles.screenDarken}
@@ -15,7 +21,7 @@ export default function Dialog({ open, onClose, children }: DialogProps) {
           }
         }}>
         <div
-          className={styles.dialog}
+          className={styles.dialog + " " + (className || "")}
           onClick={(event) => {
             event.stopPropagation();
           }}>
@@ -27,9 +33,12 @@ export default function Dialog({ open, onClose, children }: DialogProps) {
 
 type DialogTitleProps = {
   children: React.ReactNode;
+  className?: string;
 };
-export function DialogTitle({ children }: DialogTitleProps) {
-  return <h2 className={styles.dialogTitle}>{children}</h2>;
+export function DialogTitle({ children, className }: DialogTitleProps) {
+  return (
+    <h2 className={styles.dialogTitle + " " + (className || "")}>{children}</h2>
+  );
 }
 
 type DialogContentProps = {

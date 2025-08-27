@@ -45,6 +45,6 @@
     "vite": "^5.4.19",
     "vite-plugin-pwa": "^0.20.5",
     "workbox-window": "^7.3.0",
-    "wrangler": "^4.26.1"
+    "wrangler": "^4.33.0"
   }
 }

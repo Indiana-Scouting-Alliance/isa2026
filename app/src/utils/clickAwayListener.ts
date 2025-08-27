@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 export default function useClickAwayListener(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   onClick: () => void
 ) {
   useEffect(() => {

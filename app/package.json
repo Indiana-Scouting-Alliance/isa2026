@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.1",
   "type": "module",
-  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
+  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b",
   "scripts": {
     "dev": "vite --host=0.0.0.0",
     "build": "tsc -b && vite build",
@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.6",
     "@mui/icons-material": "^6.5.0",
-    "@tanstack/react-query": "^5.83.0",
+    "@tanstack/react-query": "^5.85.5",
     "@trpc/client": "11.0.0-rc.608",
     "@trpc/react-query": "11.0.0-rc.608",
     "@trpc/server": "11.0.0-rc.608",
@@ -24,27 +24,27 @@
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.7.1"
+    "react-router-dom": "^7.8.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
+    "@eslint/js": "^9.34.0",
     "@isa2026/api": "workspace:*",
-    "@types/node": "^22.17.0",
-    "@types/react": "^18.3.23",
+    "@types/node": "^22.18.0",
+    "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
     "@typescript-eslint/parser": "^8.41.0",
     "@vitejs/plugin-react": "^4.7.0",
     "babel-plugin-import": "^1.13.8",
-    "eslint": "^9.32.0",
+    "eslint": "^9.34.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "typescript": "~5.6.3",
-    "typescript-eslint": "^8.38.0",
-    "vite": "^5.4.19",
-    "vite-plugin-pwa": "^0.20.5",
+    "typescript-eslint": "^8.41.0",
+    "vite": "^7.1.3",
+    "vite-plugin-pwa": "^1.0.3",
     "workbox-window": "^7.3.0",
-    "wrangler": "^4.26.1"
+    "wrangler": "^4.33.0"
   }
 }

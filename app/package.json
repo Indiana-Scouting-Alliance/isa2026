@@ -22,7 +22,7 @@
     "events": "^3.3.0",
     "idb": "^8.0.3",
     "qrcode.react": "^4.2.0",
-    "react": "^18.3.1",
+    "react": "^19.1.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.8.2"
   },
@@ -30,7 +30,7 @@
     "@eslint/js": "^9.34.0",
     "@isa2026/api": "workspace:*",
     "@types/node": "^22.18.0",
-    "@types/react": "^18.3.24",
+    "@types/react": "^19.1.12",
     "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^8.41.0",
     "@typescript-eslint/parser": "^8.41.0",

@@ -16,7 +16,7 @@
     "@fontsource/roboto": "^5.2.6",
     "@mui/icons-material": "^7.3.1",
     "@tanstack/react-query": "^5.85.5",
-    "@trpc/client": "11.0.0-rc.608",
+    "@trpc/client": "11.5.0",
     "@trpc/react-query": "11.0.0-rc.608",
     "@trpc/server": "11.0.0-rc.608",
     "events": "^3.3.0",

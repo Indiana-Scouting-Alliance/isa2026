@@ -28,7 +28,7 @@ git clone https://github.com/Indiana-Scouting-Alliance/isa2026.git
 ## 2. Navigate to scouting directory
 
 ```zsh
-cd scouting
+cd isa2026
 ```
 
 ## 3. Set default repository

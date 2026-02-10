@@ -4,12 +4,12 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 # https://containers.dev/guide/dependabot
 
-version: 2
-updates:
-  - package-ecosystem: "npm"
-    directories:
-      - "/"
-      - "/app"
-      - "/api"
-    schedule:
-      interval: daily
+# version: 2
+# updates:
+#   - package-ecosystem: "npm"
+#     directories:
+#       - "/"
+#       - "/app"
+#       - "/api"
+#     schedule:
+#       interval: daily

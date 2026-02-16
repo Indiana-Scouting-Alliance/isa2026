@@ -1,8 +1,6 @@
 import { MAX_TEAM_NUMBER } from "@isa2026/api/src/utils/constants.ts";
 import {
   DBEvent,
-  HumanPlayerEntry,
-  HumanPlayerEntryNoShowInit,
   Match,
   TeamMatchEntry,
   TeamMatchEntryNoShowInit,
@@ -15,9 +13,8 @@ import ScoutPageContainer from "../components/PageContainer/ScoutPageContainer/S
 import Tab from "../components/Tabs/Tab.tsx";
 import TabBar from "../components/Tabs/TabBar.tsx";
 import { DeviceSetupObj } from "../setup/DeviceSetup.tsx";
-import { getDBHumanPlayerEntries, putDBEntry } from "../utils/idb.ts";
+import { putDBEntry } from "../utils/idb.ts";
 import { trpc } from "../utils/trpc.ts";
-import Human from "./Human.tsx";
 import Auto from "./robot/Auto.tsx";
 import Postmatch from "./robot/Postmatch.tsx";
 import Prematch from "./robot/Prematch.tsx";
@@ -25,16 +22,18 @@ import { Teleop } from "./robot/Teleop.tsx";
 import { ExportMatchEntry } from "./savedmatches/SavedMatches.tsx";
 import styles from "./ScoutLayout.module.css";
 
-export type MatchStage = "prematch" | "auto" | "teleop" | "postmatch" | "human";
+export type MatchStage = "prematch" | "auto" | "teleop" | "postmatch";
+
 type ScoutLayoutProps = {
-  match: TeamMatchEntry | HumanPlayerEntry;
-  setMatch: (value: TeamMatchEntry | HumanPlayerEntry) => void;
+  match: TeamMatchEntry;
+  setMatch: (value: TeamMatchEntry) => void;
   events: (DBEvent & { matches: Match[] })[];
   deviceSetup: DeviceSetupObj;
   putEntriesPending: boolean;
   setPutEntriesPending: (value: boolean) => void;
   eventEmitter: EventEmitter;
 };
+
 export default function ScoutLayout({
   match,
   setMatch,
@@ -45,66 +44,10 @@ export default function ScoutLayout({
   eventEmitter,
 }: ScoutLayoutProps) {
   const navigate = useNavigate();
-
-  const [matchStage, setMatchStage] = useState<MatchStage>(
-    match.robotNumber === 4 ? "human" : "prematch"
-  );
-  console.log("match stage: " + matchStage);
+  const [matchStage, setMatchStage] = useState<MatchStage>("prematch");
 
   const endOfMatchTeamMatchEntry = (m: TeamMatchEntry): TeamMatchEntry => {
-    return {
-      ...m,
-      autoCrossedRSL:
-        (
-          m.autoCrossedRSL ||
-          m.autoCoralABL1 ||
-          m.autoCoralAL2 ||
-          m.autoCoralAL3 ||
-          m.autoCoralAL4 ||
-          m.autoCoralBL2 ||
-          m.autoCoralBL3 ||
-          m.autoCoralBL4 ||
-          m.autoCoralCDL1 ||
-          m.autoCoralCL2 ||
-          m.autoCoralCL3 ||
-          m.autoCoralCL4 ||
-          m.autoCoralDL2 ||
-          m.autoCoralDL3 ||
-          m.autoCoralDL4 ||
-          m.autoCoralEFL1 ||
-          m.autoCoralEL2 ||
-          m.autoCoralEL3 ||
-          m.autoCoralEL4 ||
-          m.autoCoralFL2 ||
-          m.autoCoralFL3 ||
-          m.autoCoralFL4 ||
-          m.autoCoralGHL1 ||
-          m.autoCoralGL2 ||
-          m.autoCoralGL3 ||
-          m.autoCoralGL4 ||
-          m.autoCoralHL2 ||
-          m.autoCoralHL3 ||
-          m.autoCoralHL4 ||
-          m.autoCoralIJL1 ||
-          m.autoCoralIL2 ||
-          m.autoCoralIL3 ||
-          m.autoCoralIL4 ||
-          m.autoCoralJL2 ||
-          m.autoCoralJL3 ||
-          m.autoCoralJL4 ||
-          m.autoCoralKLL1 ||
-          m.autoCoralKL2 ||
-          m.autoCoralKL3 ||
-          m.autoCoralKL4 ||
-          m.autoCoralLL2 ||
-          m.autoCoralLL3 ||
-          m.autoCoralLL4 ||
-          m.autoProcessor ||
-          m.autoNet
-        ) ?
-          true
-        : false,
-    };
+    return { ...m };
   };
 
   let putEntriesTimeout: NodeJS.Timeout;
@@ -116,9 +59,7 @@ export default function ScoutLayout({
         if (putEntriesPending) {
           putEntries.reset();
           await putDBEntry({
-            ...(match.robotNumber === 4 ?
-              match
-            : endOfMatchTeamMatchEntry(match)),
+            match,
             autoUpload: false,
             quickshare: false,
             clipboard: false,
@@ -133,7 +74,7 @@ export default function ScoutLayout({
     async onSuccess() {
       clearTimeout(putEntriesTimeout);
       await putDBEntry({
-        ...(match.robotNumber === 4 ? match : endOfMatchTeamMatchEntry(match)),
+        ...match,
         autoUpload: true,
         quickshare: false,
         clipboard: false,
@@ -142,14 +83,13 @@ export default function ScoutLayout({
         upload: false,
       } as ExportMatchEntry);
       setPutEntriesPending(false);
-      console.log(getDBHumanPlayerEntries());
       navigate("/scout/savedmatches");
     },
     async onError(error) {
       clearTimeout(putEntriesTimeout);
       console.error(error);
       await putDBEntry({
-        ...(match.robotNumber === 4 ? match : endOfMatchTeamMatchEntry(match)),
+        match,
         autoUpload: false,
         quickshare: false,
         clipboard: false,
@@ -171,7 +111,6 @@ export default function ScoutLayout({
 
   const prematchCheck = () => {
     let error = false;
-
     if (!Number.isInteger(match.matchNumber) || match.matchNumber < 1) {
       error = true;
       setMatchNumberError("Invalid match number.");
@@ -184,10 +123,7 @@ export default function ScoutLayout({
             y.matchLevel === match.matchLevel
         )
     ) {
-      if (
-        matchNumberError !==
-        "Match not in schedule. Press Next again to ignore."
-      ) {
+      if (matchNumberError !== "Match not in schedule. Press Next again to ignore.") {
         error = true;
       }
       setMatchNumberError("Match not in schedule. Press Next again to ignore.");
@@ -224,12 +160,7 @@ export default function ScoutLayout({
       setTeamNumberError("");
     }
 
-    if (
-      !(match as TeamMatchEntry).noShow &&
-      !(match as TeamMatchEntry).startingLocationA &&
-      !(match as TeamMatchEntry).startingLocationB &&
-      !(match as TeamMatchEntry).startingLocationC
-    ) {
+    if (!match.noShow && !match.startZone) {
       error = true;
       setStartingPositionError("Starting position must be selected.");
     } else {
@@ -238,83 +169,21 @@ export default function ScoutLayout({
 
     return error;
   };
+
   const submitCheck = () => {
     let error = false;
-
-    if (
-      (match as TeamMatchEntry).dataConfidence !== "low" &&
-      (match as TeamMatchEntry).dataConfidence !== "neutral" &&
-      (match as TeamMatchEntry).dataConfidence !== "high"
-    ) {
+    if (match.dataConfidence === null) {
       error = true;
       setDataConfidenceError("Data confidence must be selected.");
     }
-
     return error;
   };
-  const humanCheck = () => {
-    let error = false;
 
-    if (!Number.isInteger(match.matchNumber) || match.matchNumber < 1) {
-      error = true;
-      setMatchNumberError("Invalid match number.");
-    } else if (
-      !events
-        .find((x) => x.eventKey === deviceSetup.currentEvent)
-        ?.matches.some(
-          (y) =>
-            y.matchNumber === match.matchNumber &&
-            y.matchLevel === match.matchLevel
-        )
-    ) {
-      if (
-        matchNumberError !==
-        "Match not in schedule. Press Next again to ignore."
-      ) {
-        error = true;
-      }
-      setMatchNumberError("Match not in schedule. Press Next again to ignore.");
-    } else {
-      setMatchNumberError("");
-    }
-
-    if (!match.scoutName) {
-      error = true;
-      setScoutNameError("Cannot be empty.");
-    } else {
-      setScoutNameError("");
-    }
-
-    if (
-      !match.scoutTeamNumber ||
-      match.scoutTeamNumber < 1 ||
-      match.scoutTeamNumber > MAX_TEAM_NUMBER
-    ) {
-      error = true;
-      setScoutTeamNumberError("Invalid team number.");
-    } else {
-      setScoutTeamNumberError("");
-    }
-
-    if (
-      match.teamNumber === null ||
-      isNaN(match.teamNumber) ||
-      match.teamNumber <= 0 ||
-      match.teamNumber > MAX_TEAM_NUMBER
-    ) {
-      error = true;
-      setTeamNumberError("Invalid team number.");
-    } else {
-      setTeamNumberError("");
-    }
-
-    return error;
-  };
+  // Human player check removed as requested
 
   const TELEOP_TAB_FLASH_MS = 750;
   const [teleopTabAnimation, setTeleopTabAnimation] = useState(false);
   const [teleopAnimationBackdrop, setTeleopAnimationBackdrop] = useState(false);
-  console.log(teleopTabAnimation, teleopAnimationBackdrop);
   const recurringTeleopAnimation = useRef<NodeJS.Timeout | null>(null);
   const teleopAnimationBackdropTimeout = useRef<NodeJS.Timeout | null>(null);
   const teleopTabAnimation1 = useRef<NodeJS.Timeout | null>(null);
@@ -323,6 +192,7 @@ export default function ScoutLayout({
   const teleopTabAnimation4 = useRef<NodeJS.Timeout | null>(null);
   const teleopTabAnimation5 = useRef<NodeJS.Timeout | null>(null);
   const [teleopAnimationRunning, setTeleopAnimationRunning] = useState(false);
+
   const clearTeleopAnimations = () => {
     setTeleopAnimationBackdrop(false);
     if (teleopAnimationBackdropTimeout.current) {
@@ -330,42 +200,23 @@ export default function ScoutLayout({
       teleopAnimationBackdropTimeout.current = null;
     }
     setTeleopTabAnimation(false);
-    if (teleopTabAnimation1.current) {
-      clearTimeout(teleopTabAnimation1.current);
-      teleopTabAnimation1.current = null;
-    }
-    if (teleopTabAnimation2.current) {
-      clearTimeout(teleopTabAnimation2.current);
-      teleopTabAnimation2.current = null;
-    }
-    if (teleopTabAnimation3.current) {
-      clearTimeout(teleopTabAnimation3.current);
-      teleopTabAnimation3.current = null;
-    }
-    if (teleopTabAnimation4.current) {
-      clearTimeout(teleopTabAnimation4.current);
-      teleopTabAnimation4.current = null;
-    }
-    if (teleopTabAnimation5.current) {
-      clearTimeout(teleopTabAnimation5.current);
-      teleopTabAnimation5.current = null;
-    }
-
+    [teleopTabAnimation1, teleopTabAnimation2, teleopTabAnimation3, teleopTabAnimation4, teleopTabAnimation5].forEach(ref => {
+      if (ref.current) {
+        clearTimeout(ref.current);
+        ref.current = null;
+      }
+    });
     setTeleopAnimationRunning(false);
   };
 
   const matchStageRef = useRef(matchStage);
   useEffect(() => {
     matchStageRef.current = matchStage;
-    console.log("matchStageRef", matchStageRef.current);
   }, [matchStage]);
+
   if (eventEmitter.listenerCount("teleop-animation") === 0) {
     eventEmitter.on("teleop-animation", () => {
-      console.log("teleop-animation", matchStageRef.current);
-
       if (matchStageRef.current !== "auto") {
-        console.log("not auto");
-        console.log(matchStageRef.current);
         clearTeleopAnimations();
         if (recurringTeleopAnimation.current) {
           clearInterval(recurringTeleopAnimation.current);
@@ -373,14 +224,11 @@ export default function ScoutLayout({
         }
         return;
       }
-      if (teleopAnimationRunning) {
-        console.log("teleopAnimationRunning");
-        return;
-      }
+      if (teleopAnimationRunning) return;
+      
       setTeleopAnimationRunning(true);
-      console.log("===========================================");
-
       setTeleopAnimationBackdrop(true);
+
       if (!teleopAnimationBackdropTimeout.current) {
         teleopAnimationBackdropTimeout.current = setTimeout(() => {
           setTeleopAnimationBackdrop(false);
@@ -389,48 +237,22 @@ export default function ScoutLayout({
       }
 
       setTeleopTabAnimation(true);
-      if (!teleopTabAnimation1.current) {
-        teleopTabAnimation1.current = setTimeout(() => {
-          console.log("teleop-tab-animation-1");
-          setTeleopTabAnimation(false);
-        }, TELEOP_TAB_FLASH_MS);
-      }
-      if (!teleopTabAnimation2.current) {
-        teleopTabAnimation2.current = setTimeout(() => {
-          console.log("teleop-tab-animation-2");
-          setTeleopTabAnimation(true);
-        }, TELEOP_TAB_FLASH_MS * 2);
-      }
-      if (!teleopTabAnimation3.current) {
-        teleopTabAnimation3.current = setTimeout(() => {
-          console.log("teleop-tab-animation-3");
-          setTeleopTabAnimation(false);
-        }, TELEOP_TAB_FLASH_MS * 3);
-      }
-      if (!teleopTabAnimation4.current) {
-        teleopTabAnimation4.current = setTimeout(() => {
-          console.log("teleop-tab-animation-4");
-          setTeleopTabAnimation(true);
-        }, TELEOP_TAB_FLASH_MS * 4);
-      }
-      if (!teleopTabAnimation5.current) {
-        teleopTabAnimation5.current = setTimeout(() => {
-          console.log("teleop-tab-animation-5");
-          setTeleopTabAnimation(false);
-          clearTeleopAnimations();
-        }, TELEOP_TAB_FLASH_MS * 5);
-      }
+      teleopTabAnimation1.current = setTimeout(() => setTeleopTabAnimation(false), TELEOP_TAB_FLASH_MS);
+      teleopTabAnimation2.current = setTimeout(() => setTeleopTabAnimation(true), TELEOP_TAB_FLASH_MS * 2);
+      teleopTabAnimation3.current = setTimeout(() => setTeleopTabAnimation(false), TELEOP_TAB_FLASH_MS * 3);
+      teleopTabAnimation4.current = setTimeout(() => setTeleopTabAnimation(true), TELEOP_TAB_FLASH_MS * 4);
+      teleopTabAnimation5.current = setTimeout(() => {
+        setTeleopTabAnimation(false);
+        clearTeleopAnimations();
+      }, TELEOP_TAB_FLASH_MS * 5);
 
       if (!recurringTeleopAnimation.current) {
-        console.log("ooooooooooooooooooooooooooooooooooooooooooooooooooo");
         recurringTeleopAnimation.current = setInterval(() => {
-          console.log("||||||||||||||||||||||||||||||||||||||||||||||||||");
           eventEmitter.emit("teleop-animation");
         }, TELEOP_TAB_FLASH_MS + 10000);
       }
     });
   }
-  console.log("++++", recurringTeleopAnimation.current);
 
   const noShowTeamMatchEntry = (m: TeamMatchEntry): TeamMatchEntry => {
     return {
@@ -448,61 +270,39 @@ export default function ScoutLayout({
       flag: m.flag,
     };
   };
-  const noShowHumanPlayerEntry = (m: HumanPlayerEntry): HumanPlayerEntry => {
-    return {
-      ...HumanPlayerEntryNoShowInit,
-      eventKey: m.eventKey,
-      matchLevel: m.matchLevel,
-      matchNumber: m.matchNumber,
-      teamNumber: m.teamNumber!,
-      alliance: m.alliance,
-      robotNumber: 4,
-      deviceTeamNumber: m.deviceTeamNumber,
-      deviceId: m.deviceId,
-      scoutTeamNumber: m.scoutTeamNumber,
-      scoutName: m.scoutName,
-      flag: m.flag,
-    };
-  };
 
   return (
     <ScoutPageContainer
       backdrop={teleopAnimationBackdrop}
-      onCloseBackdrop={() => {
-        clearTeleopAnimations();
-      }}
+      onCloseBackdrop={() => clearTeleopAnimations()}
       title={
-        match.robotNumber === 4 ?
-          "Human Player Data"
-        : <TabBar
-            value={matchStage}
-            onChange={(value) => {
-              clearTeleopAnimations();
-              if (recurringTeleopAnimation.current) {
-                clearInterval(recurringTeleopAnimation.current);
-                recurringTeleopAnimation.current = null;
-              }
+        <TabBar
+          value={matchStage}
+          onChange={(value) => {
+            clearTeleopAnimations();
+            if (recurringTeleopAnimation.current) {
+              clearInterval(recurringTeleopAnimation.current);
+              recurringTeleopAnimation.current = null;
+            }
 
-              if (matchStage === "prematch") {
-                if (!prematchCheck()) {
-                  setMatchStage(value as MatchStage);
-                }
-              } else {
+            if (matchStage === "prematch") {
+              if (!prematchCheck()) {
                 setMatchStage(value as MatchStage);
               }
-            }}>
-            <Tab value="prematch">Prematch</Tab>
-            <Tab value="auto">Auto</Tab>
-            <Tab
-              value="teleop"
-              style={{
-                transition: "all " + TELEOP_TAB_FLASH_MS + "ms",
-              }}
-              className={teleopTabAnimation ? styles.teleopTabHighlight : ""}>
-              Teleop
-            </Tab>
-            <Tab value="postmatch">Postmatch</Tab>
-          </TabBar>
+            } else {
+              setMatchStage(value as MatchStage);
+            }
+          }}>
+          <Tab value="prematch">Prematch</Tab>
+          <Tab value="auto">Auto</Tab>
+          <Tab
+            value="teleop"
+            style={{ transition: "all " + TELEOP_TAB_FLASH_MS + "ms" }}
+            className={teleopTabAnimation ? styles.teleopTabHighlight : ""}>
+            Teleop
+          </Tab>
+          <Tab value="postmatch">Postmatch</Tab>
+        </TabBar>
       }
       nowScouting={{
         teamNumber: match.teamNumber || 0,
@@ -512,29 +312,13 @@ export default function ScoutLayout({
       navButtons={
         matchStage === "prematch" ?
           <>
-            <Button
-              className={styles.navButtonBack}
-              onClick={() => {
-                navigate("/");
-              }}>
-              Exit
-            </Button>
-            {(match as TeamMatchEntry).noShow && (
+            <Button className={styles.navButtonBack} onClick={() => navigate("/")}>Exit</Button>
+            {match.noShow && (
               <Button
                 className={styles.navButtonForward}
                 onClick={() => {
-                  if ((match as TeamMatchEntry).noShow) {
-                    setMatch(noShowTeamMatchEntry(match as TeamMatchEntry));
-                    putEntries.mutate([
-                      noShowTeamMatchEntry(match as TeamMatchEntry),
-                    ]);
-                  } else {
-                    if (!submitCheck()) {
-                      putEntries.mutate([
-                        endOfMatchTeamMatchEntry(match as TeamMatchEntry),
-                      ]);
-                    }
-                  }
+                  setMatch(noShowTeamMatchEntry(match));
+                  putEntries.mutate([noShowTeamMatchEntry(match)]);
                 }}>
                 Submit
               </Button>
@@ -544,47 +328,17 @@ export default function ScoutLayout({
           <Button
             className={styles.navButtonForward}
             onClick={() => {
-              if ((match as TeamMatchEntry).noShow) {
-                setMatch(noShowTeamMatchEntry(match as TeamMatchEntry));
-                putEntries.mutate([
-                  noShowTeamMatchEntry(match as TeamMatchEntry),
-                ]);
+              if (match.noShow) {
+                setMatch(noShowTeamMatchEntry(match));
+                putEntries.mutate([noShowTeamMatchEntry(match)]);
               } else {
                 if (!submitCheck()) {
-                  putEntries.mutate([
-                    endOfMatchTeamMatchEntry(match as TeamMatchEntry),
-                  ]);
+                  putEntries.mutate([endOfMatchTeamMatchEntry(match)]);
                 }
               }
             }}>
             Submit
           </Button>
-        : matchStage === "human" ?
-          <>
-            <Button
-              className={styles.navButtonBack}
-              onClick={() => {
-                navigate("/");
-              }}>
-              Exit
-            </Button>
-            <Button
-              className={styles.navButtonForward}
-              onClick={() => {
-                if (!humanCheck()) {
-                  if (match.teamNumber === 0) {
-                    setMatch(noShowHumanPlayerEntry(match as HumanPlayerEntry));
-                    putEntries.mutate([
-                      noShowHumanPlayerEntry(match as HumanPlayerEntry),
-                    ]);
-                  } else {
-                    putEntries.mutate([match]);
-                  }
-                }
-              }}>
-              Submit
-            </Button>
-          </>
         : undefined
       }>
       <div className={styles.contentContainer}>
@@ -592,7 +346,7 @@ export default function ScoutLayout({
           {
             prematch: (
               <Prematch
-                match={match as TeamMatchEntry}
+                match={match}
                 setMatch={setMatch}
                 events={events}
                 deviceSetup={deviceSetup}
@@ -605,34 +359,18 @@ export default function ScoutLayout({
             ),
             auto: (
               <Auto
-                match={match as TeamMatchEntry}
+                match={match}
                 setMatch={setMatch}
                 deviceSetup={deviceSetup}
                 eventEmitter={eventEmitter}
               />
             ),
-            teleop: (
-              <Teleop
-                match={match as TeamMatchEntry}
-                setMatch={setMatch}
-              />
-            ),
+            teleop: <Teleop match={match} setMatch={setMatch} />,
             postmatch: (
               <Postmatch
-                match={match as TeamMatchEntry}
+                match={match}
                 setMatch={setMatch}
                 dataConfidenceError={dataConfidenceError}
-              />
-            ),
-            human: (
-              <Human
-                match={match as HumanPlayerEntry}
-                setMatch={setMatch}
-                events={events}
-                scoutNameError={scoutNameError}
-                scoutTeamNumberError={scoutTeamNumberError}
-                teamNumberError={teamNumberError}
-                matchNumberError={matchNumberError}
               />
             ),
           }[matchStage]

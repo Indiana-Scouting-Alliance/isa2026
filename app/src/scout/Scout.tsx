@@ -2,8 +2,6 @@ import { MAX_TEAM_NUMBER } from "@isa2026/api/src/utils/constants.ts";
 import {
   Alliance,
   DBEvent,
-  HumanPlayerEntry,
-  HumanPlayerEntryInit,
   Match,
   TeamMatchEntry,
   TeamMatchEntryInit,
@@ -54,8 +52,7 @@ export default function Scout({
     }
   }, [deviceSetup, location.pathname, navigate]);
 
-  const [match, setMatch] = useState<TeamMatchEntry | HumanPlayerEntry>(() => {
-    if (deviceSetup.robotNumber < 4) {
+  const [match, setMatch] = useState<TeamMatchEntry>(() => {
       const newMatch: TeamMatchEntry = {
         ...TeamMatchEntryInit,
         eventKey: deviceSetup.currentEvent,
@@ -94,16 +91,6 @@ export default function Scout({
       } else {
         return newMatch;
       }
-    } else {
-      return {
-        ...HumanPlayerEntryInit,
-        eventKey: deviceSetup.currentEvent,
-        alliance: deviceSetup.alliance,
-        robotNumber: deviceSetup.robotNumber as 4,
-        deviceTeamNumber: deviceSetup.deviceTeamNumber,
-        deviceId: deviceSetup.deviceId,
-      };
-    }
   });
   useEffect(() => {
     if (eventEmitter.listenerCount("idb-finished") === 0) {

@@ -3,14 +3,12 @@ import { z } from "zod";
 import { TbaMatch } from "../hooks/tba.ts";
 import { loggedPublicProcedure } from "../trpc.ts";
 import {
-  HumanPlayerEntryColumns,
-  HumanPlayerEntrySchema,
   TeamMatchEntryColumns,
   TeamMatchEntrySchema,
 } from "../utils/dbtypes.ts";
 
 export const putEntries = loggedPublicProcedure
-  .input(z.array(z.union([TeamMatchEntrySchema, HumanPlayerEntrySchema])))
+  .input(z.array(z.union([TeamMatchEntrySchema])))
   .mutation(async (opts) => {
     console.log(opts.input);
     const boundStmts: D1PreparedStatement[] = [];
@@ -22,14 +20,6 @@ export const putEntries = loggedPublicProcedure
         )
       VALUES
         (${new Array(TeamMatchEntryColumns.length).fill("?").join(",")});`
-    );
-    const humanPlayerEntryStmt = opts.ctx.env.DB.prepare(
-      `REPLACE INTO
-        HumanPlayerEntry(
-          ${HumanPlayerEntryColumns.join(", ")}
-        )
-      VALUES
-        (${new Array(HumanPlayerEntryColumns.length).fill("?").join(",")});`
     );
     const matchKeys = new Set();
 
@@ -67,19 +57,12 @@ export const putEntries = loggedPublicProcedure
       } else {
         //TODO
       }
-      if (match.robotNumber === 4) {
-        boundStmts.push(
-          humanPlayerEntryStmt.bind(
-            ...HumanPlayerEntryColumns.map((column) => match[column])
-          )
-        );
-      } else {
+      
         boundStmts.push(
           teamMatchEntryStmt.bind(
             ...TeamMatchEntryColumns.map((column) => match[column])
           )
         );
-      }
     }
 
     await opts.ctx.env.DB.batch(boundStmts);
@@ -97,15 +80,7 @@ export const putEntries = loggedPublicProcedure
           AND alliance = ?
           AND robotNumber = ?;`
     );
-    const updateHumanPlayerEntry = opts.ctx.env.DB.prepare(
-      `UPDATE HumanPlayerEntry
-        SET tbaMaxAlgaeAttempts = ?
-        WHERE eventKey = ?
-          AND matchLevel = ?
-          AND matchNumber = ?
-          AND alliance = ?
-          AND robotNumber = 4;`
-    );
+   
     const boundTbaStmts: D1PreparedStatement[] = [];
 
     for (const key of matchKeys) {
@@ -237,36 +212,7 @@ export const putEntries = loggedPublicProcedure
               3
             )
           );
-          boundTbaStmts.push(
-            updateHumanPlayerEntry.bind(
-              matchBody.score_breakdown.blue.wallAlgaeCount,
-              matchBody.event_key,
-              {
-                qm: "Qualification",
-                ef: "Playoff",
-                qf: "Playoff",
-                sf: "Playoff",
-                f: "Playoff",
-              }[matchBody.comp_level],
-              matchBody.match_number,
-              "Red"
-            )
-          );
-          boundTbaStmts.push(
-            updateHumanPlayerEntry.bind(
-              matchBody.score_breakdown.red.wallAlgaeCount,
-              matchBody.event_key,
-              {
-                qm: "Qualification",
-                ef: "Playoff",
-                qf: "Playoff",
-                sf: "Playoff",
-                f: "Playoff",
-              }[matchBody.comp_level],
-              matchBody.match_number,
-              "Blue"
-            )
-          );
+
         }
       }
     }

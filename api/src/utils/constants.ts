@@ -1,1 +1,1 @@
-export const MAX_TEAM_NUMBER = 10714;
+export const MAX_TEAM_NUMBER = 11527;

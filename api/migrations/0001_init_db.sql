@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS TeamMatchEntry (
   autoClimbPosition TEXT,
   autoClimbAttempted BOOLEAN,
   autoClimbLevel INTEGER,
-  autoFuelScored: INTEGER,
+  autoFuelScored INTEGER,
   teleFuelScored INTEGER,
   teleCycles INTEGER,
   teleFuelScoredFromHub BOOLEAN,

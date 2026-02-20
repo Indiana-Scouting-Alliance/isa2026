@@ -1,5 +1,4 @@
 import {
-  HumanPlayerEntryColumns,
   TeamMatchEntryColumns,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { useState } from "react";
@@ -42,23 +41,7 @@ export default function Export() {
           ].includes(TeamMatchEntryColumns[i])
       )
   );
-  const [humanColumns, setHumanColumns] = useState<boolean[]>(
-    new Array(HumanPlayerEntryColumns.length)
-      .fill(false)
-      .map(
-        (_, i) =>
-          ![
-            "deviceTeamNumber",
-            "deviceId",
-            "scoutName",
-            "scoutTeamNumber",
-            "eventKey",
-            "matchLevel",
-            "alliance",
-            "robotNumber",
-          ].includes(HumanPlayerEntryColumns[i])
-      )
-  );
+
 
   return (
     <div className={styles.container}>
@@ -72,13 +55,12 @@ export default function Export() {
           );
         }}>
         <Tab value="robots">Robot Data</Tab>
-        <Tab value="humans">Human Data</Tab>
       </TabBar>
       <div className={styles.contentContainer}>
         <Routes>
           <Route
             path="/"
-            element={<div>Please select robot or human data.</div>}
+            element={<div>Please select robot data.</div>}
           />
           <Route
             path="robots"
@@ -93,8 +75,6 @@ export default function Export() {
                 publicApiToken={publicApiToken.data}
                 robotColumnsState={robotColumns}
                 setRobotColumnsState={setRobotColumns}
-                humanColumnsState={[]}
-                setHumanColumnsState={setHumanColumns}
                 linkBase="/public/robots/"
                 events={events}
                 setEvents={setEvents}
@@ -103,29 +83,7 @@ export default function Export() {
               />
             }
           />
-          <Route
-            path="humans"
-            element={
-              <ExportLayout
-                showPublicApiToken={showPublicApiToken}
-                setShowPublicApiToken={setShowPublicApiToken}
-                linkIncludesToken={linkIncludesToken}
-                setLinkIncludesToken={setLinkIncludesToken}
-                showAuthorization={showAuthorization}
-                setShowAuthorization={setShowAuthorization}
-                publicApiToken={publicApiToken.data}
-                robotColumnsState={[]}
-                setRobotColumnsState={setRobotColumns}
-                humanColumnsState={humanColumns}
-                setHumanColumnsState={setHumanColumns}
-                linkBase="/public/humans/"
-                events={events}
-                setEvents={setEvents}
-                teams={teams}
-                setTeams={setTeams}
-              />
-            }
-          />
+         
         </Routes>
       </div>
       {/* <Box

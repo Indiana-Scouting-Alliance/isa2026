@@ -1,6 +1,4 @@
 import {
-  HumanPlayerEntryColumns,
-  HumanPlayerEntryInit,
   TeamMatchEntryColumns,
   TeamMatchEntryInit,
 } from "@isa2026/api/src/utils/dbtypes.ts";
@@ -35,8 +33,6 @@ type ExportLayoutProps = {
   publicApiToken: string | undefined;
   robotColumnsState: boolean[];
   setRobotColumnsState: (value: boolean[]) => void;
-  humanColumnsState: boolean[];
-  setHumanColumnsState: (value: boolean[]) => void;
   linkBase: string;
   events: string;
   setEvents: (value: string) => void;
@@ -53,8 +49,6 @@ export default function ExportLayout({
   publicApiToken,
   robotColumnsState,
   setRobotColumnsState,
-  humanColumnsState,
-  setHumanColumnsState,
   linkBase,
   events,
   setEvents,
@@ -71,9 +65,6 @@ export default function ExportLayout({
       "?include=" +
       (robotColumnsState.length > 0 ?
         robotColumnsState.map((value) => (value ? "1" : "0")).join("")
-      : "") +
-      (humanColumnsState.length > 0 ?
-        humanColumnsState.map((value) => (value ? "1" : "0")).join("")
       : "") +
       (events ?
         events
@@ -154,57 +145,6 @@ export default function ExportLayout({
                   />
                 );
               })}
-            </div>
-          </>
-        )}
-        {humanColumnsState.length > 0 && (
-          <>
-            <p className={styles.columnsHeader}>
-              Select columns to include in human data
-            </p>
-            <div className={styles.columnsContainer}>
-              {HumanPlayerEntryColumns.map((column, columnIndex) => (
-                <Checkbox
-                  key={column}
-                  id={column + "-checkbox"}
-                  value={humanColumnsState[columnIndex]}
-                  onChange={(checked) => {
-                    setHumanColumnsState(
-                      humanColumnsState.map((value, valueIndex) =>
-                        valueIndex === columnIndex ? checked : value
-                      )
-                    );
-                  }}
-                  label={
-                    <div className={styles.columnLabelContainer}>
-                      <p className={styles.columnLabel}>{column}</p>
-                      {
-                        {
-                          boolean: <DataTypeIcon dataType="boolean" />,
-                          string:
-                            column === "alliance" ?
-                              <DataTypeIcon dataType='"Red" | "Blue"' />
-                            : column === "matchLevel" ?
-                              <DataTypeIcon dataType='"None" | "Practice" | "Qualification" | "Playoff"' />
-                            : <DataTypeIcon dataType="string" />,
-                          number:
-                            column === "robotNumber" ?
-                              <DataTypeIcon dataType="4" />
-                            : <DataTypeIcon dataType="integer" />,
-                          bigint: <DataTypeIcon dataType="error" />,
-                          symbol: <DataTypeIcon dataType="error" />,
-                          function: <DataTypeIcon dataType="error" />,
-                          object:
-                            ["tbaMaxAlgaeAttempts"].includes(column) ?
-                              <DataTypeIcon dataType="integer" />
-                            : <DataTypeIcon dataType="error" />,
-                          undefined: <DataTypeIcon dataType="error" />,
-                        }[typeof HumanPlayerEntryInit[column]]
-                      }
-                    </div>
-                  }
-                />
-              ))}
             </div>
           </>
         )}

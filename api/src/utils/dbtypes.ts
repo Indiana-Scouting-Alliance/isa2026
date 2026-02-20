@@ -92,10 +92,12 @@ export const TeamMatchEntrySchema = CommonEntrySchema.omit({
   teleFuelScoredFromBump: z.boolean().nullable(),
   teleFuelScoredFromOther: z.boolean().nullable(),
 
-  teleInactiveRoleDefense: z.boolean().nullable(),
-  teleInactiveRoleIntaking: z.boolean().nullable(),
-  teleInactiveRoleFeeding: z.boolean().nullable(),
-  teleInactiveRoleEffectiveness: z.number().int().min(0).max(10).nullable(),
+  teleInactiveDefenseRoleEffectiveness: z.number().int().min(0).max(10).nullable(),
+  teleInactiveIntakingRoleEffectiveness: z.number().int().min(0).max(10).nullable(),
+  teleInactiveFeedingRoleEffectiveness: z.number().int().min(0).max(10).nullable(),
+  teleInactiveFuelPassed: z.number().int().nonnegative().nullable(),
+  
+
 
   endClimbAttempted: z.boolean().nullable(),
   robotGotStuck: z.boolean().nullable(),
@@ -126,10 +128,10 @@ export const TeamMatchEntryColumns: TeamMatchEntryColumn[] = [
   "teleFuelScoredFromBump",
   "teleFuelScoredFromOther",
 
-  "teleInactiveRoleDefense",
-  "teleInactiveRoleIntaking",
-  "teleInactiveRoleFeeding",
-  "teleInactiveRoleEffectiveness",
+  "teleInactiveDefenseRoleEffectiveness",
+  "teleInactiveIntakingRoleEffectiveness",
+  "teleInactiveFeedingRoleEffectiveness",
+  "teleInactiveFuelPassed",
 
   "endClimbAttempted",
   "robotGotStuck",
@@ -168,10 +170,10 @@ export const TeamMatchEntryInit: TeamMatchEntry = {
   teleFuelScoredFromBump: null,
   teleFuelScoredFromOther: null,
 
-  teleInactiveRoleDefense: null,
-  teleInactiveRoleIntaking: null,
-  teleInactiveRoleFeeding: null,
-  teleInactiveRoleEffectiveness: null,
+  teleInactiveDefenseRoleEffectiveness: null,
+  teleInactiveIntakingRoleEffectiveness: null,
+  teleInactiveFeedingRoleEffectiveness: null,
+  teleInactiveFuelPassed: null,
 
   endClimbAttempted: null,
   robotGotStuck: null,
@@ -210,10 +212,10 @@ export const TeamMatchEntryNoShowInit: TeamMatchEntry = {
   teleFuelScoredFromBump: null,
   teleFuelScoredFromOther: null,
 
-  teleInactiveRoleDefense: null,
-  teleInactiveRoleIntaking: null,
-  teleInactiveRoleFeeding: null,
-  teleInactiveRoleEffectiveness: null,
+  teleInactiveDefenseRoleEffectiveness: null,
+  teleInactiveIntakingRoleEffectiveness: null,
+  teleInactiveFeedingRoleEffectiveness: null,
+  teleInactiveFuelPassed: null,
 
   endClimbAttempted: null,
   robotGotStuck: null,

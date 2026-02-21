@@ -29,7 +29,7 @@ export default function Login({ setToken }: LoginProps) {
     onSuccess(data) {
       if (data?.token) {
         if (data.permLevel === "team") {
-          navigate("/data/export/robots");
+          navigate("/data/export");
         }
         setToken(
           data.token,

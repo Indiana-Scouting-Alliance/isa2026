@@ -22,12 +22,25 @@
 }
 
 .matchLevel {
-  width: 5em;
+  width: fit-content;
 }
 
 .matchNumber {
   flex: 1;
   display: flex;
+  flex-direction: column;
+}
+
+.matchNumberRow {
+  display: flex;
+}
+
+.matchNumberHelperText {
+  margin: 4px 8px;
+
+  font-family: var(--text-font-family);
+  font-size: 0.75em;
+  color: var(--color-error);
 }
 
 .matchNumberInput {
@@ -96,4 +109,54 @@ button.normalToggleButtonFalse {
   position: absolute;
   left: 0%;
   bottom: 0%;
+}
+
+/* Toggle button groups */
+.toggleButtonGroup {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toggleButtonGroupSpaced {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* Form elements */
+.formLabel {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.numberInput {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.rangeInput {
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Spacing utilities */
+.fieldSpacing {
+  margin-top: 8px;
+}
+
+.fieldContainer {
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Error text */
+.errorText {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }

@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to API (Wrangler)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "sourceMapPathOverrides": {
+        "../../../src/*": "${workspaceFolder}/api/src/*"
+      },
+      "restart": true
+    },
+    {
+      "name": "Debug App (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/app/src"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug All (App + API)",
+      "configurations": ["Attach to API (Wrangler)", "Debug App (Chrome)"],
+      "preLaunchTask": "Start All (dev)",
+      "stopAll": true
+    }
+  ]
+}

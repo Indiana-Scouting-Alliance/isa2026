@@ -1,10 +1,8 @@
 import { TeamMatchEntry } from "@isa2026/api/src/utils/dbtypes.ts";
 import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
-import HalfSmallCounter from "../../components/Counter/HalfSmallCounter.tsx";
 import Divider from "../../components/Divider/Divider.tsx";
 import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
 import scoutStyles from "../../components/styles/ScoutStyles.module.css";
-import styles from "./Teleop.module.css";
 
 type TeleopProps = {
   match: TeamMatchEntry;
@@ -18,197 +16,265 @@ export function Teleop({ match, setMatch }: TeleopProps) {
         " " +
         changeFlexDirection.changeFlexDirection
       }>
-      <div className={scoutStyles.half + " " + styles.imagesContainer}>
-        <div
-          className={
-            scoutStyles.imageContainerContainer +
-            " " +
-            styles.branchContainerContainer
-          }>
-          <div
-            className={
-              scoutStyles.imageContainer + " " + styles.branchContainer
+      <div className={scoutStyles.half}>
+        <h3>Fuel Scoring Locations</h3>
+        <div className={scoutStyles.toggleButtonGroup}>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromHub ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromHub: value,
+              })
             }>
-            <img
-              src={import.meta.env.BASE_URL + "assets/Branch.png"}
-              className={scoutStyles.image}
-            />
-            <div
-              className={
-                styles.branchIncrementRect + " " + styles.L4IncrementRect
-              }
-              onClick={() => {
-                if (match.teleopL4! < 12) {
-                  setMatch({
-                    ...match,
-                    teleopL4: match.teleopL4! + 1,
-                  });
-                }
-              }}></div>
-            <HalfSmallCounter
-              id="teleop-L4-counter"
-              className={styles.L4Counter}
-              value={match.teleopL4!}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  teleopL4: value,
-                });
-              }}
-            />
-            <div
-              className={
-                styles.branchIncrementRect + " " + styles.L3IncrementRect
-              }
-              onClick={() => {
-                if (match.teleopL3! < 12) {
-                  setMatch({
-                    ...match,
-                    teleopL3: match.teleopL3! + 1,
-                  });
-                }
-              }}></div>
-            <HalfSmallCounter
-              value={match.teleopL3!}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  teleopL3: value,
-                });
-              }}
-              className={styles.L3Counter}
-              id="teleop-L3-counter"
-            />
-            <div
-              className={
-                styles.branchIncrementRect + " " + styles.L2IncrementRect
-              }
-              onClick={() => {
-                if (match.teleopL2! < 12) {
-                  setMatch({
-                    ...match,
-                    teleopL2: match.teleopL2! + 1,
-                  });
-                }
-              }}></div>
-            <HalfSmallCounter
-              value={match.teleopL2!}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  teleopL2: value,
-                });
-              }}
-              className={styles.L2Counter}
-              id="teleop-L2-counter"
-            />
-            <div
-              className={
-                styles.branchIncrementRect + " " + styles.L1IncrementRect
-              }
-              onClick={() => {
-                if (match.teleopL1! < 12) {
-                  setMatch({
-                    ...match,
-                    teleopL1: match.teleopL1! + 1,
-                  });
-                }
-              }}></div>
-            <HalfSmallCounter
-              value={match.teleopL1!}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  teleopL1: value,
-                });
-              }}
-              className={styles.L1Counter}
-              id="teleop-L1-counter"
-            />
-          </div>
+            Hub
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromTower ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromTower: value,
+              })
+            }>
+            Tower
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromDepot ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromDepot: value,
+              })
+            }>
+            Depot
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromOutpost ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromOutpost: value,
+              })
+            }>
+            Outpost
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromTrench ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromTrench: value,
+              })
+            }>
+            Trench
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromBump ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromBump: value,
+              })
+            }>
+            Bump
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.teleFuelScoredFromOther ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                teleFuelScoredFromOther: value,
+              })
+            }>
+            Other
+          </ToggleButton>
         </div>
-        <div className={styles.bargeAndProcessorContainer}>
-          <div
-            className={
-              scoutStyles.imageContainerContainer +
-              " " +
-              styles.bargeContainerContainer
-            }>
-            <div
-              className={
-                scoutStyles.imageContainer + " " + styles.bargeContainer
-              }
-              onClick={() => {
-                if (match.teleopNet! < 18) {
-                  setMatch({
-                    ...match,
-                    teleopNet: match.teleopNet! + 1,
-                  });
-                }
-              }}>
-              <img
-                src={import.meta.env.BASE_URL + "assets/Net.png"}
-                className={scoutStyles.image}
-              />
-              <HalfSmallCounter
-                value={match.teleopNet!}
-                setValue={(value) => {
-                  setMatch({
-                    ...match,
-                    teleopNet: value,
-                  });
-                }}
-                className={scoutStyles.imageCounter}
-                id="teleop-net-counter"
-              />
-            </div>
-          </div>
-          <div
-            className={
-              scoutStyles.imageContainerContainer +
-              " " +
-              styles.processorContainerContainer
-            }>
-            <div
-              className={
-                scoutStyles.imageContainer + " " + styles.processorContainer
-              }
-              onClick={() => {
-                if (match.teleopProcessor! < 18) {
-                  setMatch({
-                    ...match,
-                    teleopProcessor: match.teleopProcessor! + 1,
-                  });
-                }
-              }}>
-              <img
-                src={import.meta.env.BASE_URL + "assets/Processor.png"}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
-              />
-              <HalfSmallCounter
-                value={match.teleopProcessor!}
-                setValue={(value) => {
-                  setMatch({
-                    ...match,
-                    teleopProcessor: value,
-                  });
-                }}
-                className={scoutStyles.imageCounter}
-                id="teleop-processor-counter"
-              />
-            </div>
-          </div>
+
+        <div className={scoutStyles.fieldSpacing}>
+          <label className={scoutStyles.formLabel}>
+            Fuel Scored: {match.teleFuelScored ?? 0}
+          </label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={match.teleFuelScored ?? 0}
+            onChange={(e) => {
+              setMatch({
+                ...match,
+                teleFuelScored: parseInt(e.target.value),
+              });
+            }}
+            className={scoutStyles.numberInput}
+          />
+        </div>
+
+        <div className={scoutStyles.fieldSpacing}>
+          <label className={scoutStyles.formLabel}>
+            Cycles: {match.teleCycles ?? 0}
+          </label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={match.teleCycles ?? 0}
+            onChange={(e) => {
+              setMatch({
+                ...match,
+                teleCycles: parseInt(e.target.value),
+              });
+            }}
+            className={scoutStyles.numberInput}
+          />
+        </div>
+
+        <Divider orientation="horizontal" />
+
+        <h3>Inactive Roles</h3>
+        <div className={scoutStyles.fieldSpacing}>
+          <label className={scoutStyles.formLabel}>
+            Defense Effectiveness: {match.teleInactiveDefenseRoleEffectiveness ?? 0}
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            value={match.teleInactiveDefenseRoleEffectiveness ?? 0}
+            onChange={(e) => {
+              setMatch({
+                ...match,
+                teleInactiveDefenseRoleEffectiveness: parseInt(e.target.value),
+              });
+            }}
+            className={scoutStyles.rangeInput}
+          />
+        </div>
+        <div className={scoutStyles.fieldSpacing}>
+          <label className={scoutStyles.formLabel}>
+            Intaking Effectiveness: {match.teleInactiveIntakingRoleEffectiveness ?? 0}
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            value={match.teleInactiveIntakingRoleEffectiveness ?? 0}
+            onChange={(e) => {
+              setMatch({
+                ...match,
+                teleInactiveIntakingRoleEffectiveness: parseInt(e.target.value),
+              });
+            }}
+            className={scoutStyles.rangeInput}
+          />
+        </div>
+        <div className={scoutStyles.fieldSpacing}>
+          <label className={scoutStyles.formLabel}>
+            Feeding Effectiveness: {match.teleInactiveFeedingRoleEffectiveness ?? 0}
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="10"
+            step="1"
+            value={match.teleInactiveFeedingRoleEffectiveness ?? 0}
+            onChange={(e) => {
+              setMatch({
+                ...match,
+                teleInactiveFeedingRoleEffectiveness: parseInt(e.target.value),
+              });
+            }}
+            className={scoutStyles.rangeInput}
+          />
+        </div>
+        <div className={scoutStyles.fieldSpacing}>
+          <label className={scoutStyles.formLabel}>
+            Fuel Passed: {match.teleInactiveFuelPassed ?? 0}
+          </label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={match.teleInactiveFuelPassed ?? 0}
+            onChange={(e) => {
+              setMatch({
+                ...match,
+                teleInactiveFuelPassed: parseInt(e.target.value),
+              });
+            }}
+            className={scoutStyles.numberInput}
+          />
         </div>
       </div>
       <Divider orientation="vertical" />
       <div className={scoutStyles.half}>
+        <h3>Robot Traverse</h3>
+        <div className={scoutStyles.toggleButtonGroup}>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.robotTraverseTrench ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                robotTraverseTrench: value,
+              })
+            }>
+            Trench
+          </ToggleButton>
+          <ToggleButton
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.normalToggleButtonFalse}
+            value={match.robotTraverseBump ?? false}
+            onChange={(value) =>
+              setMatch({
+                ...match,
+                robotTraverseBump: value,
+              })
+            }>
+            Bump
+          </ToggleButton>
+        </div>
+
+        <Divider orientation="horizontal" />
+
+        <h3>Endgame</h3>
+        <ToggleButton
+          classNameTrue={scoutStyles.normalToggleButtonTrue}
+          classNameFalse={scoutStyles.normalToggleButtonFalse}
+          value={match.endClimbAttempted ?? false}
+          onChange={(value) =>
+            setMatch({
+              ...match,
+              endClimbAttempted: value,
+            })
+          }>
+          Climb Attempted
+        </ToggleButton>
+
+        <Divider orientation="horizontal" />
+
+        <h3>Other</h3>
         <ToggleButton
           classNameTrue={scoutStyles.redToggleButtonTrue}
           classNameFalse={scoutStyles.redToggleButtonFalse}
-          value={match.died!}
+          value={match.died ?? false}
           onChange={(value) =>
             setMatch({
               ...match,
@@ -220,149 +286,14 @@ export function Teleop({ match, setMatch }: TeleopProps) {
         <ToggleButton
           classNameTrue={scoutStyles.normalToggleButtonTrue}
           classNameFalse={scoutStyles.normalToggleButtonFalse}
-          value={match.removedAlgaeFromReef!}
+          value={match.robotGotStuck ?? false}
           onChange={(value) =>
             setMatch({
               ...match,
-              removedAlgaeFromReef: value,
+              robotGotStuck: value,
             })
           }>
-          Removed Algae from Reef
-        </ToggleButton>
-        <ToggleButton
-          classNameTrue={scoutStyles.normalToggleButtonTrue}
-          classNameFalse={scoutStyles.normalToggleButtonFalse}
-          value={match.playedDefense!}
-          onChange={(value) =>
-            setMatch({
-              ...match,
-              playedDefense: value,
-            })
-          }>
-          Played Defense
-        </ToggleButton>
-        <div className={styles.climbToggleButtons}>
-          <div className={styles.climbToggleButtonRow}>
-            <ToggleButton
-              classNameTrue={scoutStyles.normalToggleButtonTrue}
-              classNameFalse={scoutStyles.normalToggleButtonFalse}
-              className={styles.climbToggle}
-              value={match.teleopAttemptedShallow!}
-              onChange={(value) => {
-                if (value) {
-                  setMatch({
-                    ...match,
-                    teleopAttemptedShallow: value,
-                    teleopAttemptedDeep: false,
-                    teleopSuccessfulShallow: false,
-                    teleopSuccessfulDeep: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    teleopAttemptedShallow: value,
-                    teleopSuccessfulShallow: false,
-                  });
-                }
-              }}>
-              Attempted Shallow Climb
-            </ToggleButton>
-            <ToggleButton
-              classNameTrue={scoutStyles.normalToggleButtonTrue}
-              classNameFalse={scoutStyles.normalToggleButtonFalse}
-              className={styles.climbToggle}
-              value={match.teleopAttemptedDeep!}
-              onChange={(value) => {
-                if (value) {
-                  setMatch({
-                    ...match,
-                    teleopAttemptedShallow: false,
-                    teleopAttemptedDeep: value,
-                    teleopSuccessfulShallow: false,
-                    teleopSuccessfulDeep: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    teleopAttemptedDeep: value,
-                    teleopSuccessfulDeep: false,
-                  });
-                }
-              }}>
-              Attempted Deep Climb
-            </ToggleButton>
-          </div>
-          <div className={styles.climbToggleButtonRow}>
-            <ToggleButton
-              classNameTrue={scoutStyles.normalToggleButtonTrue}
-              classNameFalse={scoutStyles.normalToggleButtonFalse}
-              className={styles.climbToggle}
-              value={match.teleopSuccessfulShallow!}
-              onChange={(value) => {
-                if (!match.teleopSuccessfulShallow) {
-                  setMatch({
-                    ...match,
-                    teleopAttemptedShallow: true,
-                    teleopAttemptedDeep: false,
-                    teleopSuccessfulShallow: value,
-                    teleopSuccessfulDeep: false,
-                    teleopPark: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    teleopSuccessfulShallow: value,
-                  });
-                }
-              }}>
-              Successful Shallow Climb
-            </ToggleButton>
-            <ToggleButton
-              classNameTrue={scoutStyles.normalToggleButtonTrue}
-              classNameFalse={scoutStyles.normalToggleButtonFalse}
-              className={styles.climbToggle}
-              value={match.teleopSuccessfulDeep!}
-              onChange={(value) => {
-                if (value) {
-                  setMatch({
-                    ...match,
-                    teleopAttemptedShallow: false,
-                    teleopAttemptedDeep: true,
-                    teleopSuccessfulShallow: false,
-                    teleopSuccessfulDeep: value,
-                    teleopPark: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    teleopSuccessfulDeep: value,
-                  });
-                }
-              }}>
-              Successful Deep Climb
-            </ToggleButton>
-          </div>
-        </div>
-        <ToggleButton
-          classNameTrue={scoutStyles.normalToggleButtonTrue}
-          classNameFalse={scoutStyles.normalToggleButtonFalse}
-          value={match.teleopPark!}
-          onChange={(value) => {
-            if (value) {
-              setMatch({
-                ...match,
-                teleopPark: value,
-                teleopSuccessfulShallow: false,
-                teleopSuccessfulDeep: false,
-              });
-            } else {
-              setMatch({
-                ...match,
-                teleopPark: value,
-              });
-            }
-          }}>
-          Parked
+          Robot Got Stuck
         </ToggleButton>
       </div>
     </div>

@@ -1,8 +1,4 @@
 import {
-  CommonEntryColumns,
-  HumanPlayerEntry,
-  HumanPlayerEntryColumn,
-  HumanPlayerEntryColumns,
   TeamMatchEntry,
   TeamMatchEntryColumn,
   TeamMatchEntryColumns,
@@ -39,7 +35,7 @@ export default function UploadFromSavedMatches({
   matches,
   setMatches,
 }: UploadFromSavedMatchesProps) {
-  const [data, setData] = useState<(TeamMatchEntry | HumanPlayerEntry)[]>([]);
+  const [data, setData] = useState<TeamMatchEntry[]>([]);
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
@@ -183,7 +179,7 @@ export default function UploadFromSavedMatches({
           multiple
           onChange={async (event) => {
             if (event.currentTarget.files) {
-              const matches: (TeamMatchEntry | HumanPlayerEntry)[] = [];
+              const matches: TeamMatchEntry[] = [];
 
               try {
                 for (const file of event.currentTarget.files) {
@@ -209,7 +205,7 @@ export default function UploadFromSavedMatches({
           try {
             const matches = JSON.parse(
               await navigator.clipboard.readText()
-            ) as (TeamMatchEntry | HumanPlayerEntry)[];
+            ) as TeamMatchEntry[];
 
             setData(matches);
             putEntries.mutate(matches);
@@ -262,29 +258,15 @@ export default function UploadFromSavedMatches({
                 .split(QRCODE_UPLOAD_DELIMITER)
                 .filter((x) => x.trim() !== "");
               try {
-                const matches: (TeamMatchEntry | HumanPlayerEntry)[] =
+                const matches: TeamMatchEntry[] =
                   matchArrs.map((match) => {
                     const matchArr = JSON.parse(match);
-                    const parsedMatch: Partial<
-                      Record<
-                        TeamMatchEntryColumn | HumanPlayerEntryColumn,
-                        unknown
-                      >
-                    > = {};
-                    CommonEntryColumns.forEach((column, columnIndex) => {
+                    const parsedMatch: Partial<Record<TeamMatchEntryColumn, unknown>> = {};
+                    TeamMatchEntryColumns.forEach((column, columnIndex) => {
                       parsedMatch[column] = matchArr[columnIndex];
                     });
-                    if (parsedMatch.robotNumber === 4) {
-                      HumanPlayerEntryColumns.forEach((column, columnIndex) => {
-                        parsedMatch[column] = matchArr[columnIndex];
-                      });
-                    } else {
-                      TeamMatchEntryColumns.forEach((column, columnIndex) => {
-                        parsedMatch[column] = matchArr[columnIndex];
-                      });
-                    }
                     console.log(parsedMatch);
-                    return parsedMatch as TeamMatchEntry | HumanPlayerEntry;
+                    return parsedMatch as TeamMatchEntry;
                   });
 
                 setData(matches);

@@ -59,7 +59,7 @@ export default function ScoutLayout({
         if (putEntriesPending) {
           putEntries.reset();
           await putDBEntry({
-            match,
+            ...match,
             autoUpload: false,
             quickshare: false,
             clipboard: false,
@@ -89,7 +89,7 @@ export default function ScoutLayout({
       clearTimeout(putEntriesTimeout);
       console.error(error);
       await putDBEntry({
-        match,
+        ...match,
         autoUpload: false,
         quickshare: false,
         clipboard: false,

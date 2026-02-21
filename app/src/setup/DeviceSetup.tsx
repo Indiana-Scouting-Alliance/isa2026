@@ -428,6 +428,7 @@ export default function DeviceSetup({
                 .sort((a, b) => (a.eventKey < b.eventKey ? -1 : 1))
                 .map((event) => (
                   <Radio
+                    key={event.eventKey}
                     id={"event-radio-" + event.eventKey}
                     value={event.eventKey}
                     label={event.eventKey.slice(0, 4) + " " + event.eventName}

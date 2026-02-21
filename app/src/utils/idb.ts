@@ -14,7 +14,6 @@ export enum Stores {
   Events = "DBEvents",
   Matches = "Matches",
   TeamMatchEntry = "TeamMatchEntry",
-  HumanPlayerEntry = "HumanPlayerEntry",
 }
 
 interface ISAIDBSchema extends DBSchema {
@@ -56,18 +55,6 @@ export const initDB = async (): Promise<boolean> => {
       }
       if (!db.objectStoreNames.contains(Stores.TeamMatchEntry)) {
         db.createObjectStore(Stores.TeamMatchEntry, {
-          keyPath: [
-            "eventKey",
-            "matchLevel",
-            "matchNumber",
-            "teamNumber",
-            "deviceTeamNumber",
-            "deviceId",
-          ],
-        });
-      }
-      if (!db.objectStoreNames.contains(Stores.HumanPlayerEntry)) {
-        db.createObjectStore(Stores.HumanPlayerEntry, {
           keyPath: [
             "eventKey",
             "matchLevel",

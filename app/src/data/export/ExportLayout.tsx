@@ -127,15 +127,48 @@ export default function ExportLayout({
                             object:
                               (
                                 [
-                                  "tbaAutoLine",
-                                  "tbaEndgamePark",
-                                  "tbaEndgameShallow",
-                                  "tbaEndgameDeep",
+                                  "noShow",
+                                  "autoFuelHubScoring",
+                                  "autoFuelPassed",
+                                  "autoClimbAttempted",
+                                  "teleFuelScoredFromHub",
+                                  "teleFuelScoredFromTower",
+                                  "teleFuelScoredFromDepot",
+                                  "teleFuelScoredFromOutpost",
+                                  "teleFuelScoredFromTrench",
+                                  "teleFuelScoredFromBump",
+                                  "teleFuelScoredFromOther",
+                                  "endClimbAttempted",
+                                  "robotGotStuck",
+                                  "robotTraverseTrench",
+                                  "robotTraverseBump",
+                                  "died",
                                 ].includes(column)
                               ) ?
                                 <DataTypeIcon dataType="boolean" />
-                              : column === "dataConfidence" ?
-                                <DataTypeIcon dataType='"low" | "neutral" | "high"' />
+                              : column === "comments" ?
+                                <DataTypeIcon dataType="string" />
+                              : column === "startZone" ?
+                                <DataTypeIcon dataType='"depot" | "mid" | "outpost"' />
+                              : column === "autoFuelHubScoringLocation" ?
+                                <DataTypeIcon dataType='"hub" | "tower" | "depot" | "outpost" | "trench" | "bump" | "other"' />
+                              : column === "autoClimbPosition" ?
+                                <DataTypeIcon dataType='"outpost" | "center" | "depot" | "other"' />
+                              : column === "autoClimbLevel" ?
+                                <DataTypeIcon dataType="1 | 2 | 3" />
+                              : (
+                                [
+                                  "autoFuelScored",
+                                  "teleFuelScored",
+                                  "teleCycles",
+                                  "teleInactiveDefenseRoleEffectiveness",
+                                  "teleInactiveIntakingRoleEffectiveness",
+                                  "teleInactiveFeedingRoleEffectiveness",
+                                  "teleInactiveFuelPassed",
+                                  "dataConfidence",
+                                ].includes(column)
+                              ) ?
+                                <DataTypeIcon dataType="integer" />
                               : <DataTypeIcon dataType="error" />,
                             undefined: <DataTypeIcon dataType="error" />,
                           }[typeof TeamMatchEntryInit[column]]

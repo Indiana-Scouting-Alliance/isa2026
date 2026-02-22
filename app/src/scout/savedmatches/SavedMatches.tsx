@@ -1,9 +1,5 @@
 import {
   DBEvent,
-  HumanPlayerEntry,
-  HumanPlayerEntryColumn,
-  HumanPlayerEntryColumns,
-  HumanPlayerEntryInit,
   Match,
   TeamMatchEntry,
   TeamMatchEntryColumn,
@@ -42,7 +38,6 @@ import Snackbar from "../../components/Snackbar/Snackbar.tsx";
 import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
 import {
   deleteEntry,
-  getDBHumanPlayerEntries,
   getDBTeamMatchEntries,
   putDBEntry,
 } from "../../utils/idb.ts";
@@ -52,7 +47,7 @@ import UploadFromSavedMatches, {
   QRCODE_UPLOAD_DELIMITER,
 } from "./UploadFromSavedMatches.tsx";
 
-export type ExportMatchEntry = (TeamMatchEntry | HumanPlayerEntry) & {
+export type ExportMatchEntry = TeamMatchEntry & {
   autoUpload: boolean;
   quickshare: boolean;
   clipboard: boolean;
@@ -62,8 +57,8 @@ export type ExportMatchEntry = (TeamMatchEntry | HumanPlayerEntry) & {
 };
 
 type SavedMatchesProps = {
-  match: TeamMatchEntry | HumanPlayerEntry;
-  setMatch: (value: TeamMatchEntry | HumanPlayerEntry) => void;
+  match: TeamMatchEntry;
+  setMatch: (value: TeamMatchEntry) => void;
   events: (DBEvent & { matches: Match[] })[];
   validDeviceSetup: boolean;
 };
@@ -82,38 +77,22 @@ export default function SavedMatches({
   >([]);
   useEffect(() => {
     getDBTeamMatchEntries().then((robotMatches) => {
-      getDBHumanPlayerEntries().then((humanMatches) => {
-        setMatches([
-          ...robotMatches.map((x) => ({
-            ...x,
-            selected:
-              (
-                !x.autoUpload &&
-                !x.quickshare &&
-                !x.clipboard &&
-                !x.qr &&
-                !x.download &&
-                !x.upload
-              ) ?
-                true
-              : false,
-          })),
-          ...humanMatches.map((x) => ({
-            ...x,
-            selected:
-              (
-                !x.autoUpload &&
-                !x.quickshare &&
-                !x.clipboard &&
-                !x.qr &&
-                !x.download &&
-                !x.upload
-              ) ?
-                true
-              : false,
-          })),
-        ]);
-      });
+      setMatches(
+        robotMatches.map((x) => ({
+          ...x,
+          selected:
+            (
+              !x.autoUpload &&
+              !x.quickshare &&
+              !x.clipboard &&
+              !x.qr &&
+              !x.download &&
+              !x.upload
+            ) ?
+              true
+            : false,
+        }))
+      );
     });
   }, []);
 
@@ -189,10 +168,8 @@ export default function SavedMatches({
               className={styles.filledNavButton}
               onClick={() => {
                 console.log(getDBTeamMatchEntries());
-                const newMatch: TeamMatchEntry | HumanPlayerEntry = {
-                  ...(match.robotNumber !== 4 ?
-                    TeamMatchEntryInit
-                  : HumanPlayerEntryInit),
+                const newMatch: TeamMatchEntry = {
+                  ...TeamMatchEntryInit,
                   deviceTeamNumber: match.deviceTeamNumber,
                   deviceId: match.deviceId,
                   eventKey: match.eventKey,
@@ -202,7 +179,7 @@ export default function SavedMatches({
                   robotNumber: match.robotNumber,
                   scoutName: match.scoutName,
                   scoutTeamNumber: match.scoutTeamNumber,
-                } as TeamMatchEntry | HumanPlayerEntry;
+                };
 
                 const eventMatches = events.find(
                   (event) => event.eventKey === match.eventKey
@@ -212,8 +189,7 @@ export default function SavedMatches({
                     (x) =>
                       x.matchLevel === match.matchLevel &&
                       x.matchNumber === match.matchNumber + 1
-                  ) &&
-                  match.robotNumber !== 4
+                  )
                 ) {
                   setMatch({
                     ...newMatch,
@@ -456,9 +432,7 @@ export default function SavedMatches({
                             }>
                             {matchData.alliance +
                               "\u00a0" +
-                              (matchData.robotNumber === 4 ?
-                                "HUMAN"
-                              : matchData.robotNumber)}
+                              matchData.robotNumber}
                           </p>
                           <div className={styles.matchIcons}>
                             {matchData.autoUpload && <CloudSync />}
@@ -488,7 +462,7 @@ export default function SavedMatches({
           <Button
             className={styles.exportButton}
             onClick={async () => {
-              const data: (TeamMatchEntry | HumanPlayerEntry)[] = matches
+              const data: TeamMatchEntry[] = matches
                 .filter((x) => x.selected)
                 .map((x) =>
                   omit(
@@ -503,7 +477,7 @@ export default function SavedMatches({
                     ],
                     x as unknown as Record<string, unknown>
                   )
-                ) as unknown as (TeamMatchEntry | HumanPlayerEntry)[];
+                ) as unknown as TeamMatchEntry[];
 
               let exception = false;
               try {
@@ -551,7 +525,7 @@ export default function SavedMatches({
           <Button
             className={styles.exportButton}
             onClick={() => {
-              const data: (TeamMatchEntry | HumanPlayerEntry)[] = matches
+              const data: TeamMatchEntry[] = matches
                 .filter((x) => x.selected)
                 .map((x) =>
                   omit(
@@ -566,7 +540,7 @@ export default function SavedMatches({
                     ],
                     x as unknown as Record<string, unknown>
                   )
-                ) as unknown as (TeamMatchEntry | HumanPlayerEntry)[];
+                ) as unknown as TeamMatchEntry[];
 
               let exception = false;
               try {
@@ -591,17 +565,11 @@ export default function SavedMatches({
                   .filter((x) => x.selected)
                   .map(
                     (x) =>
-                      (x.robotNumber === 4 ?
-                        JSON.stringify(
-                          HumanPlayerEntryColumns.map(
-                            (column) => x[column as HumanPlayerEntryColumn]
-                          )
+                      JSON.stringify(
+                        TeamMatchEntryColumns.map(
+                          (column) => x[column as TeamMatchEntryColumn]
                         )
-                      : JSON.stringify(
-                          TeamMatchEntryColumns.map(
-                            (column) => x[column as TeamMatchEntryColumn]
-                          )
-                        )) + QRCODE_UPLOAD_DELIMITER
+                      ) + QRCODE_UPLOAD_DELIMITER
                   )
               );
               setQrIndex(0);
@@ -610,17 +578,11 @@ export default function SavedMatches({
                   .filter((x) => x.selected)
                   .map(
                     (x) =>
-                      (x.robotNumber === 4 ?
-                        JSON.stringify(
-                          HumanPlayerEntryColumns.map(
-                            (column) => x[column as HumanPlayerEntryColumn]
-                          )
+                      JSON.stringify(
+                        TeamMatchEntryColumns.map(
+                          (column) => x[column as TeamMatchEntryColumn]
                         )
-                      : JSON.stringify(
-                          TeamMatchEntryColumns.map(
-                            (column) => x[column as TeamMatchEntryColumn]
-                          )
-                        )) + QRCODE_UPLOAD_DELIMITER
+                      ) + QRCODE_UPLOAD_DELIMITER
                   )
                   .join("")
               );
@@ -721,7 +683,7 @@ export default function SavedMatches({
           <Button
             className={styles.exportButton}
             onClick={() => {
-              const data: (TeamMatchEntry | HumanPlayerEntry)[] = matches
+              const data: TeamMatchEntry[] = matches
                 .filter((x) => x.selected)
                 .map((x) =>
                   omit(
@@ -736,7 +698,7 @@ export default function SavedMatches({
                     ],
                     x as unknown as Record<string, unknown>
                   )
-                ) as unknown as (TeamMatchEntry | HumanPlayerEntry)[];
+                ) as unknown as TeamMatchEntry[];
 
               let exception = false;
               try {
@@ -796,7 +758,7 @@ export default function SavedMatches({
                       ],
                       x as unknown as Record<string, unknown>
                     )
-                  ) as unknown as (TeamMatchEntry | HumanPlayerEntry)[]
+                  ) as unknown as TeamMatchEntry[]
               );
               putEntries.mutate(
                 matches
@@ -814,7 +776,7 @@ export default function SavedMatches({
                       ],
                       x as unknown as Record<string, unknown>
                     )
-                  ) as (TeamMatchEntry | HumanPlayerEntry)[]
+                  ) as TeamMatchEntry[]
               );
             }}>
             <Upload />

@@ -86,12 +86,13 @@ export default function Prematch({
               });
             }}
             className={scoutStyles.matchLevel}>
-            <option value="None">n</option>
-            <option value="Practice">p</option>
-            <option value="Qualification">q</option>
-            <option value="Playoff">t</option>
+            <option value="None">None</option>
+            <option value="Practice">Practice</option>
+            <option value="Qualification">Qualification</option>
+            <option value="Playoff">Playoff</option>
           </Select>
           <div className={scoutStyles.matchNumber}>
+            <div className={scoutStyles.matchNumberRow}>
             <div className={scoutStyles.matchNumberButtonContainer}>
               <p className={scoutStyles.matchNumberButtonSpacer}>X</p>
               <Button
@@ -182,7 +183,6 @@ export default function Prematch({
               }}
               label="Match Number"
               error={matchNumberError !== ""}
-              helperText={matchNumberError}
             />
             <div className={scoutStyles.matchNumberButtonContainer}>
               <p className={scoutStyles.matchNumberButtonSpacer}>X</p>
@@ -228,6 +228,12 @@ export default function Prematch({
                 <Add />
               </Button>
             </div>
+            </div>
+            {matchNumberError && (
+              <p className={scoutStyles.matchNumberHelperText}>
+                {matchNumberError}
+              </p>
+            )}
           </div>
         </div>
         <Input
@@ -268,34 +274,16 @@ export default function Prematch({
           }>
           <div className={styles.startingPositionContainer}>
             <img
-              src={
-                import.meta.env.BASE_URL +
-                "assets/" +
-                (match.alliance === "Red" ?
-                  deviceSetup.fieldOrientation === "barge" ?
-                    "RedBarge.png"
-                  : "RedProcessor.png"
-                : deviceSetup.fieldOrientation === "barge" ? "BlueBarge.png"
-                : "BlueProcessor.png")
-              }
+              src={import.meta.env.BASE_URL + "assets/Field.png"}
               className={styles.startingPositionImage}
             />
             <TransparentToggle
-              value={match.startingLocationA!}
+              value={match.startZone === "outpost"}
               setValue={(value) => {
-                if (value) {
-                  setMatch({
-                    ...match,
-                    startingLocationA: value,
-                    startingLocationB: false,
-                    startingLocationC: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    startingLocationA: value,
-                  });
-                }
+                setMatch({
+                  ...match,
+                  startZone: value ? "outpost" : null,
+                });
               }}
               disabled={match.noShow}
               error={startingPositionError !== ""}
@@ -307,21 +295,12 @@ export default function Prematch({
               A
             </TransparentToggle>
             <TransparentToggle
-              value={match.startingLocationB!}
+              value={match.startZone === "mid"}
               setValue={(value) => {
-                if (value) {
-                  setMatch({
-                    ...match,
-                    startingLocationB: value,
-                    startingLocationA: false,
-                    startingLocationC: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    startingLocationB: value,
-                  });
-                }
+                setMatch({
+                  ...match,
+                  startZone: value ? "mid" : null,
+                });
               }}
               disabled={match.noShow}
               error={startingPositionError !== ""}
@@ -333,21 +312,12 @@ export default function Prematch({
               B
             </TransparentToggle>
             <TransparentToggle
-              value={match.startingLocationC!}
+              value={match.startZone === "depot"}
               setValue={(value) => {
-                if (value) {
-                  setMatch({
-                    ...match,
-                    startingLocationC: value,
-                    startingLocationA: false,
-                    startingLocationB: false,
-                  });
-                } else {
-                  setMatch({
-                    ...match,
-                    startingLocationC: value,
-                  });
-                }
+                setMatch({
+                  ...match,
+                  startZone: value ? "depot" : null,
+                });
               }}
               disabled={match.noShow}
               error={startingPositionError !== ""}

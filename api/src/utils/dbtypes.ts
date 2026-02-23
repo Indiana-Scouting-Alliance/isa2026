@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { no } from "zod/v4/locales";
 
 export const Alliance = ["Red", "Blue"] as const;
 export const MatchLevel = [

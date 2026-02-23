@@ -44,17 +44,12 @@ export default function ScoutPageContainer({
                 (nowScouting.alliance === "Red" ?
                   styles.nowScoutingRed
                 : styles.nowScoutingBlue)
-              }
-              onClick={() => {
-                setHelpOpen(true);
-              }}>
+              }>
               {nowScouting.teamNumber +
                 "\u00a0/\u00a0" +
                 nowScouting.alliance.toUpperCase() +
                 "\u00a0" +
-                (nowScouting.robotPosition === 4 ?
-                  "HUMAN"
-                : nowScouting.robotPosition)}
+                nowScouting.robotPosition}
             </Button>
           )}
         </div>

@@ -1,0 +1,52 @@
+.fieldImageContainer {
+  height: 100%;
+}
+
+.fieldImageContainerError {
+  height: calc(100% - 2em);
+}
+
+.fieldImage {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  aspect-ratio: 3906 / 3816;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.fieldImageImg {
+  width: 200%;
+  height: 100%;
+}
+
+/* Red field and tower zoom */
+.fieldRed {
+  margin-left: 0;
+}
+
+.fieldRed.imgZoomed {
+  transform: scale(3.5);
+  transform-origin: 0% 55%;
+}
+
+/* Blue field and tower zoom */
+.fieldBlue {
+  margin-left: -100%;
+  transform: rotate(180deg);
+  transform-origin: 75% 50%;
+}
+
+.fieldBlue.imgZoomed {
+    transform: rotate(180deg) scale(3.5);
+    transform-origin: 89% 47%;
+}
+
+.mirror {
+  transform: scaleX(-1) scaleY(-1);
+}
+.mirror .childrenOverlay > * {
+  transform: scaleX(-1) scaleY(-1);
+}

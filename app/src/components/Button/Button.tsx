@@ -7,6 +7,7 @@ type ButtonProps = {
   style?: React.CSSProperties;
   htmlRef?: React.Ref<HTMLButtonElement>;
   disabled?: boolean;
+  label?: string;
 };
 export default function Button({
   onClick,
@@ -15,6 +16,7 @@ export default function Button({
   style,
   htmlRef,
   disabled,
+  label,
 }: ButtonProps) {
   return (
     <button
@@ -23,7 +25,7 @@ export default function Button({
       style={style}
       ref={htmlRef}
       disabled={disabled}>
-      {children}
+      {children || label} {/* Use label if children is not provided */}
     </button>
   );
 }

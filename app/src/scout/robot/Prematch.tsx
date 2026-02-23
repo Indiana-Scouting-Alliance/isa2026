@@ -15,6 +15,8 @@ import changeFlexDirection from "../../components/styles/ChangeFlexDirection.mod
 import scoutStyles from "../../components/styles/ScoutStyles.module.css";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
 import styles from "./Prematch.module.css";
+import FieldImage from "../../components/FieldImage/FieldImage.tsx";
+import fieldStyles from "../../components/FieldImage/FieldImage.module.css";
 
 type PrematchProps = {
   match: TeamMatchEntry;
@@ -45,6 +47,49 @@ export default function Prematch({
         " " +
         changeFlexDirection.changeFlexDirection
       }>
+      <div className={scoutStyles.half}>
+        <div
+          className={
+            startingPositionError ?
+              fieldStyles.fieldImageContainerError
+            : fieldStyles.fieldImageContainer
+          }>
+          <div className={styles.startingPositionContainer}>
+            <FieldImage deviceSetup={deviceSetup}>
+              <TransparentToggle
+                label="Outpost"
+                value={match.startZone === "outpost"}
+                setValue={(value) => setMatch({...match, startZone: value ? "outpost" : null})}          
+                disabled={match.noShow}
+                error={startingPositionError !== ""}
+                className={styles.startingPositionOutpost}
+              />
+              <TransparentToggle
+                label="Mid"
+                value={match.startZone === "mid"}
+                setValue={(value) => setMatch({...match, startZone: value ? "mid" : null})}
+                disabled={match.noShow}
+                error={startingPositionError !== ""}
+                className={styles.startingPositionMid}
+              />
+              <TransparentToggle
+                label="Depot"
+                value={match.startZone === "depot"}
+                setValue={(value) => setMatch({...match, startZone: value ? "depot" : null})}
+                disabled={match.noShow}
+                error={startingPositionError !== ""}
+                className={styles.startingPositionDepot}
+              />
+            </FieldImage> 
+          </div>
+        </div>
+        {startingPositionError && (
+          <p className={styles.startingPositionError}>
+            {startingPositionError}
+          </p>
+        )}
+      </div>
+      <Divider orientation="vertical" />
       <div className={scoutStyles.half}>
         <Input
           id="scout-name"
@@ -263,78 +308,6 @@ export default function Prematch({
           classNameFalse={scoutStyles.redToggleButtonFalse}>
           No Show
         </ToggleButton>
-      </div>
-      <Divider orientation="vertical" />
-      <div className={scoutStyles.half}>
-        <div
-          className={
-            startingPositionError ?
-              styles.startingPositionContainerContainerError
-            : styles.startingPositionContainerContainer
-          }>
-          <div className={styles.startingPositionContainer}>
-            <img
-              src={import.meta.env.BASE_URL + "assets/Field.png"}
-              className={styles.startingPositionImage}
-            />
-            <TransparentToggle
-              value={match.startZone === "outpost"}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  startZone: value ? "outpost" : null,
-                });
-              }}
-              disabled={match.noShow}
-              error={startingPositionError !== ""}
-              className={
-                deviceSetup.fieldOrientation === "barge" ?
-                  styles.startingPositionLeftA
-                : styles.startingPositionRightA
-              }>
-              A
-            </TransparentToggle>
-            <TransparentToggle
-              value={match.startZone === "mid"}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  startZone: value ? "mid" : null,
-                });
-              }}
-              disabled={match.noShow}
-              error={startingPositionError !== ""}
-              className={
-                deviceSetup.fieldOrientation === "barge" ?
-                  styles.startingPositionLeftB
-                : styles.startingPositionRightB
-              }>
-              B
-            </TransparentToggle>
-            <TransparentToggle
-              value={match.startZone === "depot"}
-              setValue={(value) => {
-                setMatch({
-                  ...match,
-                  startZone: value ? "depot" : null,
-                });
-              }}
-              disabled={match.noShow}
-              error={startingPositionError !== ""}
-              className={
-                deviceSetup.fieldOrientation === "barge" ?
-                  styles.startingPositionLeftC
-                : styles.startingPositionRightC
-              }>
-              C
-            </TransparentToggle>
-          </div>
-        </div>
-        {startingPositionError && (
-          <p className={styles.startingPositionError}>
-            {startingPositionError}
-          </p>
-        )}
       </div>
     </div>
   );

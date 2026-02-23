@@ -5,8 +5,7 @@ import {
   TeamMatchEntry,
   TeamMatchEntryNoShowInit,
 } from "@isa2026/api/src/utils/dbtypes.ts";
-import EventEmitter from "events";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
 import ScoutPageContainer from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
@@ -31,7 +30,6 @@ type ScoutLayoutProps = {
   deviceSetup: DeviceSetupObj;
   putEntriesPending: boolean;
   setPutEntriesPending: (value: boolean) => void;
-  eventEmitter: EventEmitter;
 };
 
 export default function ScoutLayout({
@@ -41,7 +39,6 @@ export default function ScoutLayout({
   deviceSetup,
   putEntriesPending,
   setPutEntriesPending,
-  eventEmitter,
 }: ScoutLayoutProps) {
   const navigate = useNavigate();
   const [matchStage, setMatchStage] = useState<MatchStage>("prematch");
@@ -179,81 +176,6 @@ export default function ScoutLayout({
     return error;
   };
 
-  // Human player check removed as requested
-
-  const TELEOP_TAB_FLASH_MS = 750;
-  const [teleopTabAnimation, setTeleopTabAnimation] = useState(false);
-  const [teleopAnimationBackdrop, setTeleopAnimationBackdrop] = useState(false);
-  const recurringTeleopAnimation = useRef<NodeJS.Timeout | null>(null);
-  const teleopAnimationBackdropTimeout = useRef<NodeJS.Timeout | null>(null);
-  const teleopTabAnimation1 = useRef<NodeJS.Timeout | null>(null);
-  const teleopTabAnimation2 = useRef<NodeJS.Timeout | null>(null);
-  const teleopTabAnimation3 = useRef<NodeJS.Timeout | null>(null);
-  const teleopTabAnimation4 = useRef<NodeJS.Timeout | null>(null);
-  const teleopTabAnimation5 = useRef<NodeJS.Timeout | null>(null);
-  const [teleopAnimationRunning, setTeleopAnimationRunning] = useState(false);
-
-  const clearTeleopAnimations = () => {
-    setTeleopAnimationBackdrop(false);
-    if (teleopAnimationBackdropTimeout.current) {
-      clearInterval(teleopAnimationBackdropTimeout.current);
-      teleopAnimationBackdropTimeout.current = null;
-    }
-    setTeleopTabAnimation(false);
-    [teleopTabAnimation1, teleopTabAnimation2, teleopTabAnimation3, teleopTabAnimation4, teleopTabAnimation5].forEach(ref => {
-      if (ref.current) {
-        clearTimeout(ref.current);
-        ref.current = null;
-      }
-    });
-    setTeleopAnimationRunning(false);
-  };
-
-  const matchStageRef = useRef(matchStage);
-  useEffect(() => {
-    matchStageRef.current = matchStage;
-  }, [matchStage]);
-
-  if (eventEmitter.listenerCount("teleop-animation") === 0) {
-    eventEmitter.on("teleop-animation", () => {
-      if (matchStageRef.current !== "auto") {
-        clearTeleopAnimations();
-        if (recurringTeleopAnimation.current) {
-          clearInterval(recurringTeleopAnimation.current);
-          recurringTeleopAnimation.current = null;
-        }
-        return;
-      }
-      if (teleopAnimationRunning) return;
-      
-      setTeleopAnimationRunning(true);
-      setTeleopAnimationBackdrop(true);
-
-      if (!teleopAnimationBackdropTimeout.current) {
-        teleopAnimationBackdropTimeout.current = setTimeout(() => {
-          setTeleopAnimationBackdrop(false);
-          clearTeleopAnimations();
-        }, TELEOP_TAB_FLASH_MS * 6);
-      }
-
-      setTeleopTabAnimation(true);
-      teleopTabAnimation1.current = setTimeout(() => setTeleopTabAnimation(false), TELEOP_TAB_FLASH_MS);
-      teleopTabAnimation2.current = setTimeout(() => setTeleopTabAnimation(true), TELEOP_TAB_FLASH_MS * 2);
-      teleopTabAnimation3.current = setTimeout(() => setTeleopTabAnimation(false), TELEOP_TAB_FLASH_MS * 3);
-      teleopTabAnimation4.current = setTimeout(() => setTeleopTabAnimation(true), TELEOP_TAB_FLASH_MS * 4);
-      teleopTabAnimation5.current = setTimeout(() => {
-        setTeleopTabAnimation(false);
-        clearTeleopAnimations();
-      }, TELEOP_TAB_FLASH_MS * 5);
-
-      if (!recurringTeleopAnimation.current) {
-        recurringTeleopAnimation.current = setInterval(() => {
-          eventEmitter.emit("teleop-animation");
-        }, TELEOP_TAB_FLASH_MS + 10000);
-      }
-    });
-  }
-
   const noShowTeamMatchEntry = (m: TeamMatchEntry): TeamMatchEntry => {
     return {
       ...TeamMatchEntryNoShowInit,
@@ -273,18 +195,10 @@ export default function ScoutLayout({
 
   return (
     <ScoutPageContainer
-      backdrop={teleopAnimationBackdrop}
-      onCloseBackdrop={() => clearTeleopAnimations()}
       title={
         <TabBar
           value={matchStage}
           onChange={(value) => {
-            clearTeleopAnimations();
-            if (recurringTeleopAnimation.current) {
-              clearInterval(recurringTeleopAnimation.current);
-              recurringTeleopAnimation.current = null;
-            }
-
             if (matchStage === "prematch") {
               if (!prematchCheck()) {
                 setMatchStage(value as MatchStage);
@@ -295,12 +209,7 @@ export default function ScoutLayout({
           }}>
           <Tab value="prematch">Prematch</Tab>
           <Tab value="auto">Auto</Tab>
-          <Tab
-            value="teleop"
-            style={{ transition: "all " + TELEOP_TAB_FLASH_MS + "ms" }}
-            className={teleopTabAnimation ? styles.teleopTabHighlight : ""}>
-            Teleop
-          </Tab>
+          <Tab value="teleop">Teleop</Tab>
           <Tab value="postmatch">Postmatch</Tab>
         </TabBar>
       }
@@ -362,10 +271,9 @@ export default function ScoutLayout({
                 match={match}
                 setMatch={setMatch}
                 deviceSetup={deviceSetup}
-                eventEmitter={eventEmitter}
               />
             ),
-            teleop: <Teleop match={match} setMatch={setMatch} />,
+            teleop: <Teleop match={match} setMatch={setMatch} deviceSetup={deviceSetup} />,
             postmatch: (
               <Postmatch
                 match={match}

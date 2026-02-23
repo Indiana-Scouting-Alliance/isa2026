@@ -30,7 +30,7 @@ export default function App() {
           alliance: "Red",
           robotNumber: 1,
           currentEvent: "",
-          fieldOrientation: "processor",
+          fieldOrientation: "left",
         } as DeviceSetupObj)
       );
       return {
@@ -39,7 +39,7 @@ export default function App() {
         alliance: "Red",
         robotNumber: 1,
         currentEvent: "",
-        fieldOrientation: "processor",
+        fieldOrientation: "left",
       };
     }
   );

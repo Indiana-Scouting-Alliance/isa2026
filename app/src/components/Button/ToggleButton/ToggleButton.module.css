@@ -6,6 +6,14 @@
 
 .buttonTrue {
   color: var(--color-primary-contrastText);
-  border: none;
+  border: var(--button-border-width) solid transparent;
   background-color: var(--color-primary);
+}
+
+.buttonDisabled {
+  color: var(--color-primary-contrastText);
+  border: var(--button-border-width) solid gray;
+  background-color: gray;
+  opacity: 0.6;
+  cursor: not-allowed;
 }

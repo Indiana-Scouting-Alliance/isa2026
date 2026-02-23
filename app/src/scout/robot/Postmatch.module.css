@@ -1,27 +1,58 @@
-.goodAtLabel {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  font-family: var(--text-font-family);
-  font-size: var(--text-body-size);
-  overflow-y: hidden;
+.commentsInput {
+  resize: vertical;
 }
 
-.goodAtCheckboxes {
-  flex: 1;
+.summaryContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-
+  gap: 12px;
   overflow-y: auto;
 }
 
-.dataConfidenceToggle {
-  flex: 1;
+.summarySection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.commentsInput {
-  resize: vertical;
+.sectionTitle {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+  margin: 0;
+  padding: 4px 8px;
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+  border-radius: var(--border-radius);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 8px;
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}
+
+.summaryRow:nth-child(even) {
+  background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+.summaryLabel {
+  color: var(--color-text);
+}
+
+.summaryValue {
+  font-weight: 600;
+}
+
+.summaryHighlight {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 8px;
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius);
 }

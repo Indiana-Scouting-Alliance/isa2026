@@ -1,5 +1,6 @@
 import Button from "../Button.tsx";
 import styles from "./ToggleButton.module.css";
+import scoutStyles from "../../styles/ScoutStyles.module.css";
 
 type ToggleButtonProps = {
   children?: React.ReactNode;
@@ -8,6 +9,8 @@ type ToggleButtonProps = {
   classNameFalse?: string;
   disabled?: boolean;
   ref?: React.Ref<HTMLButtonElement>;
+  style?: React.CSSProperties;
+  label?: string;
 };
 type ToggleButtonPropsAsStandalone = {
   value: boolean;
@@ -36,17 +39,24 @@ export default function ToggleButton({
   classNameFalse,
   disabled,
   ref,
+  style,
+  label,
   ...props
 }: ToggleButtonPropsAsStandalone | ToggleButtonPropsAsChild): React.ReactNode {
+  const trueClass = classNameTrue ?? scoutStyles.normalToggleButtonTrue;
+  const falseClass = classNameFalse ?? scoutStyles.normalToggleButtonFalse;
   return (
     <Button
       htmlRef={ref}
+      style={style}
       className={
-        ((
+        (disabled ?
+          styles.buttonDisabled
+        : (
           "selected" in props ? props.selected : value
         ) ?
-          styles.buttonTrue + " " + (classNameTrue || "")
-        : styles.buttonFalse + " " + (classNameFalse || "")) +
+          styles.buttonTrue + " " + trueClass
+        : styles.buttonFalse + " " + falseClass) +
         " " +
         (className || "")
       }
@@ -58,7 +68,7 @@ export default function ToggleButton({
         }
       }}
       disabled={disabled}>
-      {children}
+      {children || label} {/* Use label as fallback if children is not provided */}
     </Button>
   );
 }

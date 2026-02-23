@@ -1,0 +1,34 @@
+.modal {
+  align-items: center;
+  gap: 8px;
+  width: min(420px, 80vw);
+  background-color: var(--color-background);
+}
+
+.climbPosDepot {
+  left: 30%;
+  top: 2%;
+  width: 40%;
+  height: 25%;
+}
+
+.climbPosOther {
+  left: 5%;
+  top: 38%;
+  width: 30%;
+  height: 25%;
+}
+
+.climbPosCenter {
+  right: 15%;
+  top: 38%;
+  width: 40%;
+  height: 25%;
+}
+
+.climbPosOutpost {
+  left: 30%;
+  bottom: 2%;
+  width: 40%;
+  height: 25%;
+}

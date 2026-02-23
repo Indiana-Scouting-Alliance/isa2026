@@ -119,10 +119,11 @@ button.normalToggleButtonFalse {
 }
 
 .toggleButtonGroupSpaced {
-  display: flex;
-  gap: 8px;
+  display: flex;  
+  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin: auto;
+  margin-bottom: 10px;
 }
 
 /* Form elements */
@@ -142,6 +143,27 @@ button.normalToggleButtonFalse {
 .rangeInput {
   width: 100%;
   cursor: pointer;
+}
+
+/* Shared layout for traverse/fuel-passed row */
+.traverseRow {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.traverseContainer {
+  width: 60%;
+}
+
+.fuelPassedButton {
+  width: 50%;
+  height: fit-content;
+  margin: auto;
+}
+
+.diedButton {
+  margin-top: auto;
 }
 
 /* Spacing utilities */

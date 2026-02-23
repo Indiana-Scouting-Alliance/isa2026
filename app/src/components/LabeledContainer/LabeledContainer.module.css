@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  user-select: none;
+}
+
+.label {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+  text-align: center;
+  padding: 4px 0;
+  background-color: var(--color-background);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  position: relative;  
+}
+
+.labelBorder {
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.noOuterBorder {
+  border: none;
+}

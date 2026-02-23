@@ -1,0 +1,58 @@
+.incrementButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 16px;
+  min-height: 80px;
+  border: none;
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-contrastText);
+  font-family: var(--text-font-family);
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.incrementButton:hover {
+  filter: var(--hover-dim);
+}
+.incrementButton:active {
+  filter: brightness(0.7);
+}
+
+.value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--text-font-family);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-secondary-contrastText);
+  pointer-events: none;
+}
+
+.decrementButton {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+  font-family: var(--text-font-family);
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-top-right-radius: var(--border-radius);
+}
+.decrementButton:hover {
+  filter: var(--hover-dim);
+}
+.decrementButton:active {
+  filter: brightness(0.7);
+}

@@ -33,7 +33,7 @@ export type DeviceSetupObj = {
   alliance: TeamMatchEntry["alliance"];
   robotNumber: number;
   currentEvent: string;
-  fieldOrientation: "barge" | "processor";
+  fieldOrientation: "right" | "left";
 };
 type DeviceSetupProps = {
   deviceSetup: DeviceSetupObj;
@@ -57,17 +57,8 @@ export default function DeviceSetup({
   const [robotNumberError, setRobotNumberError] = useState("");
   const [fieldOrientationError, setFieldOrientationError] = useState("");
   const [currentEventError, setCurrentEventError] = useState("");
-
-  // const [createEvent, setCreateEvent] = useState(false);
-  // const openCreateEvent = () => {
-  //   setCreateEvent(true);
-  // };
-
-  // const putEvents = trpc.events.putEvents.useMutation();
-
   const [downloadEvent, setDownloadEvent] = useState(false);
   const [exportEvent, setExportEvent] = useState(false);
-
   const [status, setStatus] = useState("");
 
   const putEvents = trpc.events.putEvents.useMutation({
@@ -143,10 +134,10 @@ export default function DeviceSetup({
               }
 
               if (
-                deviceSetup.fieldOrientation !== "barge" &&
-                deviceSetup.fieldOrientation !== "processor"
+                deviceSetup.fieldOrientation !== "right" &&
+                deviceSetup.fieldOrientation !== "left"
               ) {
-                setFieldOrientationError("Must be 'barge' or 'processor'");
+                setFieldOrientationError("Must be 'right' or 'left'");
                 error = true;
               } else {
                 setFieldOrientationError("");
@@ -275,11 +266,6 @@ export default function DeviceSetup({
               className={styles.toggleButton}>
               3
             </ToggleButton>
-            <ToggleButton
-              value="4"
-              className={styles.toggleButton}>
-              Human
-            </ToggleButton>
           </ToggleButtonGroup>
           <ToggleButtonGroup
             value={deviceSetup.fieldOrientation}
@@ -296,12 +282,12 @@ export default function DeviceSetup({
             className={styles.toggleButtonGroup}
             label="Field Orientation">
             <ToggleButton
-              value="processor"
+              value="left"
               className={styles.toggleButton}>
               {deviceSetup.alliance === "Red" ? "Red on Left" : "Blue on Left"}
             </ToggleButton>
             <ToggleButton
-              value="barge"
+              value="right"
               className={styles.toggleButton}>
               {deviceSetup.alliance === "Red" ?
                 "Red on Right"

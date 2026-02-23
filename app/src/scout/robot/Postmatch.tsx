@@ -1,8 +1,12 @@
 import { TeamMatchEntry } from "@isa2026/api/src/utils/dbtypes.ts";
 import TextArea from "../../components/Input/TextArea.tsx";
+import Divider from "../../components/Divider/Divider.tsx";
 import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
 import scoutStyles from "../../components/styles/ScoutStyles.module.css";
 import styles from "./Postmatch.module.css";
+import LabeledContainer from "../../components/LabeledContainer/LabeledContainer.tsx";
+import RangeInput from "../../components/Input/RangeInput/RangeInput.tsx";
+import MatchSummary from "./MatchSummary.tsx";
 
 type PostmatchProps = {
   match: TeamMatchEntry;
@@ -21,32 +25,24 @@ export default function Postmatch({
         " " +
         changeFlexDirection.changeFlexDirection
       }>
-      <div className={scoutStyles.fieldContainer}>
-        <h3>Data Confidence</h3>
-        <div style={{ marginBottom: "1rem" }}>
-          <label className={scoutStyles.formLabel} style={{ marginBottom: "0.5rem" }}>
-            Confidence Level: {match.dataConfidence ?? 0}/10
-          </label>
-          <input
-            type="range"
-            min="0"
-            max="10"
-            step="1"
+      <div className={scoutStyles.half}>
+        <MatchSummary match={match} />
+      </div>
+
+      <Divider orientation="vertical" />
+
+      <div className={scoutStyles.half}>
+        <LabeledContainer label="Data confidence" showOuterBorder={false}>
+          <RangeInput
+            min={0}
+            max={10}
             value={match.dataConfidence ?? 0}
-            onChange={(e) => {
-              setMatch({
-                ...match,
-                dataConfidence: parseInt(e.target.value),
-              });
-            }}
-            className={scoutStyles.rangeInput}
+            onChange={(value) => setMatch({...match, dataConfidence: value})}
           />
           {dataConfidenceError && (
-            <div className={scoutStyles.errorText}>
-              {dataConfidenceError}
-            </div>
+            <div className={scoutStyles.errorText}>{dataConfidenceError}</div>
           )}
-        </div>
+        </LabeledContainer>
 
         <TextArea
           id="postmatch-comments"

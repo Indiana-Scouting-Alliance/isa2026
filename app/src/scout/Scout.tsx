@@ -31,8 +31,8 @@ export default function Scout({
   const [validDeviceSetup, setValidDeviceSetup] = useState(true);
   useEffect(() => {
     if (
-      (deviceSetup.fieldOrientation !== "processor" &&
-        deviceSetup.fieldOrientation !== "barge") ||
+      (deviceSetup.fieldOrientation !== "left" &&
+        deviceSetup.fieldOrientation !== "right") ||
       !deviceSetup.currentEvent ||
       !Number.isInteger(deviceSetup.deviceTeamNumber) ||
       !deviceSetup.deviceTeamNumber ||
@@ -144,7 +144,6 @@ export default function Scout({
               deviceSetup={deviceSetup}
               putEntriesPending={putEntriesPending}
               setPutEntriesPending={setPutEntriesPending}
-              eventEmitter={eventEmitter}
             />
           }
         />

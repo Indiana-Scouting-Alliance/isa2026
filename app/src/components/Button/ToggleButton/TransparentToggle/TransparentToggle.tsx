@@ -9,11 +9,13 @@ type TransparentToggleProps = {
   error: boolean;
   disabled?: boolean;
   className?: string;
+  label?: string;
 };
 export default function TransparentToggle({
   value,
   setValue,
   children,
+  label,
   error,
   disabled,
   className,
@@ -33,7 +35,8 @@ export default function TransparentToggle({
         (className || "")
       }
       classNameFalse={styles.toggleFalse}
-      classNameTrue={styles.toggleTrue}>
+      classNameTrue={styles.toggleTrue}
+      label={label}>      
       {children}
     </ToggleButton>
   );

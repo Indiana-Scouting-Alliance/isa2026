@@ -1,0 +1,63 @@
+/* Left orientation - toggle positions */
+.fuelScoreSpotOutpost {
+  left: 3%;
+  top: 68%;
+  width: 25%;
+  height: 30%;
+}
+
+.fuelScoreSpotDepot {
+  left: 3%;
+  top: 3%;
+  width: 25%;
+  height: 30%;
+}
+
+.fuelScoreSpotTower {
+  left: 3%;
+  top: 36%;
+  width: 25%;
+  height: 30%;
+}
+
+.fuelScoreSpotTrenchUpper {
+  left: 35%;
+  top: 2%;
+  width: 22%;
+  height: 15%;
+}
+
+.fuelScoreSpotBumpUpper {
+  left: 35%;
+  top: 20%;
+  width: 22%;
+  height: 15%;
+}
+
+.fuelScoreSpotHub {
+  left: 35%;
+  top: 40%;
+  width: 22%;
+  height: 20%;
+}
+
+.fuelScoreSpotBumpLower {
+  left: 35%;
+  top: 65%;
+  width: 22%;
+  height: 15%;
+}
+
+.fuelScoreSpotTrenchLower {
+  left: 35%;
+  top: 83%;
+  width: 22%;
+  height: 15%;
+}
+
+.fuelScoreSpotOther {
+  left: 77%;
+  top: 83%;
+  width: 22%;
+  height: 15%;
+}

@@ -1,63 +1,76 @@
-.startingPositionContainerContainer {
-  height: 100%;
-}
-.startingPositionContainerContainerError {
-  height: calc(100% - 2em);
-}
-
 .startingPositionContainer {
-  aspect-ratio: 1700 / 1650;
+  aspect-ratio: 3906 / 3816;
   max-width: 100%;
   max-height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 .startingPositionImage {
-  width: 100%;
+  width: 200%;
   height: 100%;
-  transform: scaleX(-1);
 }
 
-.startingPositionLeftA {
-  left: 8%;
-  top: 13%;
+.startingPositionOutpost {
+  left: 30%;
+  top: 66.67%;
   width: 20%;
-  height: 27%;
+  height: 33.33%;
+}
+.startingPositionMid {
+  left: 30%;
+  top: 33.33%;
+  width: 20%;
+  height: 33.34%;
+}
+.startingPositionDepot {
+  left: 30%;
+  top: 0%;
+  width: 20%;
+  height: 33.33%;
+}
+
+
+.startingPositionLeftA {
+  left: 30%;
+  top: 66.67%;
+  width: 20%;
+  height: 33.33%;
 }
 
 .startingPositionLeftB {
-  left: 8%;
-  top: 40%;
+  left: 30%;
+  top: 33.33%;
   width: 20%;
-  height: 27%;
+  height: 33.34%;
 }
 
 .startingPositionLeftC {
-  left: 8%;
-  top: 67%;
+  left: 30%;
+  top: 0%;
   width: 20%;
-  height: 27%;
+  height: 33.33%;
 }
 
 .startingPositionRightA {
-  right: 8%;
-  top: 59%;
+  right: 30%;
+  top: 0%;
   width: 20%;
-  height: 28%;
+  height: 33.33%;
 }
 
 .startingPositionRightB {
-  right: 8%;
-  top: 32%;
+  right: 30%;
+  top: 33.33%;
   width: 20%;
-  height: 27%;
+  height: 33.34%;
 }
 
 .startingPositionRightC {
-  right: 8%;
-  top: 5%;
+  right: 30%;
+  top: 66.67%;
   width: 20%;
-  height: 27%;
+  height: 33.33%;
 }
 
 .startingPositionError {

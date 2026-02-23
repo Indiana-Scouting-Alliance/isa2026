@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS TeamMatchEntry (
   teleInactiveFeedingRoleEffectiveness INTEGER,
   teleInactiveFuelPassed INTEGER,
   endClimbAttempted BOOLEAN,
+  endClimbPosition TEXT,
   autoRobotGotStuck BOOLEAN,
   autoRobotStuckTrench BOOLEAN,
   autoRobotStuckBump BOOLEAN,

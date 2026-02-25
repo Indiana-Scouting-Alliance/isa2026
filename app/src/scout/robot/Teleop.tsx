@@ -82,6 +82,7 @@ function ActiveView({ match, setMatch, deviceSetup, handleToggleChange }: Active
   return (
     <>
       <div className={scoutStyles.half}>
+        <label className={scoutStyles.label}>Scoring Locations</label>
         <FieldImage deviceSetup={deviceSetup}>
           {([
             { key: "teleFuelScoredFromOutpost", className: "fuelScoreSpotOutpost", label: "Outpost" },
@@ -194,6 +195,7 @@ function InactiveView({ match, setMatch, deviceSetup }: InactiveViewProps) {
   return (
     <>
       <div className={scoutStyles.half}>
+        <label className={scoutStyles.label}>&nbsp;</label>
         <FieldImage deviceSetup={deviceSetup} />
       </div>
 

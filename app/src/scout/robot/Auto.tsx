@@ -41,6 +41,7 @@ export default function Auto({
         changeFlexDirection.changeFlexDirection
       }>
       <div className={scoutStyles.half}>
+        <label className={scoutStyles.label}>Scoring Locations</label>
         <FieldImage deviceSetup={deviceSetup}>
           {([
             { key: "autoFuelScoredFromOutpost", className: "fuelScoreSpotOutpost", label: "Outpost" },

@@ -55,6 +55,8 @@ export default function Prematch({
             : fieldStyles.fieldImageContainer
           }>
           <div className={styles.startingPositionContainer}>
+            <label className={scoutStyles.label}>Start Locations</label>
+
             <FieldImage deviceSetup={deviceSetup}>
               <TransparentToggle
                 label="Outpost"

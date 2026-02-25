@@ -2,6 +2,11 @@
   position: absolute;
 
   border-width: 2px;
+  min-width: 0;
+  overflow: hidden;
+  font-size: clamp(0.4rem, 4cqw, 1.25rem);
+  line-height: 1.2;
+  padding: clamp(2px, 0.5cqw, 6px) clamp(4px, 1cqw, 16px);
 }
 .toggleFalse {
   color: var(--color-secondary);

@@ -82,6 +82,7 @@ function ActiveView({ match, setMatch, deviceSetup, handleToggleChange }: Active
   return (
     <>
       <div className={scoutStyles.half}>
+        <label className={scoutStyles.label}>Scoring Locations</label>
         <FieldImage deviceSetup={deviceSetup}>
           {([
             { key: "teleFuelScoredFromOutpost", className: "fuelScoreSpotOutpost", label: "Outpost" },
@@ -109,11 +110,24 @@ function ActiveView({ match, setMatch, deviceSetup, handleToggleChange }: Active
       <Divider orientation="vertical" />
 
       <div className={scoutStyles.half}>
-        <FuelCounter
-          label="TELEOP Fuel Scoring"
-          value={match.teleFuelScored ?? 0}
-          setValue={(value) => handleToggleChange("teleFuelScored", value)}
-        />
+        <div className={teleopStyles.fuelCounterRow}>
+          <div className={teleopStyles.fuelCounterCycles}>
+            <FuelCounter
+              label="Cycles"
+              value={match.teleCycles ?? 0}
+              setValue={(value) => handleToggleChange("teleCycles", value)}
+              incrementStep={1}
+              decrementStep={1}
+            />
+          </div>
+          <div className={teleopStyles.fuelCounterMain}>
+            <FuelCounter
+              label="TELEOP Fuel Scoring"
+              value={match.teleFuelScored ?? 0}
+              setValue={(value) => handleToggleChange("teleFuelScored", value)}
+            />
+          </div>
+        </div>
 
         <div className={scoutStyles.traverseRow}>
           <LabeledContainer label="Traverse?" className={scoutStyles.traverseContainer}>
@@ -194,6 +208,7 @@ function InactiveView({ match, setMatch, deviceSetup }: InactiveViewProps) {
   return (
     <>
       <div className={scoutStyles.half}>
+        <label className={scoutStyles.label}>&nbsp;</label>
         <FieldImage deviceSetup={deviceSetup} />
       </div>
 

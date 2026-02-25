@@ -10,4 +10,19 @@
 .viewContainer {
   flex: 1;
   width: 100%;
+  min-height: 0;
+}
+
+.fuelCounterRow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.fuelCounterMain {
+  flex: 3;
+}
+
+.fuelCounterCycles {
+  flex: 1.5;
 }

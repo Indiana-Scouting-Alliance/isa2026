@@ -176,6 +176,13 @@ button.normalToggleButtonFalse {
   padding: 1rem;
 }
 
+/* Field image label */
+.label {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+}
+
 /* Error text */
 .errorText {
   color: red;

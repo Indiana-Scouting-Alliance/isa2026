@@ -52,7 +52,7 @@ export default function FuelCounter({
       <button
         className={styles.incrementButton}
         onClick={() => setValue(value + incrementStep)}>
-        +{incrementStep}
+        <span className={styles.incrementStep}>+{incrementStep}</span>
       </button>
       <div className={styles.value}>{value}</div>
       {value > 0 && (

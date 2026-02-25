@@ -20,6 +20,12 @@
   filter: brightness(0.7);
 }
 
+.incrementStep {
+  opacity: 0.5;
+  font-size: 1.5rem;
+  margin-left: 4px;
+}
+
 .value {
   position: absolute;
   top: 50%;

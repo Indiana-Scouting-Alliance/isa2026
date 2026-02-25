@@ -30,7 +30,9 @@ export default function FuelCounter({
     if (intervalRef.current !== null) return;
     // use 100ms interval for continuous change
     intervalRef.current = window.setInterval(() => {
-      setValue(Math.max(0, valueRef.current - decrementStep));
+      const next = Math.max(0, valueRef.current - decrementStep);
+      setValue(next);
+      if (next === 0) stopDecrement();
     }, 100);
   };
 

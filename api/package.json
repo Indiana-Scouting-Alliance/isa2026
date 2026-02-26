@@ -8,7 +8,7 @@
   },
   "packageManager": "pnpm@10.29.2+sha512.bef43fa759d91fd2da4b319a5a0d13ef7a45bb985a3d7342058470f9d2051a3ba8674e629672654686ef9443ad13a82da2beb9eeb3e0221c87b8154fff9d74b8",
   "dependencies": {
-    "@trpc/server": "11.5.0",
+    "@trpc/server": "11.8.0",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "zod": "^4.1.5"
@@ -18,6 +18,6 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",
-    "wrangler": "^4.33.1"
+    "wrangler": "^4.59.1"
   }
 }

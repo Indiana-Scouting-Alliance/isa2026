@@ -86,13 +86,13 @@ function ActiveView({ match, setMatch, deviceSetup, handleToggleChange }: Active
         <FieldImage deviceSetup={deviceSetup}>
           {([
             { key: "teleFuelScoredFromOutpost", className: "fuelScoreSpotOutpost", label: "Outpost" },
-            { key: "teleFuelScoredFromTrenchOutpost", className: "fuelScoreSpotTrenchUpper", label: "Trench Outpost" },
-            { key: "teleFuelScoredFromBumpOutpost", className: "fuelScoreSpotBumpUpper", label: "Bump Outpost" },
+            { key: "teleFuelScoredFromTrenchDepot", className: "fuelScoreSpotTrenchUpper", label: "Trench Depot" },
+            { key: "teleFuelScoredFromBumpDepot", className: "fuelScoreSpotBumpUpper", label: "Bump Depot" },
             { key: "teleFuelScoredFromTower", className: "fuelScoreSpotTower", label: "Tower" },
             { key: "teleFuelScoredFromHub", className: "fuelScoreSpotHub", label: "Hub" },
-            { key: "teleFuelScoredFromBumpDepot", className: "fuelScoreSpotBumpLower", label: "Bump Depot" },
+            { key: "teleFuelScoredFromBumpOutpost", className: "fuelScoreSpotBumpLower", label: "Bump Outpost" },
             { key: "teleFuelScoredFromDepot", className: "fuelScoreSpotDepot", label: "Depot" },
-            { key: "teleFuelScoredFromTrenchDepot", className: "fuelScoreSpotTrenchLower", label: "Trench Depot" },
+            { key: "teleFuelScoredFromTrenchOutpost", className: "fuelScoreSpotTrenchLower", label: "Trench Outpost" },
             { key: "teleFuelScoredFromOther", className: "fuelScoreSpotOther", label: "Other" },
           ] as const).map(({ key, className, label }) => (
             <TransparentToggle

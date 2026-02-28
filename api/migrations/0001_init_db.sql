@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS TeamMatchEntry (
     alliance,
     robotNumber,
     deviceTeamNumber,
-    deviceId,
+    deviceId
   )
 );
 

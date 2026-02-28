@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS TeamMatchEntry (
   scoutTeamNumber integer NOT NULL,
   scoutName text NOT NULL,
   flag text NOT NULL,
+  finalTimeStamp text NOT NULL,
   
   noShow boolean NOT NULL,
   comments TEXT,
@@ -74,7 +75,8 @@ CREATE TABLE IF NOT EXISTS TeamMatchEntry (
     alliance,
     robotNumber,
     deviceTeamNumber,
-    deviceId
+    deviceId,
+    finalTimeStamp
   )
 );
 

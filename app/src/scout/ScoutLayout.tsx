@@ -44,8 +44,11 @@ export default function ScoutLayout({
   const [matchStage, setMatchStage] = useState<MatchStage>("prematch");
 
   const endOfMatchTeamMatchEntry = (m: TeamMatchEntry): TeamMatchEntry => {
-    return { ...m };
+  return { 
+    ...m, 
+    finalTimeStamp: Date.now().toString()
   };
+};
 
   let putEntriesTimeout: NodeJS.Timeout;
   const putEntries = trpc.data.putEntries.useMutation({

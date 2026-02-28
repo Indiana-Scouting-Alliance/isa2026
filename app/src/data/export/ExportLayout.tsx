@@ -163,8 +163,6 @@ export default function ExportLayout({
                                 <DataTypeIcon dataType="string" />
                               : column === "startZone" ?
                                 <DataTypeIcon dataType='"depot" | "mid" | "outpost"' />
-                              : column === "autoFuelHubScoringLocation" ?
-                                <DataTypeIcon dataType='"hub" | "tower" | "depot" | "outpost" | "trench" | "bump" | "other"' />
                               : column === "autoClimbPosition" ?
                                 <DataTypeIcon dataType='"outpost" | "center" | "depot" | "other"' />
                               : column === "autoClimbLevel" ?

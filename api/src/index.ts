@@ -1,14 +1,15 @@
-import { D1Database, KVNamespace } from "@cloudflare/workers-types";
+import { D1Database, KVNamespace, ScheduledEvent } from "@cloudflare/workers-types";
 import {
   FetchCreateContextFnOptions,
   fetchRequestHandler,
 } from "@trpc/server/adapters/fetch";
 import { createContext } from "./context.ts";
 import { createWebhooksContext } from "./hooks/context.ts";
-import { hooksRouter } from "./hooks/index.ts";
+//import { hooksRouter } from "./hooks/index.ts";
 import { createPublicContext } from "./public/context.ts";
 import { publicRouter } from "./public/index.ts";
 import { appRouter } from "./router.ts";
+import { toLowerCase } from "zod";
 
 export interface Env {
   DB: D1Database;
@@ -46,7 +47,7 @@ export default {
         publicRouter
       );
     }
-
+/****
     if (url.pathname.startsWith("/hooks")) {
       return await createWebhooksContext(
         request,
@@ -55,7 +56,7 @@ export default {
         hooksRouter
       );
     }
-
+****/
     return fetchRequestHandler({
       endpoint: "/api",
       req: request,
@@ -67,4 +68,49 @@ export default {
         }),
     });
   },
+  /****
+   async scheduled(event: ScheduledEvent, env: Env) {
+    try {
+      // Query for records with null flag
+      const records = await env.DB.prepare(
+        `SELECT * FROM TeamMatchEntry WHERE flag IS "";`
+      ).all();
+      
+      console.log(`Found ${records.results.length} records with blank flag`);
+      
+      for (const record of records.results) {
+        console.log(record.noShow);
+        if(record.noShow == 1) {
+          return
+        }
+        const matchData = await getTBAMatchData((record.eventKey as string).toLowerCase(), env);
+        console.log(`Fetched match data for ${record.matchKey} from TBA`);
+        console.log(matchData);
+        
+      }
+    } catch (error) {
+      console.error('Cron job failed:', error);
+    }
+  }
+
 };
+
+async function getTBAMatchData(matchKey: string, env: Env): Promise<JSON> {
+  const matchRes = await fetch(
+    "https://www.thebluealliance.com/api/v3/match/" + matchKey,
+    {
+      method: "GET",
+      headers: {
+        
+        "X-TBA-Auth-Key": env.TBA_API_TOKEN,
+      },
+    }
+  );
+  if (matchRes.status === 200) {
+    const matchBody: JSON = await matchRes.json();
+    return matchBody;
+  } else {
+    throw new Error("Failed to fetch match data from TBA");
+  }
+  ****/
+}

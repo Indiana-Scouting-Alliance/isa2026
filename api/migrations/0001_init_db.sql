@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS TeamMatchEntry (
     robotNumber,
     deviceTeamNumber,
     deviceId,
-    finalTimeStamp
   )
 );
 

@@ -5,8 +5,8 @@ main = "src/index.ts"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "isa2026-db"
-database_id = "c78a80ef-5c92-4916-a204-ab22c967677b"
+database_name = "2026isadb"
+database_id = "3fc30442-2485-4d75-98d5-32d20c5dc5a8"
 
 [[kv_namespaces]]
 binding = "KV"

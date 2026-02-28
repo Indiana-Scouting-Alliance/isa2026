@@ -30,6 +30,7 @@ export const CommonEntrySchema = z.object({
   scoutTeamNumber: z.number().int().nonnegative(),
   scoutName: z.string(),
   flag: z.string(),
+  finalTimeStamp: z.string(),
 });
 export type CommonEntry = z.infer<typeof CommonEntrySchema>;
 export type CommonEntryColumn = keyof CommonEntry;
@@ -45,6 +46,7 @@ export const CommonEntryColumns: CommonEntryColumn[] = [
   "scoutTeamNumber",
   "scoutName",
   "flag",
+  "finalTimeStamp"
 ] as CommonEntryColumn[];
 
 export const TeamMatchEntrySchema = CommonEntrySchema.omit({
@@ -198,6 +200,7 @@ export const TeamMatchEntryInit: TeamMatchEntry = {
   scoutTeamNumber: NaN,
   scoutName: "",
   flag: "",
+  finalTimeStamp: "",
 
   noShow: false,
   comments: null,
@@ -265,6 +268,7 @@ export const TeamMatchEntryNoShowInit: TeamMatchEntry = {
   scoutTeamNumber: NaN,
   scoutName: "",
   flag: "",
+  finalTimeStamp: "",
 
   noShow: true,
   comments: null,

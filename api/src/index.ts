@@ -1,4 +1,4 @@
-import { D1Database, KVNamespace, ScheduledEvent } from "@cloudflare/workers-types";
+import { D1Database, KVNamespace } from "@cloudflare/workers-types";
 import {
   FetchCreateContextFnOptions,
   fetchRequestHandler,

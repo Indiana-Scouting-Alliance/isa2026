@@ -102,7 +102,7 @@ export const TeamMatchEntrySchema = CommonEntrySchema.omit({
   teleInactiveIntakingRoleEffectiveness: z.number().int().min(0).max(10).nullable(),
   teleInactiveFeedingRoleEffectiveness: z.number().int().min(0).max(10).nullable(),
   teleInactiveFuelPassed: z.number().int().nonnegative().nullable(),
-  
+
 
 
   endClimbAttempted: z.boolean().nullable(),
@@ -354,6 +354,226 @@ export const UserColumns: UserColumn[] = [
   "teamNumber",
   "hashedPassword",
 ];
+
+export const PitScoutEntrySchema = z.object({
+  eventKey: z.string(),
+  teamNumber: z.number().int().nonnegative(),
+  deviceTeamNumber: z.number().int().nonnegative(),
+  deviceId: z.string(),
+  scoutTeamNumber: z.number().int().nonnegative(),
+  scoutName: z.string(),
+  uploadedAt: z.string(),
+
+  startingLocation: z.union([
+    z.literal("trenchDepot"),
+    z.literal("bumpDepot"),
+    z.literal("hub"),
+    z.literal("bumpOutpost"),
+    z.literal("trenchOutpost"),
+  ]).nullable(),
+
+  pitAutoShootHub: z.boolean().nullable(),
+  pitAutoShootTower: z.boolean().nullable(),
+  pitAutoShootDepot: z.boolean().nullable(),
+  pitAutoShootOutpost: z.boolean().nullable(),
+  pitAutoShootTrenchOutpost: z.boolean().nullable(),
+  pitAutoShootTrenchDepot: z.boolean().nullable(),
+  pitAutoShootBumpOutpost: z.boolean().nullable(),
+  pitAutoShootBumpDepot: z.boolean().nullable(),
+  pitAutoShootOther: z.boolean().nullable(),
+
+  pitPickupFloor: z.boolean().nullable(),
+  pitPickupOutpost: z.boolean().nullable(),
+  pitPickupDepot: z.boolean().nullable(),
+  pitPickupNo: z.boolean().nullable(),
+
+  pitFeedZone1: z.boolean().nullable(),
+  pitFeedZone2: z.boolean().nullable(),
+  pitFeedOutpost: z.boolean().nullable(),
+
+  pitTraverseTrench: z.boolean().nullable(),
+  pitTraverseBump: z.boolean().nullable(),
+
+  pitAutoMove: z.boolean().nullable(),
+  pitAutoScore: z.boolean().nullable(),
+  pitAutoClimb: z.boolean().nullable(),
+  pitAutoPickup: z.boolean().nullable(),
+  pitNumberOfAutos: z.number().int().nonnegative().nullable(),
+
+  pitHopperSize: z.number().int().nonnegative().nullable(),
+
+  pitClimbLocation: z.union([
+    z.literal("depot"),
+    z.literal("center"),
+    z.literal("outpost"),
+    z.literal("other"),
+  ]).nullable(),
+  pitClimbLevel: z.union([
+    z.literal(1),
+    z.literal(2),
+    z.literal(3),
+  ]).nullable(),
+  pitClimbTime: z.number().nonnegative().nullable(),
+
+  pitShooterBps: z.number().nonnegative().nullable(),
+
+  pitHumanScore: z.boolean().nullable(),
+  pitHumanFeed: z.boolean().nullable(),
+  pitHumanOther: z.boolean().nullable(),
+
+  pitTelePrimary: z.union([
+    z.literal("score"),
+    z.literal("feed"),
+    z.literal("climb"),
+    z.literal("defense"),
+    z.literal("pickupHerd"),
+  ]).nullable(),
+  pitTeleScore: z.boolean().nullable(),
+  pitTeleFeed: z.boolean().nullable(),
+  pitTeleClimb: z.boolean().nullable(),
+  pitTeleDefense: z.boolean().nullable(),
+  pitTelePickupHerd: z.boolean().nullable(),
+
+  pitTeleShootHub: z.boolean().nullable(),
+  pitTeleShootTower: z.boolean().nullable(),
+  pitTeleShootDepot: z.boolean().nullable(),
+  pitTeleShootOutpost: z.boolean().nullable(),
+  pitTeleShootTrenchOutpost: z.boolean().nullable(),
+  pitTeleShootTrenchDepot: z.boolean().nullable(),
+  pitTeleShootBumpOutpost: z.boolean().nullable(),
+  pitTeleShootBumpDepot: z.boolean().nullable(),
+  pitTeleShootOther: z.boolean().nullable(),
+  pitTeleShootAny: z.boolean().nullable(),
+});
+export type PitScoutEntry = z.infer<typeof PitScoutEntrySchema>;
+export type PitScoutEntryColumn = keyof PitScoutEntry;
+export const PitScoutEntryColumns: PitScoutEntryColumn[] = [
+  "eventKey",
+  "teamNumber",
+  "deviceTeamNumber",
+  "deviceId",
+  "scoutTeamNumber",
+  "scoutName",
+  "uploadedAt",
+  "startingLocation",
+  "pitAutoShootHub",
+  "pitAutoShootTower",
+  "pitAutoShootDepot",
+  "pitAutoShootOutpost",
+  "pitAutoShootTrenchOutpost",
+  "pitAutoShootTrenchDepot",
+  "pitAutoShootBumpOutpost",
+  "pitAutoShootBumpDepot",
+  "pitAutoShootOther",
+  "pitPickupFloor",
+  "pitPickupOutpost",
+  "pitPickupDepot",
+  "pitPickupNo",
+  "pitFeedZone1",
+  "pitFeedZone2",
+  "pitFeedOutpost",
+  "pitTraverseTrench",
+  "pitTraverseBump",
+  "pitAutoMove",
+  "pitAutoScore",
+  "pitAutoClimb",
+  "pitAutoPickup",
+  "pitNumberOfAutos",
+  "pitHopperSize",
+  "pitClimbLocation",
+  "pitClimbLevel",
+  "pitClimbTime",
+  "pitShooterBps",
+  "pitHumanScore",
+  "pitHumanFeed",
+  "pitHumanOther",
+  "pitTelePrimary",
+  "pitTeleScore",
+  "pitTeleFeed",
+  "pitTeleClimb",
+  "pitTeleDefense",
+  "pitTelePickupHerd",
+  "pitTeleShootHub",
+  "pitTeleShootTower",
+  "pitTeleShootDepot",
+  "pitTeleShootOutpost",
+  "pitTeleShootTrenchOutpost",
+  "pitTeleShootTrenchDepot",
+  "pitTeleShootBumpOutpost",
+  "pitTeleShootBumpDepot",
+  "pitTeleShootOther",
+  "pitTeleShootAny",
+] as PitScoutEntryColumn[];
+
+export const PitScoutEntryInit: PitScoutEntry = {
+  eventKey: "",
+  teamNumber: 0,
+  deviceTeamNumber: 0,
+  deviceId: "",
+  scoutTeamNumber: NaN,
+  scoutName: "",
+  uploadedAt: "",
+
+  startingLocation: null,
+
+  pitAutoShootHub: null,
+  pitAutoShootTower: null,
+  pitAutoShootDepot: null,
+  pitAutoShootOutpost: null,
+  pitAutoShootTrenchOutpost: null,
+  pitAutoShootTrenchDepot: null,
+  pitAutoShootBumpOutpost: null,
+  pitAutoShootBumpDepot: null,
+  pitAutoShootOther: null,
+
+  pitPickupFloor: null,
+  pitPickupOutpost: null,
+  pitPickupDepot: null,
+  pitPickupNo: null,
+
+  pitFeedZone1: null,
+  pitFeedZone2: null,
+  pitFeedOutpost: null,
+
+  pitTraverseTrench: null,
+  pitTraverseBump: null,
+
+  pitAutoMove: null,
+  pitAutoScore: null,
+  pitAutoClimb: null,
+  pitAutoPickup: null,
+  pitNumberOfAutos: null,
+
+  pitHopperSize: null,
+
+  pitClimbLocation: null,
+  pitClimbLevel: null,
+  pitClimbTime: null,
+
+  pitShooterBps: null,
+
+  pitHumanScore: null,
+  pitHumanFeed: null,
+  pitHumanOther: null,
+
+  pitTelePrimary: null,
+  pitTeleScore: null,
+  pitTeleFeed: null,
+  pitTeleClimb: null,
+  pitTeleDefense: null,
+  pitTelePickupHerd: null,
+
+  pitTeleShootHub: null,
+  pitTeleShootTower: null,
+  pitTeleShootDepot: null,
+  pitTeleShootOutpost: null,
+  pitTeleShootTrenchOutpost: null,
+  pitTeleShootTrenchDepot: null,
+  pitTeleShootBumpOutpost: null,
+  pitTeleShootBumpDepot: null,
+  pitTeleShootOther: null,
+  pitTeleShootAny: null,
+};
 
 export const DBEventSchema = z.object({
   eventKey: z.string(),

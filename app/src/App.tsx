@@ -9,6 +9,7 @@ import { getDBEvents, getDBMatches, initDB } from "./utils/idb.ts";
 const LandingPage = React.lazy(() => import("./LandingPage.tsx"));
 const Data = React.lazy(() => import("./data/Data.tsx"));
 const Scout = React.lazy(() => import("./scout/Scout.tsx"));
+const PitScout = React.lazy(() => import("./pit/PitScout.tsx"));
 const DeviceSetup = React.lazy(() => import("./setup/DeviceSetup.tsx"));
 
 export default function App() {
@@ -93,6 +94,14 @@ export default function App() {
                   deviceSetup={deviceSetup}
                   events={events}
                   eventEmitter={eventEmitter}
+                />
+              }
+            />
+            <Route
+              path="/pit/*"
+              element={
+                <PitScout
+                  deviceSetup={deviceSetup}
                 />
               }
             />

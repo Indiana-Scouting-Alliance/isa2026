@@ -1,19 +1,22 @@
 import {
-  DBEvent,
-  Match,
-  MatchLevel,
-  TeamMatchEntry,
+    DBEvent,
+    Match,
+    MatchLevel,
+    PitScoutEntry,
+    TeamMatchEntry,
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import { DBSchema, openDB } from "idb";
+import { ExportPitEntry } from "../pit/SavedPitEntries.tsx";
 import { ExportMatchEntry } from "../scout/savedmatches/SavedMatches.tsx";
 
-const version = 1;
+const version = 2;
 const dbname = "isa2026-idb";
 
 export enum Stores {
   Events = "DBEvents",
   Matches = "Matches",
   TeamMatchEntry = "TeamMatchEntry",
+  PitScoutEntry = "PitScoutEntry",
 }
 
 interface ISAIDBSchema extends DBSchema {
@@ -28,6 +31,17 @@ interface ISAIDBSchema extends DBSchema {
   TeamMatchEntry: {
     key: [string, (typeof MatchLevel)[number], number, number, number, string];
     value: TeamMatchEntry & {
+      autoUpload: boolean;
+      quickshare: boolean;
+      clipboard: boolean;
+      qr: boolean;
+      download: boolean;
+      upload: boolean;
+    };
+  };
+  PitScoutEntry: {
+    key: [string, number];
+    value: PitScoutEntry & {
       autoUpload: boolean;
       quickshare: boolean;
       clipboard: boolean;
@@ -63,6 +77,11 @@ export const initDB = async (): Promise<boolean> => {
             "deviceTeamNumber",
             "deviceId",
           ],
+        });
+      }
+      if (!db.objectStoreNames.contains(Stores.PitScoutEntry)) {
+        db.createObjectStore(Stores.PitScoutEntry, {
+          keyPath: ["eventKey", "teamNumber"],
         });
       }
     };
@@ -123,4 +142,25 @@ export const deleteEntry = async (
       match.deviceTeamNumber,
       match.deviceId,
     ]);
+};
+
+export const getDBPitEntries = async () => {
+  const db = await openDB<ISAIDBSchema>(dbname, version);
+  const res = await db.getAll(Stores.PitScoutEntry);
+  return res;
+};
+
+export const putDBPitEntry = async (entry: ExportPitEntry) => {
+  const db = await openDB<ISAIDBSchema>(dbname, version);
+  await db.put(Stores.PitScoutEntry, entry);
+};
+
+export const deletePitEntry = async (
+  entry: PitScoutEntry | ExportPitEntry
+) => {
+  const db = await openDB<ISAIDBSchema>(dbname, version);
+  db.delete(Stores.PitScoutEntry, [
+    entry.eventKey,
+    entry.teamNumber,
+  ]);
 };

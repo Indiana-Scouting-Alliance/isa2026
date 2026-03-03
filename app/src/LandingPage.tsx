@@ -18,6 +18,16 @@ export default function LandingPage() {
           Saved Matches
         </LinkButton>
         <LinkButton
+          to="/pit"
+          className={styles.menuButton}>
+          Pit Scout
+        </LinkButton>
+        <LinkButton
+          to="/pit/saved"
+          className={styles.menuButton}>
+          Saved Pit Entries
+        </LinkButton>
+        <LinkButton
           to="/setup"
           className={styles.menuButton}>
           Device Setup

@@ -7,6 +7,7 @@ import styles from "./DataLayout.module.css";
 
 const DataMenu = React.lazy(() => import("./DataMenu.tsx"));
 const Export = React.lazy(() => import("./export/Export.tsx"));
+const PitExport = React.lazy(() => import("./export/PitExport.tsx"));
 const Users = React.lazy(() => import("./users/Users.tsx"));
 const Util = React.lazy(() => import("./Util.tsx"));
 
@@ -75,6 +76,12 @@ export default function DataLayout({ setToken, permLevel }: DataLayoutProps) {
               <Route
                 path="export/*"
                 element={<Export />}
+              />
+            )}
+            {["team", "datamanage", "admin"].includes(permLevel) && (
+              <Route
+                path="pitExport/*"
+                element={<PitExport />}
               />
             )}
             {["datamanage", "admin"].includes(permLevel) && (

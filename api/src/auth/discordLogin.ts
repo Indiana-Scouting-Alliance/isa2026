@@ -24,7 +24,7 @@ export const discordLogin = loggedPublicProcedure
       });
   const tokenData = await tokenResponse.json();
   console.log("Token response:", tokenData);
-  if (!tokenData.access_token) throw new Error("Failed to get token");
+  if (!tokenData.access_token) throw new Error(tokenData);
   
   const guildResponse = await fetch(`https://discord.com/api/users/@me/guilds/${DISCORD_GUILD_ID}/member`, {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },

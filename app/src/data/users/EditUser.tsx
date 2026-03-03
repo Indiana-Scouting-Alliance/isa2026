@@ -22,6 +22,8 @@ type EditUserProps = {
   setEditUserPermLevel: (value: User["permLevel"] | undefined) => void;
   editUserTeamNumber: number | undefined;
   setEditUserTeamNumber: (value: number | undefined) => void;
+  editUserDiscordRoleId: string | null | undefined;
+  setEditUserDiscordRoleId: (value: string | null | undefined) => void;
   closeEditUser: () => void;
   refreshUsers: () => void;
 };
@@ -33,6 +35,8 @@ export default function EditUser({
   setEditUserPermLevel,
   editUserTeamNumber,
   setEditUserTeamNumber,
+  editUserDiscordRoleId,
+  setEditUserDiscordRoleId,
   closeEditUser,
   refreshUsers,
 }: EditUserProps) {
@@ -114,6 +118,14 @@ export default function EditUser({
               </IconButton>
             }
           />
+          <Input
+            id="edit-user-discordRoleId"
+            value={editUserDiscordRoleId || ""}
+            onChange={(value) => {
+              setEditUserDiscordRoleId(value || null);
+            }}
+            label="Discord Role ID (optional)"
+          />
         </div>
       </DialogContent>
       <DialogActions>
@@ -155,6 +167,7 @@ export default function EditUser({
                 permLevel: editUserPermLevel!,
                 password: editUserPassword ? editUserPassword : undefined,
                 teamNumber: editUserTeamNumber!,
+                discordRoleId: editUserDiscordRoleId || undefined,
               });
               closeEditUser();
             }

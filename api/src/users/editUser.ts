@@ -13,6 +13,7 @@ export const editUser = authedLoggedProcedure
       permLevel: z.enum(UserPermLevel),
       password: z.string().optional(),
       teamNumber: z.number().int().nonnegative(),
+      discordRoleId: z.string().optional().nullable(),
     })
   )
   .mutation(async (opts) => {
@@ -38,6 +39,10 @@ export const editUser = authedLoggedProcedure
     }
     changes.push("teamNumber = ?");
     params.push(opts.input.teamNumber.toString());
+    if (opts.input.discordRoleId) {
+      changes.push("discordRoleId = ?");
+      params.push(opts.input.discordRoleId);
+    }
     query += changes.join(", ");
     query += " WHERE username = ? LIMIT 1";
 

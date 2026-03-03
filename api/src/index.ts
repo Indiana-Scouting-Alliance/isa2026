@@ -20,6 +20,11 @@ export interface Env {
 
   FIRST_API_TOKEN: string;
   TBA_API_TOKEN: string;
+  DISCORD_CLIENT_ID: string;
+  DISCORD_CLIENT_SECRET: string;
+  DISCORD_REDIRECT_URI: string;
+  DISCORD_GUILD_ID: string;
+  
 }
 
 export default {

@@ -46,6 +46,9 @@ export default function Users({ logoutFunction }: UsersProps) {
   const [editUserTeamNumber, setEditUserTeamNumber] = useState<
     number | undefined
   >(undefined);
+  const [editUserDiscordRoleId, setEditUserDiscordRoleId] = useState<
+    string | null | undefined
+  >(undefined);
   const openEditUser = (username: string) => {
     setEditUserUsername(username);
     setEditUserOldUsername(username);
@@ -54,6 +57,9 @@ export default function Users({ logoutFunction }: UsersProps) {
     );
     setEditUserTeamNumber(
       users.data?.find((user) => user.username === username)?.teamNumber
+    );
+    setEditUserDiscordRoleId(
+      users.data?.find((user) => user.username === username)?.discordRoleId
     );
   };
   const closeEditUser = () => {
@@ -127,6 +133,7 @@ export default function Users({ logoutFunction }: UsersProps) {
                         username: "Username",
                         permLevel: "Permissions",
                         teamNumber: "Team",
+                        discordRoleId: "Discord Role ID",
                       }[column]
                     }
                   </Th>
@@ -186,6 +193,8 @@ export default function Users({ logoutFunction }: UsersProps) {
         setEditUserPermLevel={setEditUserPermLevel}
         editUserTeamNumber={editUserTeamNumber}
         setEditUserTeamNumber={setEditUserTeamNumber}
+        editUserDiscordRoleId={editUserDiscordRoleId}
+        setEditUserDiscordRoleId={setEditUserDiscordRoleId}
         closeEditUser={closeEditUser}
         refreshUsers={() => {
           users.refetch();

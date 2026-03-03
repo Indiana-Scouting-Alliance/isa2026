@@ -345,6 +345,7 @@ export const UserSchema = z.object({
   ]),
   teamNumber: z.number().int().nonnegative(),
   hashedPassword: z.string(),
+  discordRoleId: z.string().nullable().optional(),
 });
 export type User = z.infer<typeof UserSchema>;
 export type UserColumn = keyof User;
@@ -353,6 +354,7 @@ export const UserColumns: UserColumn[] = [
   "permLevel",
   "teamNumber",
   "hashedPassword",
+  "discordRoleId",
 ];
 
 export const PitScoutEntrySchema = z.object({

@@ -23,7 +23,7 @@ export const discordLogin = loggedPublicProcedure
         }),
       });
   const tokenData = await tokenResponse.json();
-  if (!tokenData.access_token) throw new Error("Failed to fetch token.");
+  if (!tokenData.access_token) throw new Error("Failed to fetch token., data: " + JSON.stringify(tokenData));
   
   const guildResponse = await fetch(`https://discord.com/api/users/@me/guilds/${DISCORD_GUILD_ID}/member`, {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },

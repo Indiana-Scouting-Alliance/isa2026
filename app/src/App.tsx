@@ -11,6 +11,7 @@ const Data = React.lazy(() => import("./data/Data.tsx"));
 const Scout = React.lazy(() => import("./scout/Scout.tsx"));
 const PitScout = React.lazy(() => import("./pit/PitScout.tsx"));
 const DeviceSetup = React.lazy(() => import("./setup/DeviceSetup.tsx"));
+const Login = React.lazy(() => import("./data/Login.tsx"));
 
 export default function App() {
   const eventEmitter = useMemo(() => new EventEmitter(), []);
@@ -82,6 +83,18 @@ export default function App() {
             <Route
               path="/"
               element={<LandingPage />}
+            />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  setToken={(token, expiresAt, permLevel) => {
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("tokenExpiresAt", expiresAt.toString());
+                    localStorage.setItem("permLevel", permLevel);
+                  }}
+                />
+              }
             />
             <Route
               path="/data/*"

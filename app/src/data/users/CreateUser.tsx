@@ -34,6 +34,7 @@ export default function CreateUser({
   const [createUserTeamNumber, setCreateUserTeamNumber] = useState<number>(0);
   const [createUserTeamNumberError, setCreateUserTeamNumberError] =
     useState("");
+  const [createUserDiscordRoleId, setCreateUserDiscordRoleId] = useState("");
   const createUser = trpc.users.createUser.useMutation({
     onSuccess() {
       refreshUsers();
@@ -107,6 +108,14 @@ export default function CreateUser({
             helperText={createUserTeamNumberError}
             error={createUserTeamNumberError !== ""}
           />
+          <Input
+            id="create-user-discordRoleId"
+            value={createUserDiscordRoleId}
+            onChange={(value) => {
+              setCreateUserDiscordRoleId(value);
+            }}
+            label="Discord Role ID (optional)"
+          />
         </div>
       </DialogContent>
       <DialogActions>
@@ -150,9 +159,10 @@ export default function CreateUser({
             if (!error) {
               createUser.mutate({
                 username: createUserUsername,
-                password: createUserPassword,
                 permLevel: createUserPermLevel,
+                password: createUserPassword,
                 teamNumber: createUserTeamNumber,
+                discordRoleId: createUserDiscordRoleId || undefined,
               });
               setCreateUser(false);
             }

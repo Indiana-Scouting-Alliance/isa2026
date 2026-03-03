@@ -1,6 +1,6 @@
 import { User } from "@isa2026/api/src/utils/dbtypes.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
 import IconButton from "../components/Button/IconButton/IconButton.tsx";
@@ -42,6 +42,44 @@ export default function Login({ setToken }: LoginProps) {
       setErrorText(error.message);
     },
   });
+
+  const discordLogin = trpc.auth.discordLogin.useMutation({
+    onSuccess(data) {
+      if (data?.token) {
+        if (data.permLevel === "team") {
+          navigate("/data/export");
+        }
+        setToken(
+          data.token,
+          data.expiresAt,
+          data.permLevel as User["permLevel"]
+        );
+      }
+    },
+    onError(error) {
+      setErrorText(error.message);
+    },
+  });
+
+  const handleDiscordLogin = () => {
+    const params = new URLSearchParams({
+      client_id: import.meta.env.VITE_DISCORD_CLIENT_ID,
+      redirect_uri: import.meta.env.VITE_DISCORD_REDIRECT_URI,
+      response_type: "code",
+      scope: "identify guilds.members.read",
+    });
+    window.location.href = `https://discord.com/api/oauth2/authorize?${params}`;
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    if (code) {
+      discordLogin.mutate({ code });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   return (
     <GridBorder>
@@ -103,6 +141,11 @@ export default function Login({ setToken }: LoginProps) {
           }}
           className={styles.submitButton}>
           Submit
+        </Button>
+        <Button
+          onClick={handleDiscordLogin}
+          className={styles.discordButton}>
+          Login with Discord
         </Button>
       </div>
       <Button

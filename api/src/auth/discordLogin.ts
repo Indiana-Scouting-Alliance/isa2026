@@ -23,24 +23,34 @@ export const discordLogin = loggedPublicProcedure
         }),
       });
   const tokenData = await tokenResponse.json();
-  console.log("Token response:", tokenData);
   if (!tokenData.access_token) throw new Error("Failed to fetch token.");
   
   const guildResponse = await fetch(`https://discord.com/api/users/@me/guilds/${DISCORD_GUILD_ID}/member`, {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },
   });
   const guildMember = await guildResponse.json();
-  console.log("Guild member response:", guildMember);
 
-      const roleIds = guildMember.roles || [];
+      const roleIds: string[] =
+        Array.isArray(guildMember?.roles) ? guildMember.roles : [];
       let user: User | null = null;
-      for (const roleId of roleIds) {
+
+      if (roleIds.length > 0) {
+        const placeholders = roleIds.map(() => "?").join(", ");
         user = await DB.prepare(
-          "SELECT username, permLevel FROM Users WHERE discordRoleId = ? LIMIT 1;"
+          `SELECT username, permLevel
+           FROM Users
+           WHERE discordRoleId IN (${placeholders})
+           ORDER BY CASE permLevel
+             WHEN 'admin' THEN 5
+             WHEN 'datamanage' THEN 4
+             WHEN 'team' THEN 3
+             WHEN 'demo' THEN 2
+             ELSE 1
+           END DESC
+           LIMIT 1;`
         )
-          .bind(roleId)
+          .bind(...roleIds)
           .first<User>();
-        if (user) break;
       }
 
       if (!user) {
@@ -60,6 +70,7 @@ export const discordLogin = loggedPublicProcedure
         token,
         permLevel: user.permLevel,
         expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        redirectPath: "/data",
       };
     } catch (error) {
       throw new TRPCError({

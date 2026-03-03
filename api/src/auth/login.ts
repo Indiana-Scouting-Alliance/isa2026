@@ -42,6 +42,7 @@ export const login = loggedPublicProcedure
           token: token,
           permLevel: result.permLevel,
           expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+          redirectPath: "/data",
         };
       } else {
         throw new TRPCError({
@@ -96,6 +97,7 @@ export const login = loggedPublicProcedure
             token: token,
             permLevel: "admin",
             expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+            redirectPath: "/data",
           };
         }
         throw new TRPCError({

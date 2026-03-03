@@ -28,14 +28,12 @@ export default function Login({ setToken }: LoginProps) {
   const login = trpc.auth.login.useMutation({
     onSuccess(data) {
       if (data?.token) {
-        if (data.permLevel === "team") {
-          navigate("/data/export");
-        }
         setToken(
           data.token,
           data.expiresAt,
           data.permLevel as User["permLevel"]
         );
+        navigate(data.redirectPath || "/data");
       }
     },
     onError(error) {
@@ -46,14 +44,12 @@ export default function Login({ setToken }: LoginProps) {
   const discordLogin = trpc.auth.discordLogin.useMutation({
     onSuccess(data) {
       if (data?.token) {
-        if (data.permLevel === "team") {
-          navigate("/data/export");
-        }
         setToken(
           data.token,
           data.expiresAt,
           data.permLevel as User["permLevel"]
         );
+        navigate(data.redirectPath || "/data");
       }
     },
     onError(error) {

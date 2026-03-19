@@ -3,7 +3,6 @@
   flex-direction: column;
   border: 2px solid var(--color-primary);
   border-radius: var(--border-radius);
-  overflow: hidden;
   user-select: none;
 }
 
@@ -19,7 +18,13 @@
 .body {
   display: flex;
   flex: 1;
-  position: relative;  
+  position: relative;
+}
+
+.body button {
+  font-size: clamp(0.4rem, 4cqw, 1.25rem);
+  padding: clamp(2px, 0.5cqw, 6px) clamp(4px, 1cqw, 16px);
+  min-width: 0;
 }
 
 .labelBorder {

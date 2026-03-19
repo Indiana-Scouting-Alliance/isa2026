@@ -43,23 +43,42 @@ export default function ScoutLayout({
   const navigate = useNavigate();
   const [matchStage, setMatchStage] = useState<MatchStage>("prematch");
 
-  const endOfMatchTeamMatchEntry = (m: TeamMatchEntry): TeamMatchEntry => {
-  return { 
-    ...m, 
-    finalTimeStamp: Date.now().toString()
+  const estimateFuelScored = (
+    allianceTotal: number | null,
+    percentage: number | null
+  ): number | null => {
+    if (allianceTotal === null || percentage === null) {
+      return null;
+    }
+    return Math.round((allianceTotal * percentage) / 100);
   };
-};
+
+  const endOfMatchTeamMatchEntry = (m: TeamMatchEntry): TeamMatchEntry => {
+    return {
+      ...m,
+      autoFuelScored: estimateFuelScored(
+        m.totalAllianceFuelScoredScoutAuto,
+        m.autoFuelScoredPercentage
+      ),
+      teleFuelScored: estimateFuelScored(
+        m.totalAllianceFuelScoredScoutTele,
+        m.teleFuelScoredPercentage
+      ),
+      finalTimeStamp: Date.now().toString(),
+    };
+  };
 
   let putEntriesTimeout: NodeJS.Timeout;
   const putEntries = trpc.data.putEntries.useMutation({
-    onMutate() {
+    onMutate(entries) {
+      const entry = entries[0] as TeamMatchEntry;
       clearTimeout(putEntriesTimeout);
       setPutEntriesPending(true);
       putEntriesTimeout = setTimeout(async () => {
         if (putEntriesPending) {
           putEntries.reset();
           await putDBEntry({
-            ...match,
+            ...entry,
             autoUpload: false,
             quickshare: false,
             clipboard: false,
@@ -71,10 +90,11 @@ export default function ScoutLayout({
         }
       }, 3000);
     },
-    async onSuccess() {
+    async onSuccess(_data, entries) {
+      const entry = entries[0] as TeamMatchEntry;
       clearTimeout(putEntriesTimeout);
       await putDBEntry({
-        ...match,
+        ...entry,
         autoUpload: true,
         quickshare: false,
         clipboard: false,
@@ -85,11 +105,12 @@ export default function ScoutLayout({
       setPutEntriesPending(false);
       navigate("/scout/savedmatches");
     },
-    async onError(error) {
+    async onError(error, entries) {
+      const entry = entries[0] as TeamMatchEntry;
       clearTimeout(putEntriesTimeout);
       console.error(error);
       await putDBEntry({
-        ...match,
+        ...entry,
         autoUpload: false,
         quickshare: false,
         clipboard: false,
@@ -108,6 +129,7 @@ export default function ScoutLayout({
   const [teamNumberError, setTeamNumberError] = useState("");
   const [startingPositionError, setStartingPositionError] = useState("");
   const [dataConfidenceError, setDataConfidenceError] = useState("");
+  const [fuelPercentagesDiscussedError, setFuelPercentagesDiscussedError] = useState("");
 
   const prematchCheck = () => {
     let error = false;
@@ -175,6 +197,15 @@ export default function ScoutLayout({
     if (match.dataConfidence === null) {
       error = true;
       setDataConfidenceError("Data confidence must be selected.");
+    } else {
+      setDataConfidenceError("");
+    }
+
+    if (match.fuelPercentagesDiscussed === null) {
+      error = true;
+      setFuelPercentagesDiscussedError("Fuel percentages discussed must be selected.");
+    } else {
+      setFuelPercentagesDiscussedError("");
     }
     return error;
   };
@@ -282,6 +313,7 @@ export default function ScoutLayout({
                 match={match}
                 setMatch={setMatch}
                 dataConfidenceError={dataConfidenceError}
+                fuelPercentagesDiscussedError={fuelPercentagesDiscussedError}
               />
             ),
           }[matchStage]

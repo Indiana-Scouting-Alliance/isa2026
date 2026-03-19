@@ -83,9 +83,15 @@ export const TeamMatchEntrySchema = CommonEntrySchema.omit({
     z.literal(3),
   ]).nullable(),
   autoFuelScored: z.number().int().nonnegative().nullable(),
+  autoFuelScoredPercentage: z.number().int().min(0).max(100).nullable(),
 
 
   teleFuelScored: z.number().int().nonnegative().nullable(),
+  teleFuelScoredPercentage: z.number().int().min(0).max(100).nullable(),
+  totalAllianceFuelScoredScoutAuto: z.number().int().nonnegative().nullable(),
+  totalAllianceFuelScoredScoutTele: z.number().int().nonnegative().nullable(),
+  totalAllianceFuelScoredOfficialAuto: z.number().int().nonnegative().nullable(),
+  totalAllianceFuelScoredOfficialTele: z.number().int().nonnegative().nullable(),
   teleCycles: z.number().int().nonnegative().nullable(),
   teleFuelScoredFromHub: z.boolean().nullable(),
   teleFuelScoredFromTower: z.boolean().nullable(),
@@ -128,6 +134,8 @@ export const TeamMatchEntrySchema = CommonEntrySchema.omit({
   teleRobotTraverseBump: z.boolean().nullable(),
   died: z.boolean().nullable(),
   dataConfidence: z.number().int().min(0).max(10).nullable(),
+  fuelPercentagesDiscussed: z.boolean().nullable(),
+  fuelQualitative: z.number().int().min(0).max(10).nullable(),
 });
 export type TeamMatchEntry = z.infer<typeof TeamMatchEntrySchema>;
 export type TeamMatchEntryColumn = keyof TeamMatchEntry;
@@ -151,7 +159,13 @@ export const TeamMatchEntryColumns: TeamMatchEntryColumn[] = [
   "autoClimbAttempted",
   "autoClimbLevel",
   "autoFuelScored",
+  "autoFuelScoredPercentage",
   "teleFuelScored",
+  "teleFuelScoredPercentage",
+  "totalAllianceFuelScoredScoutAuto",
+  "totalAllianceFuelScoredOfficialAuto",
+  "totalAllianceFuelScoredScoutTele",
+  "totalAllianceFuelScoredOfficialTele",
   "teleCycles",
   "teleFuelScoredFromHub",
   "teleFuelScoredFromTower",
@@ -186,7 +200,9 @@ export const TeamMatchEntryColumns: TeamMatchEntryColumn[] = [
   "teleRobotTraverseTrench",
   "teleRobotTraverseBump",
   "died",
-  "dataConfidence"
+  "dataConfidence",
+  "fuelPercentagesDiscussed",
+  "fuelQualitative"
 ] as TeamMatchEntryColumn[];
 export const TeamMatchEntryInit: TeamMatchEntry = {
   eventKey: "",
@@ -219,7 +235,13 @@ export const TeamMatchEntryInit: TeamMatchEntry = {
   autoClimbAttempted: null,
   autoClimbLevel: null,
   autoFuelScored: null,
+  autoFuelScoredPercentage: null,
   teleFuelScored: null,
+  teleFuelScoredPercentage: null,
+  totalAllianceFuelScoredScoutAuto: null,
+  totalAllianceFuelScoredOfficialAuto: null,
+  totalAllianceFuelScoredScoutTele: null,
+  totalAllianceFuelScoredOfficialTele: null,
   teleCycles: null,
   teleFuelScoredFromHub: null,
   teleFuelScoredFromTower: null,
@@ -255,6 +277,8 @@ export const TeamMatchEntryInit: TeamMatchEntry = {
   teleRobotTraverseBump: null,
   died: null,
   dataConfidence: null,
+  fuelPercentagesDiscussed: null,
+  fuelQualitative: null,
 };
 export const TeamMatchEntryNoShowInit: TeamMatchEntry = {
   eventKey: "",
@@ -287,7 +311,13 @@ export const TeamMatchEntryNoShowInit: TeamMatchEntry = {
   autoClimbAttempted: null,
   autoClimbLevel: null,
   autoFuelScored: null,
+  autoFuelScoredPercentage: null,
   teleFuelScored: null,
+  teleFuelScoredPercentage: null,
+  totalAllianceFuelScoredScoutAuto: null,
+  totalAllianceFuelScoredOfficialAuto: null,
+  totalAllianceFuelScoredScoutTele: null,
+  totalAllianceFuelScoredOfficialTele: null,
   teleCycles: null,
   teleFuelScoredFromHub: null,
   teleFuelScoredFromTower: null,
@@ -323,6 +353,8 @@ export const TeamMatchEntryNoShowInit: TeamMatchEntry = {
   teleRobotTraverseBump: null,
   died: null,
   dataConfidence: null,
+  fuelPercentagesDiscussed: null,
+  fuelQualitative: null,
 };
 
 

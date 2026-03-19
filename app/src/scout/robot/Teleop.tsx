@@ -13,7 +13,7 @@ import scoreLocationStyles from "../../components/styles/ScoreLocationStyles.mod
 import teleopStyles from "./Teleop.module.css";
 import { DeviceSetupObj } from "../../setup/DeviceSetup.tsx";
 import ClimbPositionModal from "../../components/ClimbPositionModal/ClimbPositionModal.tsx";
-
+import FuelPercentageCounter from "../../components/Counter/FuelPercentageCounter.tsx";
 type TeleopProps = {
   match: TeamMatchEntry;
   setMatch: (value: TeamMatchEntry) => void;
@@ -121,10 +121,11 @@ function ActiveView({ match, setMatch, deviceSetup, handleToggleChange }: Active
             />
           </div>
           <div className={teleopStyles.fuelCounterMain}>
-            <FuelCounter
+            <FuelPercentageCounter
               label="TELEOP Fuel Scoring"
-              value={match.teleFuelScored ?? 0}
-              setValue={(value) => handleToggleChange("teleFuelScored", value)}
+              value={match.teleFuelScoredPercentage ?? 0}
+              setValue={(value) => handleToggleChange("teleFuelScoredPercentage", value)}
+              maxValue={100}
             />
           </div>
         </div>

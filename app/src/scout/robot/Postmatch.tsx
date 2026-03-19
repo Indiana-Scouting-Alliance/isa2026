@@ -76,7 +76,7 @@ export default function Postmatch({
         </LabeledContainer>
 
         <LabeledContainer
-          label="Total Alliance Fuel Scored (On Screen)"
+          label="Total Alliance Fuel Scored Auto (On Screen)"
           bodyClass={styles.postmatchBody}
         >
           <input
@@ -84,12 +84,32 @@ export default function Postmatch({
             type="number"
             min={0}
             step={1}
-            value={match.totalAllianceFuelScoredScout ?? ""}
+            value={match.totalAllianceFuelScoredScoutAuto ?? ""}
             onChange={(event) => {
               const nextValue = event.currentTarget.value;
               setMatch({
                 ...match,
-                totalAllianceFuelScoredScout:
+                totalAllianceFuelScoredScoutAuto:
+                  nextValue === "" ? null : Number(nextValue),
+              });
+            }}
+          />
+        </LabeledContainer>
+        <LabeledContainer
+          label="Total Alliance Fuel Scored Teleop (On Screen)"
+          bodyClass={styles.postmatchBody}
+        >
+          <input
+            className={styles.numberInput}
+            type="number"
+            min={0}
+            step={1}
+            value={match.totalAllianceFuelScoredScoutTele ?? ""}
+            onChange={(event) => {
+              const nextValue = event.currentTarget.value;
+              setMatch({
+                ...match,
+                totalAllianceFuelScoredScoutTele:
                   nextValue === "" ? null : Number(nextValue),
               });
             }}

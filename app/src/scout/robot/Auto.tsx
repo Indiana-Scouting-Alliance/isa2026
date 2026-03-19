@@ -71,8 +71,8 @@ export default function Auto({
       <div className={scoutStyles.half}>
         <FuelPercentageCounter
           label="AUTO Fuel Scoring"
-          value={match.autoFuelScored ?? 0}
-          setValue={(value) => handleValueChange("autoFuelScored", value)}
+          value={match.autoFuelScoredPercentage ?? 0}
+          setValue={(value) => handleValueChange("autoFuelScoredPercentage", value)}
           maxValue={100}
         />
 

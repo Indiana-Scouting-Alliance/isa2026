@@ -12,6 +12,14 @@ function numDisplay(value: number | null | undefined): string {
   return String(value);
 }
 
+function estimateFuelScored(
+  allianceTotal: number | null | undefined,
+  percentage: number | null | undefined
+): number | null {
+  if (allianceTotal == null || percentage == null) return null;
+  return Math.round((allianceTotal * percentage) / 100);
+}
+
 function climbDisplay(
   attempted: boolean | null | undefined,
   level: number | null | undefined,
@@ -64,15 +72,29 @@ type MatchSummaryProps = {
 export default function MatchSummary({ match }: MatchSummaryProps) {
   const autoLocations = getScoringLocations(match, "auto");
   const teleLocations = getScoringLocations(match, "tele");
-  const totalFuelScored =
-    (match.autoFuelScored ?? 0) + (match.teleFuelScored ?? 0);
+  const estimatedAutoFuelScored =
+    match.autoFuelScored ??
+    estimateFuelScored(
+      match.totalAllianceFuelScoredScoutAuto,
+      match.autoFuelScoredPercentage
+    );
+  const estimatedTeleFuelScored =
+    match.teleFuelScored ??
+    estimateFuelScored(
+      match.totalAllianceFuelScoredScoutTele,
+      match.teleFuelScoredPercentage
+    );
+  const totalEstimatedFuelScored =
+    estimatedAutoFuelScored != null && estimatedTeleFuelScored != null ?
+      estimatedAutoFuelScored + estimatedTeleFuelScored
+    : null;
 
   return (
     <div className={styles.summaryContainer}>
       {/* Total summary */}
       <div className={styles.summaryHighlight}>
-        <span>Total Fuel Scored</span>
-        <span>{numDisplay(totalFuelScored)}</span>
+        <span>Estimated Robot Fuel Scored</span>
+        <span>{numDisplay(totalEstimatedFuelScored)}</span>
       </div>
 
       {/* Auto section */}
@@ -83,8 +105,20 @@ export default function MatchSummary({ match }: MatchSummaryProps) {
           value={match.startZone ?? "—"}
         />
         <SummaryRow
-          label="Fuel Scored"
-          value={numDisplay(match.autoFuelScored)}
+          label="Alliance Fuel (Scout)"
+          value={numDisplay(match.totalAllianceFuelScoredScoutAuto)}
+        />
+        <SummaryRow
+          label="Robot Fuel %"
+          value={
+            match.autoFuelScoredPercentage == null ?
+              "—"
+            : `${match.autoFuelScoredPercentage}%`
+          }
+        />
+        <SummaryRow
+          label="Estimated Robot Fuel"
+          value={numDisplay(estimatedAutoFuelScored)}
         />
         <SummaryRow
           label="Scoring Locations"
@@ -124,8 +158,20 @@ export default function MatchSummary({ match }: MatchSummaryProps) {
       <div className={styles.summarySection}>
         <div className={styles.sectionTitle}>Teleop</div>
         <SummaryRow
-          label="Fuel Scored"
-          value={numDisplay(match.teleFuelScored)}
+          label="Alliance Fuel (Scout)"
+          value={numDisplay(match.totalAllianceFuelScoredScoutTele)}
+        />
+        <SummaryRow
+          label="Robot Fuel %"
+          value={
+            match.teleFuelScoredPercentage == null ?
+              "—"
+            : `${match.teleFuelScoredPercentage}%`
+          }
+        />
+        <SummaryRow
+          label="Estimated Robot Fuel"
+          value={numDisplay(estimatedTeleFuelScored)}
         />
         <SummaryRow
           label="Cycles"

@@ -1,0 +1,6 @@
+ALTER TABLE TeamMatchEntry DROP COLUMN totalAllianceFuelScoredScout;
+ALTER TABLE TeamMatchEntry DROP COLUMN totalAllianceFuelScoredOfficial;
+ALTER TABLE TeamMatchEntry ADD COLUMN totalAllianceFuelScoredScoutAuto INTEGER;
+ALTER TABLE TeamMatchEntry ADD COLUMN totalAllianceFuelScoredScoutTele INTEGER;
+ALTER TABLE TeamMatchEntry ADD COLUMN totalAllianceFuelScoredOfficialAuto INTEGER;
+ALTER TABLE TeamMatchEntry ADD COLUMN totalAllianceFuelScoredOfficialTele INTEGER;

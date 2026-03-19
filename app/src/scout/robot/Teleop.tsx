@@ -123,8 +123,8 @@ function ActiveView({ match, setMatch, deviceSetup, handleToggleChange }: Active
           <div className={teleopStyles.fuelCounterMain}>
             <FuelPercentageCounter
               label="TELEOP Fuel Scoring"
-              value={match.teleFuelScored ?? 0}
-              setValue={(value) => handleToggleChange("teleFuelScored", value)}
+              value={match.teleFuelScoredPercentage ?? 0}
+              setValue={(value) => handleToggleChange("teleFuelScoredPercentage", value)}
               maxValue={100}
             />
           </div>

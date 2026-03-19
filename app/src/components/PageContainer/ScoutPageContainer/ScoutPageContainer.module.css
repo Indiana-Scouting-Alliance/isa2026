@@ -10,7 +10,7 @@
   flex-direction: row;
   width: 100%;
   padding: 16px;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .title {
@@ -22,9 +22,12 @@
 .nowScouting {
   color: #fff;
   margin-left: auto;
-  width: max-content;
+  min-width: 0;
   padding-left: 24px;
   padding-right: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: clamp(0.5rem, 2.5vw, 1.25rem);
 }
 .nowScoutingRed {
   background-color: #ff0000;

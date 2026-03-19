@@ -99,3 +99,19 @@ button.blueToggleButtonFalse {
 .eventsContainerError {
   border: 2px solid var(--color-error);
 }
+
+@media (max-width: 600px), (orientation: portrait) {
+  .contentContainer {
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .deviceInfoContainer {
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .eventsContainer {
+    overflow-y: visible;
+  }
+}

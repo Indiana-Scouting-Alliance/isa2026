@@ -2,11 +2,6 @@
   flex-direction: column;
 }
 
-.modeToggleRow {
-  display: flex;
-  justify-content: center;
-}
-
 .viewContainer {
   flex: 1;
   width: 100%;
@@ -25,4 +20,17 @@
 
 .fuelCounterCycles {
   flex: 1.5;
+}
+
+.phaseLabel {
+  margin: 0 -16px;
+  padding: 4px 16px;
+}
+
+.activePhasLabel {
+  background-color: rgba(0, 15, 93, 0.12);
+}
+
+.inactivePhasLabel {
+  background-color: rgba(0, 0, 0, 0.08);
 }

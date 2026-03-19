@@ -4,7 +4,7 @@ import {
 } from "@isa2026/api/src/utils/dbtypes.ts";
 import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
 import TransparentToggle from "../../components/Button/ToggleButton/TransparentToggle/TransparentToggle.tsx";
-import FuelCounter from "../../components/Counter/FuelCounter.tsx";
+import FuelPercentageCounter from "../../components/Counter/FuelPercentageCounter.tsx";
 import Divider from "../../components/Divider/Divider.tsx";
 import changeFlexDirection from "../../components/styles/ChangeFlexDirection.module.css";
 import scoutStyles from "../../components/styles/ScoutStyles.module.css";
@@ -69,10 +69,11 @@ export default function Auto({
       <Divider orientation="vertical" />
 
       <div className={scoutStyles.half}>
-        <FuelCounter
+        <FuelPercentageCounter
           label="AUTO Fuel Scoring"
           value={match.autoFuelScored ?? 0}
           setValue={(value) => handleValueChange("autoFuelScored", value)}
+          maxValue={100}
         />
 
         <div className={scoutStyles.traverseRow}>

@@ -85,6 +85,7 @@ button.normalToggleButtonTrue {
   color: var(--color-primary-contrastText);
   border: none;
 }
+
 button.normalToggleButtonFalse {
   background-color: var(--color-background);
   color: var(--color-primary);

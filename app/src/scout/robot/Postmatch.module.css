@@ -2,6 +2,37 @@
   resize: vertical;
 }
 
+.postmatchFormColumn {
+  overflow-y: auto;
+}
+
+.fuelFieldsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.postmatchBody {
+  display: block;
+  position: static;
+  padding: 8px;
+}
+
+.numberInput {
+  width: 100%;
+  padding: 8px;
+  border: var(--button-border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  color: var(--color-background-contrastText);
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}
+
+.numberInput:focus {
+  outline: none;
+}
+
 .summaryContainer {
   display: flex;
   flex-direction: column;

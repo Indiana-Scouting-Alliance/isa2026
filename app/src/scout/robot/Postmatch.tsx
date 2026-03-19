@@ -7,16 +7,19 @@ import styles from "./Postmatch.module.css";
 import LabeledContainer from "../../components/LabeledContainer/LabeledContainer.tsx";
 import RangeInput from "../../components/Input/RangeInput/RangeInput.tsx";
 import MatchSummary from "./MatchSummary.tsx";
+import ToggleButton from "../../components/Button/ToggleButton/ToggleButton.tsx";
 
 type PostmatchProps = {
   match: TeamMatchEntry;
   setMatch: (value: TeamMatchEntry) => void;
   dataConfidenceError: string;
+  fuelPercentagesDiscussedError: string;
 };
 export default function Postmatch({
   match,
   setMatch,
   dataConfidenceError,
+  fuelPercentagesDiscussedError,
 }: PostmatchProps) {
   return (
     <div
@@ -31,7 +34,8 @@ export default function Postmatch({
 
       <Divider orientation="vertical" />
 
-      <div className={scoutStyles.half}>
+      <div className={`${scoutStyles.half} ${styles.postmatchFormColumn}`}>
+        <div className={styles.fuelFieldsGroup}>
         <LabeledContainer label="Data confidence" showOuterBorder={false}>
           <RangeInput
             min={0}
@@ -43,6 +47,55 @@ export default function Postmatch({
             <div className={scoutStyles.errorText}>{dataConfidenceError}</div>
           )}
         </LabeledContainer>
+
+        
+          <ToggleButton
+            label="Fuel Percentages Discussed With All Scouts?"
+            value={match.fuelPercentagesDiscussed ?? false}
+            classNameTrue={scoutStyles.normalToggleButtonTrue}
+            classNameFalse={scoutStyles.redToggleButtonFalse}
+            onChange={(value) =>
+              setMatch({ ...match, fuelPercentagesDiscussed: value })
+            }
+          />
+          {fuelPercentagesDiscussedError && (
+            <div className={scoutStyles.errorText}>{fuelPercentagesDiscussedError}</div>
+          )}
+       
+
+        <LabeledContainer
+          label="Fuel Score (0-10)"
+          bodyClass={styles.postmatchBody}
+        >
+          <RangeInput
+            min={0}
+            max={10}
+            value={match.fuelQualitative ?? 0}
+            onChange={(value) => setMatch({ ...match, fuelQualitative: value })}
+          />
+        </LabeledContainer>
+
+        <LabeledContainer
+          label="Total Alliance Fuel Scored (On Screen)"
+          bodyClass={styles.postmatchBody}
+        >
+          <input
+            className={styles.numberInput}
+            type="number"
+            min={0}
+            step={1}
+            value={match.totalAllianceFuelScoredScout ?? ""}
+            onChange={(event) => {
+              const nextValue = event.currentTarget.value;
+              setMatch({
+                ...match,
+                totalAllianceFuelScoredScout:
+                  nextValue === "" ? null : Number(nextValue),
+              });
+            }}
+          />
+        </LabeledContainer>
+        </div>
 
         <TextArea
           id="postmatch-comments"

@@ -108,6 +108,7 @@ export default function ScoutLayout({
   const [teamNumberError, setTeamNumberError] = useState("");
   const [startingPositionError, setStartingPositionError] = useState("");
   const [dataConfidenceError, setDataConfidenceError] = useState("");
+  const [fuelPercentagesDiscussedError, setFuelPercentagesDiscussedError] = useState("");
 
   const prematchCheck = () => {
     let error = false;
@@ -175,6 +176,15 @@ export default function ScoutLayout({
     if (match.dataConfidence === null) {
       error = true;
       setDataConfidenceError("Data confidence must be selected.");
+    } else {
+      setDataConfidenceError("");
+    }
+
+    if (match.fuelPercentagesDiscussed === null) {
+      error = true;
+      setFuelPercentagesDiscussedError("Fuel percentages discussed must be selected.");
+    } else {
+      setFuelPercentagesDiscussedError("");
     }
     return error;
   };
@@ -282,6 +292,7 @@ export default function ScoutLayout({
                 match={match}
                 setMatch={setMatch}
                 dataConfidenceError={dataConfidenceError}
+                fuelPercentagesDiscussedError={fuelPercentagesDiscussedError}
               />
             ),
           }[matchStage]

@@ -14,3 +14,10 @@
   height: 100%;
   width: 0;
 }
+
+@media (orientation: portrait) {
+  .verticalDivider {
+    height: 0;
+    width: 100%;
+  }
+}

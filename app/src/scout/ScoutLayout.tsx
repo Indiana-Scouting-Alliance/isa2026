@@ -5,7 +5,7 @@ import {
   TeamMatchEntry,
   TeamMatchEntryNoShowInit,
 } from "@isa2026/api/src/utils/dbtypes.ts";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button.tsx";
 import ScoutPageContainer from "../components/PageContainer/ScoutPageContainer/ScoutPageContainer.tsx";
@@ -42,6 +42,10 @@ export default function ScoutLayout({
 }: ScoutLayoutProps) {
   const navigate = useNavigate();
   const [matchStage, setMatchStage] = useState<MatchStage>("prematch");
+  const contentRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    contentRef.current?.scrollTo(0, 0);
+  }, [matchStage]);
 
   const estimateFuelScored = (
     allianceTotal: number | null,
@@ -284,7 +288,7 @@ export default function ScoutLayout({
           </Button>
         : undefined
       }>
-      <div className={styles.contentContainer}>
+      <div className={styles.contentContainer} ref={contentRef}>
         {
           {
             prematch: (

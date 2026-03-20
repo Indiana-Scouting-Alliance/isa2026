@@ -1,9 +1,11 @@
-.commentsInput {
-  resize: vertical;
+@media (orientation: portrait) {
+  .postmatchFormColumn {
+    order: -1;
+  }
 }
 
-.postmatchFormColumn {
-  overflow-y: auto;
+.commentsInput {
+  resize: vertical;
 }
 
 .fuelFieldsGroup {
@@ -37,7 +39,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto;
 }
 
 .summarySection {

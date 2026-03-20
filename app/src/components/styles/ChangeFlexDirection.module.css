@@ -3,7 +3,7 @@
   flex-direction: row;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px), (orientation: portrait) {
   .changeFlexDirection {
     flex-direction: column;
   }

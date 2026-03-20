@@ -13,6 +13,7 @@
   flex: 1;
   padding: 16px;
   height: 100%;
+  container-type: inline-size;
 }
 
 .matchInfoContainer {

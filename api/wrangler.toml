@@ -15,3 +15,6 @@ id = "c187ffbf9da446e9bd939b960c4fc68b"
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+[triggers]
+crons = ["*/5 * * * *"]
